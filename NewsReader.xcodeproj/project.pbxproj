@@ -9,11 +9,12 @@
 /* Begin PBXBuildFile section */
 		7522E53D1ABF403E00078733 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E53C1ABF403E00078733 /* main.m */; };
 		7522E5401ABF403E00078733 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E53F1ABF403E00078733 /* AppDelegate.m */; };
-		7522E5431ABF403E00078733 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E5421ABF403E00078733 /* ViewController.m */; };
+		7522E5431ABF403E00078733 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E5421ABF403E00078733 /* NewsViewController.m */; };
 		7522E5461ABF403E00078733 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7522E5441ABF403E00078733 /* Main.storyboard */; };
 		7522E5481ABF403E00078733 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7522E5471ABF403E00078733 /* Images.xcassets */; };
 		7522E54B1ABF403E00078733 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7522E5491ABF403E00078733 /* LaunchScreen.xib */; };
 		7522E5571ABF403E00078733 /* NewsReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E5561ABF403E00078733 /* NewsReaderTests.m */; };
+		7522E66E1ABF866D00078733 /* NewsTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E66D1ABF866D00078733 /* NewsTile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +33,17 @@
 		7522E53C1ABF403E00078733 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7522E53E1ABF403E00078733 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7522E53F1ABF403E00078733 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7522E5411ABF403E00078733 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		7522E5421ABF403E00078733 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		7522E5411ABF403E00078733 /* NewsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
+		7522E5421ABF403E00078733 /* NewsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
 		7522E5451ABF403E00078733 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7522E5471ABF403E00078733 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7522E54A1ABF403E00078733 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		7522E5501ABF403E00078733 /* NewsReaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsReaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7522E5551ABF403E00078733 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7522E5561ABF403E00078733 /* NewsReaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewsReaderTests.m; sourceTree = "<group>"; };
+		7522E66C1ABF866D00078733 /* NewsTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsTile.h; sourceTree = "<group>"; };
+		7522E66D1ABF866D00078733 /* NewsTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTile.m; sourceTree = "<group>"; };
+		7522E66F1ABFB0D500078733 /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,8 +87,11 @@
 			children = (
 				7522E53E1ABF403E00078733 /* AppDelegate.h */,
 				7522E53F1ABF403E00078733 /* AppDelegate.m */,
-				7522E5411ABF403E00078733 /* ViewController.h */,
-				7522E5421ABF403E00078733 /* ViewController.m */,
+				7522E5411ABF403E00078733 /* NewsViewController.h */,
+				7522E5421ABF403E00078733 /* NewsViewController.m */,
+				7522E66C1ABF866D00078733 /* NewsTile.h */,
+				7522E66D1ABF866D00078733 /* NewsTile.m */,
+				7522E66F1ABFB0D500078733 /* Macros.h */,
 				7522E5441ABF403E00078733 /* Main.storyboard */,
 				7522E5471ABF403E00078733 /* Images.xcassets */,
 				7522E5491ABF403E00078733 /* LaunchScreen.xib */,
@@ -219,7 +226,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7522E5431ABF403E00078733 /* ViewController.m in Sources */,
+				7522E66E1ABF866D00078733 /* NewsTile.m in Sources */,
+				7522E5431ABF403E00078733 /* NewsViewController.m in Sources */,
 				7522E5401ABF403E00078733 /* AppDelegate.m in Sources */,
 				7522E53D1ABF403E00078733 /* main.m in Sources */,
 			);
