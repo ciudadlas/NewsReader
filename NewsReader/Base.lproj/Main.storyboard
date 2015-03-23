@@ -73,6 +73,16 @@
                                     <constraint firstAttribute="width" constant="294" id="qbz-Oj-xgb"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MkR-cr-MBz">
+                                <rect key="frame" x="259" y="762" width="82" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="ub7-UT-z04"/>
+                                    <constraint firstAttribute="width" constant="82" id="y3A-IY-0RD"/>
+                                </constraints>
+                                <state key="normal" title="News Menu">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -80,6 +90,8 @@
                             <constraint firstAttribute="trailing" secondItem="JfL-he-7Eb" secondAttribute="trailing" constant="10" id="AF7-BY-iTa"/>
                             <constraint firstItem="JfL-he-7Eb" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="58" id="H56-Hn-5rf"/>
                             <constraint firstItem="JfL-he-7Eb" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="10" id="HyU-bD-kJT"/>
+                            <constraint firstAttribute="centerX" secondItem="MkR-cr-MBz" secondAttribute="centerX" id="UHp-3y-hb1"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="MkR-cr-MBz" secondAttribute="bottom" constant="8" id="grv-rv-Luy"/>
                             <constraint firstItem="dtg-S9-xSQ" firstAttribute="top" secondItem="JfL-he-7Eb" secondAttribute="bottom" constant="40" id="kxJ-4Y-XN1"/>
                         </constraints>
                     </view>
