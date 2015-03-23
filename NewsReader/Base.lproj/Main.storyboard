@@ -14,7 +14,7 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JfL-he-7Eb">
@@ -27,20 +27,82 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="tbV-eH-3Ht"/>
                                 </connections>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dtg-S9-xSQ" userLabel="Action Menu">
+                                <rect key="frame" x="153" y="566" width="294" height="71"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cBd-da-8qq" userLabel="Center Action">
+                                        <rect key="frame" x="96" y="-4" width="99" height="79"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="actions-menu-background-center" translatesAutoresizingMaskIntoConstraints="NO" id="Wbu-Ev-Esf">
+                                                <rect key="frame" x="0.0" y="4" width="99" height="79"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ActionModule_Icon_Star" translatesAutoresizingMaskIntoConstraints="NO" id="70d-BX-zAY">
+                                                <rect key="frame" x="34" y="28" width="30" height="21"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ip3-QU-9tL" userLabel="Right Action">
+                                        <rect key="frame" x="195" y="-4" width="99" height="79"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="actions-menu-background-right" translatesAutoresizingMaskIntoConstraints="NO" id="UIA-Ot-Lh4">
+                                                <rect key="frame" x="0.0" y="4" width="99" height="79"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ActionModule_Icon_News" translatesAutoresizingMaskIntoConstraints="NO" id="ypn-bN-PHX">
+                                                <rect key="frame" x="34" y="28" width="30" height="21"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E1w-J5-pL8" userLabel="Left Action">
+                                        <rect key="frame" x="-2" y="0.0" width="99" height="79"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="actions-menu-background-left" translatesAutoresizingMaskIntoConstraints="NO" id="l16-Xf-7Bf">
+                                                <rect key="frame" x="0.0" y="0.0" width="99" height="79"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ActionModule_Icon_Feedback" translatesAutoresizingMaskIntoConstraints="NO" id="io4-Od-kMD">
+                                                <rect key="frame" x="41" y="19" width="29" height="28"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="71" id="oXW-sX-7dL"/>
+                                    <constraint firstAttribute="width" constant="294" id="qbz-Oj-xgb"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="dtg-S9-xSQ" secondAttribute="centerX" id="7wT-AS-IbF"/>
                             <constraint firstAttribute="trailing" secondItem="JfL-he-7Eb" secondAttribute="trailing" constant="10" id="AF7-BY-iTa"/>
                             <constraint firstItem="JfL-he-7Eb" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="58" id="H56-Hn-5rf"/>
                             <constraint firstItem="JfL-he-7Eb" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="10" id="HyU-bD-kJT"/>
+                            <constraint firstItem="dtg-S9-xSQ" firstAttribute="top" secondItem="JfL-he-7Eb" secondAttribute="bottom" constant="40" id="kxJ-4Y-XN1"/>
                         </constraints>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="800"/>
                     <connections>
+                        <outlet property="centerAction" destination="cBd-da-8qq" id="Jwb-RF-PXV"/>
+                        <outlet property="leftAction" destination="E1w-J5-pL8" id="hml-sO-QyR"/>
+                        <outlet property="rightAction" destination="ip3-QU-9tL" id="dw7-cP-4TT"/>
                         <outlet property="scrollView" destination="JfL-he-7Eb" id="tGT-1g-uEi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="393" y="288"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ActionModule_Icon_Feedback" width="29" height="28"/>
+        <image name="ActionModule_Icon_News" width="30" height="21"/>
+        <image name="ActionModule_Icon_Star" width="30" height="21"/>
+        <image name="actions-menu-background-center" width="91" height="79"/>
+        <image name="actions-menu-background-left" width="99" height="79"/>
+        <image name="actions-menu-background-right" width="99" height="79"/>
+    </resources>
 </document>
