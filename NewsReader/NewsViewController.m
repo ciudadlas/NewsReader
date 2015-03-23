@@ -54,7 +54,7 @@
     }
 }
 
-#pragma mark - NewsTileScalingDelegate methods
+#pragma mark - NewsTileDelegate methods
 
 - (float)viewOffsetForScaling:(NewsTile *)tile {
     

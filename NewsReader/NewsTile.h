@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class NewsTile;
 
-@protocol NewsTileScalingDelegate <NSObject>
+@protocol NewsTileDelegate <NSObject>
 
 @required
 - (float)viewOffsetForScaling:(NewsTile *)tile;
@@ -19,6 +19,6 @@
 @interface NewsTile : UIView
 
 @property (nonatomic) CGRect initialFrame;
-@property (nonatomic, weak) id <NewsTileScalingDelegate> delegate;
+@property (nonatomic, weak) id <NewsTileDelegate> delegate;
 
 @end

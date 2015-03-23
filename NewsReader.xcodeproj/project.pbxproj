@@ -91,7 +91,6 @@
 				7522E5421ABF403E00078733 /* NewsViewController.m */,
 				7522E66C1ABF866D00078733 /* NewsTile.h */,
 				7522E66D1ABF866D00078733 /* NewsTile.m */,
-				7522E66F1ABFB0D500078733 /* Macros.h */,
 				7522E5441ABF403E00078733 /* Main.storyboard */,
 				7522E5471ABF403E00078733 /* Images.xcassets */,
 				7522E5491ABF403E00078733 /* LaunchScreen.xib */,
@@ -103,6 +102,7 @@
 		7522E53A1ABF403E00078733 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7522E66F1ABFB0D500078733 /* Macros.h */,
 				7522E53B1ABF403E00078733 /* Info.plist */,
 				7522E53C1ABF403E00078733 /* main.m */,
 			);
