@@ -19,8 +19,10 @@ typedef void (^NewsResult)(NSError *error, NSDictionary *repsonse);
 @property (nonatomic, copy, readonly) NSDate *webPulicationDate;
 @property (nonatomic, copy, readonly) NSString *webTitle;
 @property (nonatomic, copy, readonly) NSString *webURL;
+@property (nonatomic, copy, readonly) NSString *summaryText;
+@property (nonatomic, copy, readonly) NSString *thumbnailURL;
 
-- (instancetype)initWithAPIURL:(NSString*)apiURL newsID:(NSString *)newsID sectionID:(NSString *)sectionID sectionName:(NSString *)sectionName publicationDate:(NSDate *)publicationDate webTitle:(NSString *)webTitle webURL:(NSString *)webURL;
+- (instancetype)initWithAPIURL:(NSString*)apiURL newsID:(NSString *)newsID sectionID:(NSString *)sectionID sectionName:(NSString *)sectionName publicationDate:(NSDate *)publicationDate webTitle:(NSString *)webTitle webURL:(NSString *)webURL thumbnailURL:(NSString *)thumbnailURL newsSummary:(NSString *)newsSummary;
 
 + (void)getNewsByKeyword:(NSString *)keyword block:(NewsResult)closure;
 + (void)getNewsBySectionName:(NSString *)sectionName block:(NewsResult)closure;

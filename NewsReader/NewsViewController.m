@@ -30,7 +30,13 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     [self setupView];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
     [self loadNews];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,8 +76,9 @@
     // Add Tiles
     for (int i = 0; i < numberOfTiles; i++) {
         
+        News *newsItem = news[i];
         NewsTile *tile = [[NewsTile alloc] initWithFrame:CGRectMake(i*self.scrollView.frame.size.width + 10, 10,
-                                                                    self.scrollView.bounds.size.width - 20, self.scrollView.bounds.size.height - 20)];
+                                                                    self.scrollView.bounds.size.width - 20, self.scrollView.bounds.size.height - 20) news:newsItem];
         tile.delegate = self;
         
         //NSLog(@"%@", NSStringFromCGRect(self.scrollView.frame));

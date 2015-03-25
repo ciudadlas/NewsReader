@@ -13,7 +13,7 @@
 
 #pragma mark - Initializers
 
-- (instancetype)initWithAPIURL:(NSString*)apiURL newsID:(NSString *)newsID sectionID:(NSString *)sectionID sectionName:(NSString *)sectionName publicationDate:(NSDate *)publicationDate webTitle:(NSString *)webTitle webURL:(NSString *)webURL {
+- (instancetype)initWithAPIURL:(NSString*)apiURL newsID:(NSString *)newsID sectionID:(NSString *)sectionID sectionName:(NSString *)sectionName publicationDate:(NSDate *)publicationDate webTitle:(NSString *)webTitle webURL:(NSString *)webURL thumbnailURL:(NSString *)thumbnailURL newsSummary:(NSString *)newsSummary {
     
     self = [super init];
     
@@ -25,6 +25,8 @@
         _webPulicationDate = [publicationDate copy];
         _webTitle = [webTitle copy];
         _webURL = [newsID copy];
+        _thumbnailURL = [thumbnailURL copy];
+        _summaryText = [newsSummary copy];
     }
     
     return self;
@@ -38,7 +40,7 @@
 
 + (void)getNewsByKeyword:(NSString *)keyword block:(NewsResult)closure {
 
-    NSString *requestPath = [NSString stringWithFormat:@"search?api-key=%@&q=%@&fields=headline,trailText,thumbnail&order-by=newest", [APIClient sharedInstance].APIKey, keyword];
+    NSString *requestPath = [NSString stringWithFormat:@"search?api-key=%@&q=%@&show-fields=headline,trailText,thumbnail&order-by=newest", [APIClient sharedInstance].APIKey, keyword];
     
     // Make the API call
     [[APIClient sharedInstance] GET:requestPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -48,7 +50,7 @@
         // Parse the API call results
         NSError *error;
         NSArray *news = [self parseNewsResponse:responseObject error:&error];
-        NSLog(@"Response object: %@", responseObject);
+//        NSLog(@"Response object: %@", responseObject);
         
         // Depending on what the error is we may decide to disregard the data altogether or still use it despite errors
         if (error) {
@@ -77,28 +79,41 @@
     
     NSMutableArray *news = [[NSMutableArray alloc] init];
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    
     NSDictionary *newsItems = newsResponse[@"response"][@"results"];
     for (NSDictionary *newsItem in newsItems) {
         
         // TO DO: Error checking, and error setting if these values are missing etc.
         // TO DO: Make constants for the parsing keys
-        // TO DO: Parse additional fields
         NSString *apiUrl = [newsItem objectForKey:@"apiUrl"];
         NSString *newsId = [newsItem objectForKey:@"id"];
         NSString *sectionId = [newsItem objectForKey:@"sectionId"];
         NSString *sectionName = [newsItem objectForKey:@"sectionName"];
-        NSString *publicationDate = [newsItem objectForKey:@"webPublicationDate"];
+        NSDate *publicationDate = [dateFormatter dateFromString:[newsItem objectForKey:@"webPublicationDate"]];
         NSString *webTitle = [newsItem objectForKey:@"webTitle"];
         NSString *webUrl = [newsItem objectForKey:@"webUrl"];
+        
+        NSString *thumbnailURL = nil;
+        NSString *newsSummary = nil;
+        
+        NSDictionary *fields = [newsItem objectForKey:@"fields"];
+        if (fields) {
+            thumbnailURL = [fields objectForKey:@"thumbnail"];
+            newsSummary = [fields objectForKey:@"trailText"];
+        }
         
         // TO DO: Only if the values are all present, add the object.
         News *newsObject = [[News alloc] initWithAPIURL:apiUrl
                                                  newsID:newsId
                                               sectionID:sectionId
                                             sectionName:sectionName
-                                        publicationDate:nil
+                                        publicationDate:publicationDate
                                                webTitle:webTitle
-                                                 webURL:webUrl];
+                                                 webURL:webUrl
+                                           thumbnailURL:thumbnailURL
+                                            newsSummary:newsSummary];
         
         [news addObject:newsObject];
     }

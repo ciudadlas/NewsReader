@@ -23,17 +23,40 @@
 
 @interface NewsTile ()
 
+@property (nonatomic, strong) UILabel *newsTitleLabel;
+
 @end
 
 @implementation NewsTile
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame news:(News *)news {
     
     self = [super initWithFrame:frame];
     if (self) {
+        
+        _news = news;
+        
         self.backgroundColor = HEXCOLOR(TILE_DEFAULT_COLOR);
         self.layer.cornerRadius = TILE_CORNER_SIZE;
-        self.initialFrame = frame;
+        _initialFrame = frame;
+        
+        double leftMargin = 15.f;
+        double topMargin = 15.f;
+        
+        _newsTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, frame.size.width - leftMargin * 2, topMargin)];
+        _newsTitleLabel.textColor = HEXCOLOR(TILE_TITLE_COLOR);
+        _newsTitleLabel.backgroundColor = [UIColor clearColor];
+        _newsTitleLabel.text = news.webTitle;
+        _newsTitleLabel.opaque = NO;
+        _newsTitleLabel.textAlignment = NSTextAlignmentLeft;
+        _newsTitleLabel.minimumScaleFactor = 2;
+        _newsTitleLabel.autoresizesSubviews = YES;
+        _newsTitleLabel.numberOfLines = 0;
+        _newsTitleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15.f];
+        [_newsTitleLabel sizeToFit];
+        
+        [self addSubview:_newsTitleLabel];
+        
     }
     
     return self;
@@ -61,6 +84,11 @@
 
         self.layer.transform = finalTransform;
     }
+}
+
+- (void)setNews:(News *)news {
+    _news = news;
+    self.newsTitleLabel.text = news.webTitle;
 }
 
 @end

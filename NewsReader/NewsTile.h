@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "News.h"
 @class NewsTile;
 
 @protocol NewsTileDelegate <NSObject>
@@ -18,7 +19,10 @@
 
 @interface NewsTile : UIView
 
+- (id)initWithFrame:(CGRect)frame news:(News *)news;
+
 @property (nonatomic) CGRect initialFrame;
 @property (nonatomic, weak) id <NewsTileDelegate> delegate;
+@property (nonatomic, strong) News *news;
 
 @end
