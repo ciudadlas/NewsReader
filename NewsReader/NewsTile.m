@@ -9,6 +9,7 @@
 #import "NewsTile.h"
 #import "Macros.h"
 #import "UIImageView+AFNetworking.h"
+#import "NSDate+DateTools.h"
 
 #define TILE_CORNER_SIZE 15
 #define TILE_DEFAULT_COLOR 0xF4F4F4
@@ -64,7 +65,7 @@
         _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(dateLabelLeftMargin, _newsTitleLabel.frame.size.height + _newsTitleLabel.frame.origin.y, frame.size.width - leftMargin * 2, topMargin)];
         _dateLabel.textColor = [UIColor grayColor];
         _dateLabel.backgroundColor = [UIColor clearColor];
-        _dateLabel.text = [news.webPulicationDate description]; // TO DO: Convert to a format like "2 hours ago", "1 day ago"
+        _dateLabel.text = [news.webPulicationDate timeAgoSinceNow];
         _dateLabel.opaque = NO;
         _dateLabel.textAlignment = NSTextAlignmentLeft;
         _dateLabel.minimumScaleFactor = 2;

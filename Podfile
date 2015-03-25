@@ -7,3 +7,4 @@ xcodeproj 'NewsReader'
 
 pod 'AFNetworking', '~> 2.0'
 pod 'SVProgressHUD', '~> 1.1.2'
+pod 'DateTools' , '~> 1.5.0'
