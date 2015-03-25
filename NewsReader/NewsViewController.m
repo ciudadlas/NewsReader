@@ -12,7 +12,7 @@
 #import "SKNWebViewController.h"
 #import "SVProgressHUD.h"
 
-@interface NewsViewController ()
+@interface NewsViewController () <UIAlertViewDelegate>
 
 - (IBAction)changeNewsContentTapped:(id)sender;
 
@@ -34,7 +34,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     [self setupView];
-    [self loadNews];
+    [self loadNewsWithQuery:@"isis"];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -58,11 +58,13 @@
     self.view.backgroundColor = patternColor;
 }
 
-- (void)loadNews {
+- (void)loadNewsWithQuery:(NSString *)query {
 
-//    [self configActions];
+#warning TO DO: Look into why this is happening and a potential fix
+//    [self configActions]; // This is displacing the menu buttons, so avoiding for now.
+    
     [SVProgressHUD showWithStatus:@"Loading news"];
-    [News getNewsByKeyword:@"isis" block:^(NSError *error, NSDictionary *response) {
+    [News getNewsByKeyword:query block:^(NSError *error, NSDictionary *response) {
         if (error) {
             DLog(@"Error getting news");
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error loading news: %@", [error localizedDescription]]];
@@ -76,6 +78,13 @@
 }
 
 - (void)setupTilesForReceivedNews:(NSArray *)news {
+    // First remove all existing tiles
+    for (UIView *view in self.scrollView.subviews) {
+        if ([view isKindOfClass:[NewsTile class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    
     NSUInteger numberOfTiles = news.count;
     
     // Add Tiles
@@ -237,11 +246,21 @@
 
 - (void)changeNewsContentTapped:(id)sender {
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter a search query" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Load News", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter a search query below:" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Load News", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alert show];
 }
 
 #pragma mark - UIAlertViewDelegate methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"Button index %ld", (long)buttonIndex);
+    // If load news tapped
+    if (buttonIndex == 1) {
+        UITextField *textfield = [alertView textFieldAtIndex: 0];
+        NSString *searchQuery = textfield.text;
+        [self loadNewsWithQuery:searchQuery];
+    }
+}
 
 @end
