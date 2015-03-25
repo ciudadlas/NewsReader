@@ -32,13 +32,11 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     [self setupView];
+    [self loadNews];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [self loadNews];
-
 }
 
 - (void)didReceiveMemoryWarning {
