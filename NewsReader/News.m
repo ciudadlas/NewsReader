@@ -8,6 +8,7 @@
 
 #import "News.h"
 #import "APIClient.h"
+#import "Macros.h"
 
 @implementation News
 
@@ -45,12 +46,12 @@
     // Make the API call
     [[APIClient sharedInstance] GET:requestPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-        NSLog(@"Request URL: %@", operation.request.URL);
+        DLog(@"Request URL: %@", operation.request.URL);
         
         // Parse the API call results
         NSError *error;
         NSArray *news = [self parseNewsResponse:responseObject error:&error];
-//        NSLog(@"Response object: %@", responseObject);
+//        DLog(@"Response object: %@", responseObject);
         
         // Depending on what the error is we may decide to disregard the data altogether or still use it despite errors
         if (error) {
@@ -66,7 +67,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        NSLog(@"Error while getting news by keyword: %@", [error localizedDescription]);
+        DLog(@"Error while getting news by keyword: %@", [error localizedDescription]);
         if (closure != NULL) {
             closure(error, nil);
         }

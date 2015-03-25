@@ -749,8 +749,8 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
                                  [rootController setNeedsStatusBarAppearanceUpdate];
                              }
                              // uncomment to make sure UIWindow is gone from app.windows
-                             //NSLog(@"%@", [UIApplication sharedApplication].windows);
-                             //NSLog(@"keyWindow = %@", [UIApplication sharedApplication].keyWindow);
+                             //DLog(@"%@", [UIApplication sharedApplication].windows);
+                             //DLog(@"keyWindow = %@", [UIApplication sharedApplication].keyWindow);
                          }
                      }];
 }

@@ -129,8 +129,7 @@
     self.newsTitleLabel.text = news.webTitle;
 }
 
-- (void)tapTile:(UIGestureRecognizer *)gestureRecognizer {
-    NSLog(@"Tapped tile, push news detail");
+- (void)tapTile:(UIGestureRecognizer *)gestureRecognizer {    
     [self.delegate tileTapped:self];
 }
 

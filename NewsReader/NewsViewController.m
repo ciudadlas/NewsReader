@@ -62,11 +62,11 @@
     [SVProgressHUD showWithStatus:@"Loading news"];
     [News getNewsByKeyword:@"isis" block:^(NSError *error, NSDictionary *response) {
         if (error) {
-            NSLog(@"Error getting news");
+            DLog(@"Error getting news");
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error loading news: %@", [error localizedDescription]]];
         } else {
             NSArray *news = response[@"news"];
-            NSLog(@"Fetched %lu news articles", (unsigned long)news.count);
+            DLog(@"Fetched %lu news articles", (unsigned long)news.count);
             [SVProgressHUD showSuccessWithStatus:@"Success"];
             [self setupTilesForReceivedNews:news];
         }
@@ -84,7 +84,7 @@
                                                                     self.scrollView.bounds.size.width - 20, self.scrollView.bounds.size.height - 20) news:newsItem];
         tile.delegate = self;
         
-        //NSLog(@"%@", NSStringFromCGRect(self.scrollView.frame));
+        //DLog(@"%@", NSStringFromCGRect(self.scrollView.frame));
         [self.scrollView addSubview:tile];
     }
     
@@ -225,10 +225,12 @@
 - (void)tileTapped:(NewsTile *)tile {
     SKNWebViewController *webViewController = [[SKNWebViewController alloc] initWithURL:tile.news.fullURL];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:webViewController];
-    NSLog(@"URL string: %@", tile.news.fullURL);
+    DLog(@"TappedURL string: %@", tile.news.fullURL);
     [self presentViewController:navController animated:YES completion:^{
         //
     }];
 }
+
+#pragma mark -
 
 @end
