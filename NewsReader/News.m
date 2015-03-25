@@ -35,7 +35,7 @@
 #pragma mark - Get Data Methods
 
 + (void)getNewsBySectionName:(NSString *)keyword block:(NewsResult)closure {
-    
+#warning TO DO: Implement or delete
 }
 
 + (void)getNewsByKeyword:(NSString *)keyword block:(NewsResult)closure {

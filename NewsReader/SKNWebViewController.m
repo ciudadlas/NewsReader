@@ -166,7 +166,7 @@ static void *WebContext = &WebContext;
 }
 
 - (void)updateSearchBarUrl {
-#warning These should be cleaned up
+#warning TO DO: These should be cleaned up
 //    NSString *URLString = [self.webView.URL host];
 //    
 //    URLString = [URLString stringByReplacingOccurrencesOfString:@"https://" withString:@""];
