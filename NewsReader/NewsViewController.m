@@ -23,19 +23,14 @@
 
 @implementation NewsViewController
 
+#pragma mark - View Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    UIColor *patternColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"egg_shell"]];
-    self.view.backgroundColor = patternColor;
-    
-//    [self configActions];
-    [News getNewsByKeyword:@"isis" block:^(NSError *error, NSDictionary *response) {
-        NSArray *news = response[@"news"];
-        NSLog(@"News: %@", news);
-    }];
-    
+    [self setupView];
+    [self loadNews];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,21 +39,47 @@
 }
 
 // This is called after the auto layout constraints of the view have been applied, which is what we need.
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
+//- (void)viewDidLayoutSubviews {
+//    [super viewDidLayoutSubviews];
+//}
+
+#pragma mark - View Setup Helpers
+
+- (void)setupView {
+    UIColor *patternColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"egg_shell"]];
+    self.view.backgroundColor = patternColor;
+}
+
+- (void)loadNews {
+    //    [self configActions];
+    [News getNewsByKeyword:@"isis" block:^(NSError *error, NSDictionary *response) {
+        if (error) {
+            NSLog(@"Error getting news");
+        } else {
+            NSArray *news = response[@"news"];
+            NSLog(@"Fetched %lu news articles", (unsigned long)news.count);
+            
+            [self setupTilesForReceivedNews:news];
+        }
+    }];
+}
+
+- (void)setupTilesForReceivedNews:(NSArray *)news {
+    NSUInteger numberOfTiles = news.count;
     
-    // Add 10 tiles
-    for (int i = 0; i < 10; i++) {
+    // Add Tiles
+    for (int i = 0; i < numberOfTiles; i++) {
         
         NewsTile *tile = [[NewsTile alloc] initWithFrame:CGRectMake(i*self.scrollView.frame.size.width + 10, 10,
                                                                     self.scrollView.bounds.size.width - 20, self.scrollView.bounds.size.height - 20)];
         tile.delegate = self;
         
-        NSLog(@"%@", NSStringFromCGRect(self.scrollView.frame));
+        //NSLog(@"%@", NSStringFromCGRect(self.scrollView.frame));
         [self.scrollView addSubview:tile];
     }
     
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * 10, self.scrollView.frame.size.height);
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * numberOfTiles, self.scrollView.frame.size.height);
+
 }
 
 #pragma mark - Helper Methods
@@ -66,7 +87,7 @@
 // create the proper placement and perspective for the action menu segments
 - (void)configActions {
     [self setAnchorPoint:CGPointMake(1.5, 0.5) forView:self.leftAction];
-    [self setAnchorPoint:CGPointMake(-0.5,0.5) forView:self.rightAction];
+    [self setAnchorPoint:CGPointMake(-0.5, 0.5) forView:self.rightAction];
 }
 
 // Taken from: http://stackoverflow.com/a/5666430
@@ -92,8 +113,8 @@
     view.layer.anchorPoint = anchorPoint;
 }
 
-- (float)relativeOffset
-{
+- (float)relativeOffset {
+    
     float offset = self.scrollView.contentOffset.x;
     float contentSize = self.scrollView.contentSize.width;
     float width = self.scrollView.frame.size.width;
@@ -108,8 +129,8 @@
     return offset;
 }
 
-- (void)layoutActionMenuForOffset:(float)offset
-{
+- (void)layoutActionMenuForOffset:(float)offset {
+    
     // we're splitting the offset into three equally-spaced animations
     // Timeline:      |----|----|----|----|----|
     // Left action:   |--------------|
@@ -140,8 +161,7 @@
     [self rotateAction:self.rightAction byAmount:rightActionRotationAmount];
 }
 
-- (float)transformRotation:(float)rotationAmount
-{
+- (float)transformRotation:(float)rotationAmount {
     // map our rotation so it flips back down at the center point and the layer is never upside down
     float returnVal = rotationAmount >= 0.5 ? rotationAmount - 1 : rotationAmount;
     
@@ -154,8 +174,7 @@
     return returnVal;
 }
 
-- (void)rotateAction:(UIView *)action byAmount:(float)amount
-{
+- (void)rotateAction:(UIView *)action byAmount:(float)amount {
     CATransform3D rotationTransform = CATransform3DIdentity;
     
     rotationTransform.m33 = 0.0;
@@ -168,8 +187,8 @@
 
 #pragma mark - UIScrollViewDelegate methods
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
     for (UIView *newsTile in [scrollView subviews]) {
         [newsTile setNeedsLayout];
     }
