@@ -14,6 +14,8 @@
 
 @interface NewsViewController ()
 
+- (IBAction)changeNewsContentTapped:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
@@ -225,12 +227,21 @@
 - (void)tileTapped:(NewsTile *)tile {
     SKNWebViewController *webViewController = [[SKNWebViewController alloc] initWithURL:tile.news.fullURL];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:webViewController];
-    DLog(@"TappedURL string: %@", tile.news.fullURL);
+    DLog(@"Tapped news item full url: %@", tile.news.fullURL);
     [self presentViewController:navController animated:YES completion:^{
         //
     }];
 }
 
-#pragma mark -
+#pragma mark - IBAction methods
+
+- (void)changeNewsContentTapped:(id)sender {
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter a search query" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Load News", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
+}
+
+#pragma mark - UIAlertViewDelegate methods
 
 @end
