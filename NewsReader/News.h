@@ -8,8 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@interface News : UIViewController
+typedef void (^NewsResult)(NSError *error, NSDictionary *repsonse);
 
-- (void)getNewsByKeyword:(NSString *)keyword;
+@interface News : NSObject
+
+@property (nonatomic, copy, readonly) NSString *apiURL;
+@property (nonatomic, copy, readonly) NSString *newsID;
+@property (nonatomic, copy, readonly) NSString *sectionID;
+@property (nonatomic, copy, readonly) NSString *sectionName;
+@property (nonatomic, copy, readonly) NSDate *webPulicationDate;
+@property (nonatomic, copy, readonly) NSString *webTitle;
+@property (nonatomic, copy, readonly) NSString *webURL;
+
+- (instancetype)initWithAPIURL:(NSString*)apiURL newsID:(NSString *)newsID sectionID:(NSString *)sectionID sectionName:(NSString *)sectionName publicationDate:(NSDate *)publicationDate webTitle:(NSString *)webTitle webURL:(NSString *)webURL;
+
++ (void)getNewsByKeyword:(NSString *)keyword block:(NewsResult)closure;
++ (void)getNewsBySectionName:(NSString *)sectionName block:(NewsResult)closure;
 
 @end

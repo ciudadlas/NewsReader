@@ -8,6 +8,7 @@
 
 #import "NewsViewController.h"
 #import "Macros.h"
+#import "News.h"
 
 @interface NewsViewController ()
 
@@ -30,6 +31,10 @@
     self.view.backgroundColor = patternColor;
     
 //    [self configActions];
+    [News getNewsByKeyword:@"isis" block:^(NSError *error, NSDictionary *response) {
+        NSArray *news = response[@"news"];
+        NSLog(@"News: %@", news);
+    }];
     
 }
 
