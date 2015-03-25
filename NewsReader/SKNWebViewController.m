@@ -124,17 +124,24 @@ static void *WebContext = &WebContext;
 }
 
 - (void)setupNavigationBar {
+    
+    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc]
+                                    initWithBarButtonSystemItem:(UIBarButtonSystemItemStop)
+                                    target:self
+                                    action:@selector(closeButtonTapped:)];
+    
+    self.navigationItem.rightBarButtonItem = closeButton;
 
     self.navigationController.navigationBar.backgroundColor = [UIColor grayColor];
 }
 
 - (void)setupBottomBar {
-    self.backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed:)];
+    self.backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonTapped:)];
     
     UIBarButtonItem *separator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     separator.width = 25.f;
     
-    self.forwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"forwardIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(forwardButtonPressed:)];
+    self.forwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"forwardIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(forwardButtonTapped:)];
     
     self.toolbarItems = @[self.backButton, separator, self.forwardButton];
     
@@ -168,13 +175,21 @@ static void *WebContext = &WebContext;
 //    self.urlBar.text = URLString;
 }
 
+#pragma mark - Navigation Bar Action Handling
+
+- (void)closeButtonTapped:(id)sender {
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        //
+    }];
+}
+
 #pragma mark - Bottom Toolbar Action Handling
 
-- (void)backButtonPressed:(id)sender {
+- (void)backButtonTapped:(id)sender {
     [self.webView goBack];
 }
 
-- (void)forwardButtonPressed:(id)sender {
+- (void)forwardButtonTapped:(id)sender {
     [self.webView goForward];
 }
 
