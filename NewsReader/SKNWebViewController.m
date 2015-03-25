@@ -16,12 +16,23 @@ static void *WebContext = &WebContext;
 @property (nonatomic, strong) UIBarButtonItem *forwardButton;
 @property (nonatomic, strong) UIBarButtonItem *backButton;
 @property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic, strong) NSURL *initialURL;
 
 @end
 
 @implementation SKNWebViewController
 
 #pragma mark - View Lifecycle
+
+- (instancetype)initWithURL:(NSURL *)url {
+    self = [super init];
+    
+    if (self) {
+        _initialURL = url;
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -59,7 +70,7 @@ static void *WebContext = &WebContext;
 }
 
 - (void)deregisterNotifications {
-    [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(estimatedProgress)) context:WebContext];
+    [self.webView removeObserver:self forKeyPath:NSStringFromSelector(@selector(estimatedProgress)) context:WebContext];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -107,21 +118,13 @@ static void *WebContext = &WebContext;
 
     [self.view addSubview:self.webView];
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://tresnotas.github.io/"]]];
+    if (self.initialURL) {
+        [self.webView loadRequest:[NSURLRequest requestWithURL:self.initialURL]];
+    }
 }
 
 - (void)setupNavigationBar {
-//    CGRect urlBarFrame = CGRectMake(0.0, 0.0, self.navigationItem.titleView.frame.size.width, self.navigationItem.titleView.frame.size.height);
-//    self.urlBar = [[UISearchBar alloc] initWithFrame:urlBarFrame];
-//    self.urlBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-//    self.urlBar.returnKeyType = UIReturnKeyGo;
-//    self.urlBar.keyboardType = UIKeyboardTypeURL;
-//    self.urlBar.delegate = self;
-//    self.urlBar.placeholder = @"Enter a website address";
-//    self.urlBar.searchBarStyle = UISearchBarStyleMinimal;
-    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setLeftViewMode:UITextFieldViewModeNever];
 
-//    self.navigationItem.titleView = self.urlBar;
     self.navigationController.navigationBar.backgroundColor = [UIColor grayColor];
 }
 
@@ -134,6 +137,9 @@ static void *WebContext = &WebContext;
     self.forwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"forwardIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(forwardButtonPressed:)];
     
     self.toolbarItems = @[self.backButton, separator, self.forwardButton];
+    
+    self.navigationController.toolbarHidden = NO;
+    self.navigationController.toolbar.translucent = NO;
 }
 
 - (void)setupProgressView {

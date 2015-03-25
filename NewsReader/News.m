@@ -85,8 +85,8 @@
     NSDictionary *newsItems = newsResponse[@"response"][@"results"];
     for (NSDictionary *newsItem in newsItems) {
         
-        // TO DO: Error checking, and error setting if these values are missing etc.
-        // TO DO: Make constants for the parsing keys
+#warning TO DO: Error checking, and error setting if these values are missing etc.
+#warning TO DO: Make constants for the parsing keys
         NSString *apiUrl = [newsItem objectForKey:@"apiUrl"];
         NSString *newsId = [newsItem objectForKey:@"id"];
         NSString *sectionId = [newsItem objectForKey:@"sectionId"];
@@ -106,7 +106,7 @@
             newsSummary = [[fields objectForKey:@"trailText"] stringByReplacingOccurrencesOfString:@"<br>" withString:@""];
         }
         
-        // TO DO: Only if the values are all present, add the object.
+#warning TO DO: Only if the values are all present, add the object.
         News *newsObject = [[News alloc] initWithAPIURL:apiUrl
                                                  newsID:newsId
                                               sectionID:sectionId
@@ -121,6 +121,17 @@
     }
     
     return [NSArray arrayWithArray:news];
+}
+
+#pragma mark - Helpers
+
+- (NSURL *)fullURL {
+    if (self.webURL) {
+        NSString *fullURLString = [NSString stringWithFormat:@"http://www.theguardian.com/%@", self.webURL];
+        return [NSURL URLWithString:fullURLString];
+    } else {
+        return nil;
+    }
 }
 
 @end

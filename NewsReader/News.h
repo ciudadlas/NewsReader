@@ -21,6 +21,7 @@ typedef void (^NewsResult)(NSError *error, NSDictionary *repsonse);
 @property (nonatomic, copy, readonly) NSString *webURL;
 @property (nonatomic, copy, readonly) NSString *summaryText;
 @property (nonatomic, copy, readonly) NSString *thumbnailURL;
+@property (nonatomic, readonly) NSURL *fullURL;
 
 - (instancetype)initWithAPIURL:(NSString*)apiURL newsID:(NSString *)newsID sectionID:(NSString *)sectionID sectionName:(NSString *)sectionName publicationDate:(NSDate *)publicationDate webTitle:(NSString *)webTitle webURL:(NSString *)webURL thumbnailURL:(NSString *)thumbnailURL newsSummary:(NSString *)newsSummary;
 

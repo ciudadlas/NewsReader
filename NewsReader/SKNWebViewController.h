@@ -11,4 +11,6 @@
 
 @interface SKNWebViewController : UIViewController <WKNavigationDelegate, WKUIDelegate>
 
+- (instancetype)initWithURL:(NSURL *)url;
+
 @end

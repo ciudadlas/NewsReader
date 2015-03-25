@@ -225,10 +225,12 @@
 }
 
 - (void)tileTapped:(NewsTile *)tile {
-    if (self.navigationController) {
-        SKNWebViewController *webViewController = [[SKNWebViewController alloc] initWithNibName:@"SKNWebViewController" bundle:nil];
-        [self.navigationController pushViewController:webViewController animated:YES];
-    }
+    SKNWebViewController *webViewController = [[SKNWebViewController alloc] initWithURL:tile.news.fullURL];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:webViewController];
+    NSLog(@"URL string: %@", tile.news.fullURL);
+    [self presentViewController:navController animated:YES completion:^{
+        //
+    }];
 }
 
 @end
