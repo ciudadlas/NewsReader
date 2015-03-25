@@ -44,7 +44,7 @@
         self.layer.cornerRadius = TILE_CORNER_SIZE;
         _initialFrame = frame;
         
-        // 1. Title
+        // 1. Title Label
         double leftMargin = 15.f;
         double topMargin = 15.f;
         _newsTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, frame.size.width - leftMargin * 2, topMargin)];
@@ -60,29 +60,28 @@
         [_newsTitleLabel sizeToFit];
         [self addSubview:_newsTitleLabel];
         
-        // 2. Date
+        // 2. Date Label
         double dateLabelLeftMargin = 15.f;
-        
         _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(dateLabelLeftMargin, _newsTitleLabel.frame.size.height + _newsTitleLabel.frame.origin.y, frame.size.width - leftMargin * 2, topMargin)];
         _dateLabel.textColor = [UIColor grayColor];
         _dateLabel.backgroundColor = [UIColor clearColor];
-        _dateLabel.text = [news.webPulicationDate description];
+        _dateLabel.text = [news.webPulicationDate description]; // TO DO: Convert to a format like "2 hours ago", "1 day ago"
         _dateLabel.opaque = NO;
         _dateLabel.textAlignment = NSTextAlignmentLeft;
         _dateLabel.minimumScaleFactor = 2;
         _dateLabel.autoresizesSubviews = YES;
-        _dateLabel.numberOfLines = 0;
+        _dateLabel.numberOfLines = 1;
         _dateLabel.font = [UIFont fontWithName:@"Helvetica" size:12.f];
         [_dateLabel sizeToFit];
         [self addSubview:_dateLabel];
         
-        // 3. Thumbnail
+        // 3. Thumbnail Image
         _thumbnailImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, _dateLabel.frame.size.height + _dateLabel.frame.origin.y, 150, 150)];
         _thumbnailImageView.contentMode = UIViewContentModeScaleAspectFit & UIViewContentModeTop;
         [_thumbnailImageView setImageWithURL:[NSURL URLWithString:news.thumbnailURL] placeholderImage:nil];
         [self addSubview:_thumbnailImageView];
         
-        // 4. Summary text
+        // 4. News Summary Label
         _summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(_thumbnailImageView.frame.origin.x + _thumbnailImageView.frame.size.width, _thumbnailImageView.frame.origin.y, frame.size.width - _thumbnailImageView.frame.size.width - _thumbnailImageView.frame.origin.x , frame.size.height - _thumbnailImageView.frame.origin.y - 15)];
         _summaryTextView.text = news.summaryText;
         _summaryTextView.backgroundColor = [UIColor clearColor];
