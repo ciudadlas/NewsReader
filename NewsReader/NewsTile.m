@@ -93,6 +93,7 @@
         
         // 5. Tap Recognizer
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTile:)];
+        tap.numberOfTapsRequired = 2;
         [self addGestureRecognizer:tap];
         
     }

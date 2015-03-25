@@ -56,13 +56,12 @@
 - (void)setupView {
     UIColor *patternColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"egg_shell"]];
     self.view.backgroundColor = patternColor;
+    
+    [self configMenuActions];
 }
 
 - (void)loadNewsWithQuery:(NSString *)query {
 
-#warning TO DO: Look into why this is happening and a potential fix
-//    [self configActions]; // This is displacing the menu buttons, so avoiding for now.
-    
     [SVProgressHUD showWithStatus:@"Loading news"];
     [News getNewsByKeyword:query block:^(NSError *error, NSDictionary *response) {
         if (error) {
@@ -109,9 +108,30 @@
 #pragma mark - Helper Methods
 
 // create the proper placement and perspective for the action menu segments
-- (void)configActions {
-    [self setAnchorPoint:CGPointMake(1.5, 0.5) forView:self.leftAction];
-    [self setAnchorPoint:CGPointMake(-0.5, 0.5) forView:self.rightAction];
+- (void)configMenuActions {
+    
+#warning TO DO: Look into why this is happening and a potential fix
+     // These are displacing the menu buttons, so avoiding for now.
+//    [self setAnchorPoint:CGPointMake(1.5, 0.5) forView:self.leftAction];
+//    [self setAnchorPoint:CGPointMake(-0.5, 0.5) forView:self.rightAction];
+    
+    // Config left action
+    UITapGestureRecognizer *tapLeft = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftActionTapped:)];
+    tapLeft.numberOfTapsRequired = 1;
+    tapLeft.numberOfTouchesRequired = 1;
+    [self.leftAction addGestureRecognizer: tapLeft];
+    
+    // Config center action
+    UITapGestureRecognizer *tapCenter = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(centerActionTapped:)];
+    tapCenter.numberOfTapsRequired = 1;
+    tapCenter.numberOfTouchesRequired = 1;
+    [self.centerAction addGestureRecognizer: tapCenter];
+    
+    // Config right action
+    UITapGestureRecognizer *tapRight = [[UITapGestureRecognizer alloc] initWithTarget:self action: @selector(rightActionTapped:)];
+    tapRight.numberOfTapsRequired = 1;
+    tapRight.numberOfTouchesRequired = 1;
+    [self.rightAction addGestureRecognizer: tapRight];
 }
 
 // Taken from: http://stackoverflow.com/a/5666430
@@ -209,6 +229,13 @@
     layer.transform = rotationTransform;
 }
 
+- (void)enableActionsAfterScroll {
+    // Without this, tap gesture recognizers stop working.
+    self.leftAction.layer.transform = CATransform3DIdentity;
+    self.centerAction.layer.transform = CATransform3DIdentity;
+    self.rightAction.layer.transform = CATransform3DIdentity;
+}
+
 #pragma mark - UIScrollViewDelegate methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -218,6 +245,16 @@
     }
     
     [self layoutActionMenuForOffset:[self relativeOffset]];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
+    @try {
+        [self enableActionsAfterScroll];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception after scrolling: %@", exception);
+    }
 }
 
 #pragma mark - NewsTileDelegate methods
@@ -252,6 +289,18 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter a search query below:" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Load News", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alert show];
+}
+
+- (void)leftActionTapped:(id)sender {
+    NSLog(@"Left action tapped");
+}
+
+- (void)centerActionTapped:(id)sender {
+    NSLog(@"Center action tapped");
+}
+
+- (void)rightActionTapped:(id)sender {
+    NSLog(@"Right action tapped");
 }
 
 #pragma mark - UIAlertViewDelegate methods
