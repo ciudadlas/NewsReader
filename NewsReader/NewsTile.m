@@ -86,6 +86,8 @@
         // 4. News Summary Label
         _summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(_thumbnailImageView.frame.origin.x + _thumbnailImageView.frame.size.width, _thumbnailImageView.frame.origin.y + 20, frame.size.width - _thumbnailImageView.frame.size.width - _thumbnailImageView.frame.origin.x , frame.size.height - _thumbnailImageView.frame.origin.y - 15)];
         _summaryTextView.text = news.summaryText;
+        _summaryTextView.editable = NO;
+        _summaryTextView.selectable = NO;
         _summaryTextView.backgroundColor = [UIColor clearColor];
         [self addSubview:_summaryTextView];
         
