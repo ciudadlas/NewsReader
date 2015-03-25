@@ -42,6 +42,8 @@
 + (void)getNewsByKeyword:(NSString *)keyword block:(NewsResult)closure {
 
     NSString *requestPath = [NSString stringWithFormat:@"search?api-key=%@&q=%@&show-fields=headline,trailText,thumbnail&order-by=newest", [APIClient sharedInstance].APIKey, keyword];
+    requestPath = [requestPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
     
     // Make the API call
     [[APIClient sharedInstance] GET:requestPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
