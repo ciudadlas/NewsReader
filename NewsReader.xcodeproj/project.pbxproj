@@ -89,6 +89,49 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7502A0091AC3481100CAF0CF /* 00 - Core */ = {
+			isa = PBXGroup;
+			children = (
+				7522E53E1ABF403E00078733 /* AppDelegate.h */,
+				7522E53F1ABF403E00078733 /* AppDelegate.m */,
+				7502A00A1AC3482400CAF0CF /* Data Layer */,
+			);
+			name = "00 - Core";
+			sourceTree = "<group>";
+		};
+		7502A00A1AC3482400CAF0CF /* Data Layer */ = {
+			isa = PBXGroup;
+			children = (
+				7598D0711AC29FC500BFE50D /* APIClient.h */,
+				7598D0721AC29FC500BFE50D /* APIClient.m */,
+				75759B2F1AC00CB000DC67A4 /* News.h */,
+				75759B301AC00CB000DC67A4 /* News.m */,
+			);
+			name = "Data Layer";
+			sourceTree = "<group>";
+		};
+		7502A00B1AC3483700CAF0CF /* 01 - Read News */ = {
+			isa = PBXGroup;
+			children = (
+				7522E5411ABF403E00078733 /* NewsViewController.h */,
+				7522E5421ABF403E00078733 /* NewsViewController.m */,
+				7522E66C1ABF866D00078733 /* NewsTile.h */,
+				7522E66D1ABF866D00078733 /* NewsTile.m */,
+				7502A0061AC341AF00CAF0CF /* SKNWebViewController.h */,
+				7502A0071AC341AF00CAF0CF /* SKNWebViewController.m */,
+			);
+			name = "01 - Read News";
+			sourceTree = "<group>";
+		};
+		7502A00C1AC3486500CAF0CF /* 02 - Select News */ = {
+			isa = PBXGroup;
+			children = (
+				75759B2C1AC0023700DC67A4 /* NewsSelectionViewController.h */,
+				75759B2D1AC0023700DC67A4 /* NewsSelectionViewController.m */,
+			);
+			name = "02 - Select News";
+			sourceTree = "<group>";
+		};
 		7522E52E1ABF403E00078733 = {
 			isa = PBXGroup;
 			children = (
@@ -112,20 +155,9 @@
 		7522E5391ABF403E00078733 /* NewsReader */ = {
 			isa = PBXGroup;
 			children = (
-				7522E53E1ABF403E00078733 /* AppDelegate.h */,
-				7522E53F1ABF403E00078733 /* AppDelegate.m */,
-				75759B2C1AC0023700DC67A4 /* NewsSelectionViewController.h */,
-				75759B2D1AC0023700DC67A4 /* NewsSelectionViewController.m */,
-				7522E5411ABF403E00078733 /* NewsViewController.h */,
-				7522E5421ABF403E00078733 /* NewsViewController.m */,
-				7522E66C1ABF866D00078733 /* NewsTile.h */,
-				7522E66D1ABF866D00078733 /* NewsTile.m */,
-				7502A0061AC341AF00CAF0CF /* SKNWebViewController.h */,
-				7502A0071AC341AF00CAF0CF /* SKNWebViewController.m */,
-				75759B2F1AC00CB000DC67A4 /* News.h */,
-				75759B301AC00CB000DC67A4 /* News.m */,
-				7598D0711AC29FC500BFE50D /* APIClient.h */,
-				7598D0721AC29FC500BFE50D /* APIClient.m */,
+				7502A0091AC3481100CAF0CF /* 00 - Core */,
+				7502A00B1AC3483700CAF0CF /* 01 - Read News */,
+				7502A00C1AC3486500CAF0CF /* 02 - Select News */,
 				7522E5441ABF403E00078733 /* Main.storyboard */,
 				7522E5471ABF403E00078733 /* Images.xcassets */,
 				7522E5491ABF403E00078733 /* LaunchScreen.xib */,

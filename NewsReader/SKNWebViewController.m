@@ -47,9 +47,9 @@ static void *WebContext = &WebContext;
 }
 
 - (void)dealloc {
-//    [self deregisterNotifications];
-//    [self.webView setNavigationDelegate:nil];
-//    [self.webView setUIDelegate:nil];
+    [self deregisterNotifications];
+    [self.webView setNavigationDelegate:nil];
+    [self.webView setUIDelegate:nil];
 }
 
 #pragma mark - Notifications
@@ -153,7 +153,13 @@ static void *WebContext = &WebContext;
 }
 
 - (void)updateSearchBarUrl {
-
+#warning These should be cleaned up
+//    NSString *URLString = [self.webView.URL host];
+//    
+//    URLString = [URLString stringByReplacingOccurrencesOfString:@"https://" withString:@""];
+//    URLString = [URLString stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+//    
+//    self.urlBar.text = URLString;
 }
 
 #pragma mark - Bottom Toolbar Action Handling
