@@ -257,8 +257,7 @@
 #pragma mark - UIAlertViewDelegate methods
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"Button index %ld", (long)buttonIndex);
-    // If load news tapped
+    // If load news button is tapped
     if (buttonIndex == 1) {
         UITextField *textfield = [alertView textFieldAtIndex: 0];
         NSString *searchQuery = textfield.text;
