@@ -100,6 +100,9 @@
     }
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * numberOfTiles, self.scrollView.frame.size.height);
+    
+    // Scroll to the beginning of scroll view
+    [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 
 }
 
