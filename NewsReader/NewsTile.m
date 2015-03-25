@@ -76,7 +76,8 @@
         [self addSubview:_dateLabel];
         
         // 3. Thumbnail Image
-        _thumbnailImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, _dateLabel.frame.size.height + _dateLabel.frame.origin.y, 150, 150)];
+        double thumbnailLeftMargin = 15.f;
+        _thumbnailImageView = [[UIImageView alloc] initWithFrame:CGRectMake(thumbnailLeftMargin, _dateLabel.frame.size.height + _dateLabel.frame.origin.y, 150, 150)];
         _thumbnailImageView.contentMode = UIViewContentModeScaleAspectFit & UIViewContentModeTop;
         [_thumbnailImageView setImageWithURL:[NSURL URLWithString:news.thumbnailURL] placeholderImage:nil];
         [self addSubview:_thumbnailImageView];
