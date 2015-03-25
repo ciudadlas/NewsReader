@@ -9,6 +9,8 @@
 #import "NewsViewController.h"
 #import "Macros.h"
 #import "News.h"
+#import "SKNWebViewController.h"
+#import "SVProgressHUD.h"
 
 @interface NewsViewController ()
 
@@ -57,14 +59,17 @@
 }
 
 - (void)loadNews {
-    //    [self configActions];
+
+//    [self configActions];
+    [SVProgressHUD showWithStatus:@"Loading news"];
     [News getNewsByKeyword:@"isis" block:^(NSError *error, NSDictionary *response) {
         if (error) {
             NSLog(@"Error getting news");
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error loading news: %@", [error localizedDescription]]];
         } else {
             NSArray *news = response[@"news"];
             NSLog(@"Fetched %lu news articles", (unsigned long)news.count);
-            
+            [SVProgressHUD showSuccessWithStatus:@"Success"];
             [self setupTilesForReceivedNews:news];
         }
     }];
@@ -217,6 +222,13 @@
     }
     
     return diff;
+}
+
+- (void)tileTapped:(NewsTile *)tile {
+    if (self.navigationController) {
+        SKNWebViewController *webViewController = [[SKNWebViewController alloc] initWithNibName:@"SKNWebViewController" bundle:nil];
+        [self.navigationController pushViewController:webViewController animated:YES];
+    }
 }
 
 @end

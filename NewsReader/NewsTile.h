@@ -14,6 +14,7 @@
 
 @required
 - (float)viewOffsetForScaling:(NewsTile *)tile;
+- (void)tileTapped:(NewsTile *)tile;
 
 @end
 

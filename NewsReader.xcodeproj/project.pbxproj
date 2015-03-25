@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7502A0081AC341AF00CAF0CF /* SKNWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7502A0071AC341AF00CAF0CF /* SKNWebViewController.m */; };
 		7522E53D1ABF403E00078733 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E53C1ABF403E00078733 /* main.m */; };
 		7522E5401ABF403E00078733 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E53F1ABF403E00078733 /* AppDelegate.m */; };
 		7522E5431ABF403E00078733 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E5421ABF403E00078733 /* NewsViewController.m */; };
@@ -33,6 +34,8 @@
 
 /* Begin PBXFileReference section */
 		5F868C196D509AB4AE7B8604 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		7502A0061AC341AF00CAF0CF /* SKNWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKNWebViewController.h; sourceTree = "<group>"; };
+		7502A0071AC341AF00CAF0CF /* SKNWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKNWebViewController.m; sourceTree = "<group>"; };
 		7522E5371ABF403E00078733 /* NewsReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7522E53B1ABF403E00078733 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7522E53C1ABF403E00078733 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -117,6 +120,8 @@
 				7522E5421ABF403E00078733 /* NewsViewController.m */,
 				7522E66C1ABF866D00078733 /* NewsTile.h */,
 				7522E66D1ABF866D00078733 /* NewsTile.m */,
+				7502A0061AC341AF00CAF0CF /* SKNWebViewController.h */,
+				7502A0071AC341AF00CAF0CF /* SKNWebViewController.m */,
 				75759B2F1AC00CB000DC67A4 /* News.h */,
 				75759B301AC00CB000DC67A4 /* News.m */,
 				7598D0711AC29FC500BFE50D /* APIClient.h */,
@@ -302,6 +307,7 @@
 			files = (
 				7522E66E1ABF866D00078733 /* NewsTile.m in Sources */,
 				7598D0731AC29FC500BFE50D /* APIClient.m in Sources */,
+				7502A0081AC341AF00CAF0CF /* SKNWebViewController.m in Sources */,
 				7522E5431ABF403E00078733 /* NewsViewController.m in Sources */,
 				75759B311AC00CB100DC67A4 /* News.m in Sources */,
 				75759B2E1AC0023700DC67A4 /* NewsSelectionViewController.m in Sources */,

@@ -101,7 +101,9 @@
         NSDictionary *fields = [newsItem objectForKey:@"fields"];
         if (fields) {
             thumbnailURL = [fields objectForKey:@"thumbnail"];
-            newsSummary = [fields objectForKey:@"trailText"];
+            
+            // It looks like that the API can return random <br> strings for the trailText field. Getting rid of those here.
+            newsSummary = [[fields objectForKey:@"trailText"] stringByReplacingOccurrencesOfString:@"<br>" withString:@""];
         }
         
         // TO DO: Only if the values are all present, add the object.

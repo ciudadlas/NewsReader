@@ -77,16 +77,21 @@
         
         // 3. Thumbnail Image
         double thumbnailLeftMargin = 15.f;
-        _thumbnailImageView = [[UIImageView alloc] initWithFrame:CGRectMake(thumbnailLeftMargin, _dateLabel.frame.size.height + _dateLabel.frame.origin.y, 150, 150)];
+        double imageViewWidth = frame.size.width/2 - 2*thumbnailLeftMargin;
+        _thumbnailImageView = [[UIImageView alloc] initWithFrame:CGRectMake(thumbnailLeftMargin, _dateLabel.frame.size.height + _dateLabel.frame.origin.y, imageViewWidth, imageViewWidth)];
         _thumbnailImageView.contentMode = UIViewContentModeScaleAspectFit & UIViewContentModeTop;
         [_thumbnailImageView setImageWithURL:[NSURL URLWithString:news.thumbnailURL] placeholderImage:nil];
         [self addSubview:_thumbnailImageView];
         
         // 4. News Summary Label
-        _summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(_thumbnailImageView.frame.origin.x + _thumbnailImageView.frame.size.width, _thumbnailImageView.frame.origin.y, frame.size.width - _thumbnailImageView.frame.size.width - _thumbnailImageView.frame.origin.x , frame.size.height - _thumbnailImageView.frame.origin.y - 15)];
+        _summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(_thumbnailImageView.frame.origin.x + _thumbnailImageView.frame.size.width, _thumbnailImageView.frame.origin.y + 20, frame.size.width - _thumbnailImageView.frame.size.width - _thumbnailImageView.frame.origin.x , frame.size.height - _thumbnailImageView.frame.origin.y - 15)];
         _summaryTextView.text = news.summaryText;
         _summaryTextView.backgroundColor = [UIColor clearColor];
         [self addSubview:_summaryTextView];
+        
+        // 5. Tap Recognizer
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTile:)];
+        [self addGestureRecognizer:tap];
         
     }
     
@@ -120,6 +125,11 @@
 - (void)setNews:(News *)news {
     _news = news;
     self.newsTitleLabel.text = news.webTitle;
+}
+
+- (void)tapTile:(UIGestureRecognizer *)gestureRecognizer {
+    NSLog(@"Tapped tile, push news detail");
+    [self.delegate tileTapped:self];
 }
 
 @end
