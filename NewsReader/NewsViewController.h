@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NewsTileView.h"
 
-@interface NewsViewController : UIViewController <NewsTileDelegate>
+@interface NewsViewController : UIViewController
 
 
 @end

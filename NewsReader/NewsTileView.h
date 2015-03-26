@@ -1,5 +1,5 @@
 //
-//  NewsTile.h
+//  NewsTileView.h
 //  NewsReader
 //
 //  Created by Serdar Karatekin on 3/22/15.

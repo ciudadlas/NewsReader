@@ -1,5 +1,5 @@
 //
-//  NewsTile.m
+//  NewsTileView.m
 //  NewsReader
 //
 //  Created by Serdar Karatekin on 3/22/15.
