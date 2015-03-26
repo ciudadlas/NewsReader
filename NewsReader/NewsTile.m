@@ -130,8 +130,10 @@
 
 - (void)setNews:(News *)news {
     _news = news;
+    
+    [self resetView];
+    
     self.newsTitleLabel.text = news.webTitle;
-
     self.dateLabel.text = [news.webPulicationDate timeAgoSinceNow];
 
     [self.thumbnailImageView setImageWithURL:[NSURL URLWithString:news.thumbnailURL] placeholderImage:nil];
@@ -155,6 +157,13 @@
 
 - (void)tapTile:(UIGestureRecognizer *)gestureRecognizer {
     [self.delegate tileTapped:self];
+}
+
+- (void)resetView {
+    self.thumbnailImageView.image = nil;
+    self.dateLabel.text = nil;
+    self.newsTitleLabel.text = nil;
+    self.summaryTextView.text = nil;
 }
 
 @end

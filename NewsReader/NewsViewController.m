@@ -112,11 +112,11 @@
         CGRect tileFrame = CGRectMake(index*self.scrollView.frame.size.width + 10, 10,
                                       self.scrollView.bounds.size.width - 20, self.scrollView.bounds.size.height - 20);
         if (tile) {
-            DLog(@"Re-using tile.");
+//            DLog(@"Re-using tile.");
             tile.news = news;
             tile.frame = tileFrame;
         } else {
-            DLog(@"Creating new tile.");
+//            DLog(@"Creating new tile.");
             tile = [[NewsTile alloc] initWithFrame:tileFrame news:news];
         }
         
@@ -144,7 +144,7 @@
         } else {
             NSArray *news = response[@"news"];
             self.newsItems = news;
-            DLog(@"Fetched %lu news articles", (unsigned long)news.count);
+//            DLog(@"Fetched %lu news articles", (unsigned long)news.count);
             
             [self clearScrollView];
             
@@ -153,8 +153,8 @@
                 [self addTileWithIndex:tileIndex];
             }
             
-            DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
-            DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
+//            DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
+//            DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
             
             // Set scroll view content size, and move it back to start
             self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * news.count, self.scrollView.frame.size.height);
@@ -176,15 +176,15 @@
         int firstNeededTileIndex = (int)MIN(MAX(currentTileIndex - 1, 0), self.newsItems.count - 3);
         int lastNeededTileIndex  = (int)MAX(MIN(currentTileIndex + 1, self.newsItems.count - 1), 2);
         
-        DLog(@"First page tile index: %d", firstNeededTileIndex);
-        DLog(@"Last page tile index: %d", lastNeededTileIndex);
+//        DLog(@"First page tile index: %d", firstNeededTileIndex);
+//        DLog(@"Last page tile index: %d", lastNeededTileIndex);
         
         if (self.newsItems.count > 3) {
             
             // Put any visible tiles that are no longer needed into the recycled set
             for (NewsTile *tile in self.visibleTiles) {
                 if (tile.tag < [self getTagFromIndex:firstNeededTileIndex] || tile.tag > [self getTagFromIndex:lastNeededTileIndex]) {
-                    DLog(@"Recycling tile with tag: %ld", (long)tile.tag);
+//                    DLog(@"Recycling tile with tag: %ld", (long)tile.tag);
                     [self.recycledTiles addObject:tile];
                     [tile removeFromSuperview];
                 }
@@ -192,8 +192,8 @@
             
             [self.visibleTiles minusSet:self.recycledTiles];
             
-            DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
-            DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
+//            DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
+//            DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
 
             
             // Add missing tile views
@@ -206,8 +206,8 @@
         
         self.selectedTileIndex = currentTileIndex;
         
-        DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
-        DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
+//        DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
+//        DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
     }
 }
 
