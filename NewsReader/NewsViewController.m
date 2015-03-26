@@ -65,6 +65,14 @@
 
 #pragma mark - View Setup Helpers
 
+- (int)getArrayIndexFromTileViewTag:(int)tag {
+    return tag - 100;
+}
+
+- (int)getTagFromIndex:(int)index {
+    return index + 100;
+}
+
 - (void)clearScrollView {
     
     // Empty scroll view and put all the visible tile views into the recycled set (if there are any)
@@ -79,7 +87,7 @@
 - (BOOL)isDisplayingPageForIndex:(NSUInteger)index {
     BOOL foundPage = NO;
     for (NewsTile *page in self.visibleTiles) {
-        if (page.tag - 100 == index) {
+        if ([self getArrayIndexFromTileViewTag:page.tag] == index) {
             foundPage = YES;
             break;
         }
@@ -104,11 +112,12 @@
         }
         
         tile.delegate = self;
-        tile.tag = 100 + index;
+        tile.tag = [self getTagFromIndex:index];
         [self.scrollView addSubview:tile];
         
         // Add tile to currently visible tiles array
         [self.visibleTiles addObject:tile];
+        
     } else {
         DLog(@"No tile found for requested news tile view");
     }
@@ -169,8 +178,8 @@
             
             // Put any visible tiles that are no longer needed into the recycled set
             for (NewsTile *tile in self.visibleTiles) {
-                if (tile.tag < firstNeededPageIndex + 100 || tile.tag > lastNeededPageIndex + 100) {
-                    DLog(@"Recycling tile with index: %ld", tile.tag - 100);
+                if (tile.tag < [self getTagFromIndex:firstNeededPageIndex] || tile.tag > [self getTagFromIndex:firstNeededPageIndex]) {
+                    DLog(@"Recycling tile with index: %d", [self getArrayIndexFromTileViewTag:(int)tile.tag]);
                     [self.recycledTiles addObject:tile];
                     [tile removeFromSuperview];
                 }
@@ -422,7 +431,7 @@
 
 - (void)leftActionTapped:(id)sender {
     int currentTileIndex = [self currentTileIndex];
-    UIView *view = [self.scrollView viewWithTag:currentTileIndex + 100];
+    UIView *view = [self.scrollView viewWithTag:[self getTagFromIndex:currentTileIndex]];
     if ([view isKindOfClass:[NewsTile class]]) {
         NewsTile *tile = (NewsTile *)view;
         [self shareText:tile.news.webTitle andImage:nil andUrl:tile.news.fullURL];
@@ -433,7 +442,7 @@
 
 - (void)centerActionTapped:(id)sender {
     int currentTileIndex = [self currentTileIndex];
-    UIView *view = [self.scrollView viewWithTag:currentTileIndex + 100];
+    UIView *view = [self.scrollView viewWithTag:[self getTagFromIndex:currentTileIndex]];
     if ([view isKindOfClass:[NewsTile class]]) {
         [self tileTapped:(NewsTile *)view];
     } else {
