@@ -130,7 +130,7 @@
         [newsTile setNeedsLayout];
     }
     
-    [self layoutActionMenuForOffset:[self relativeOffset]];
+    [self updateActionMenuLayoutWithScrollViewOffset:[self relativeOffset]];
     [self repositionTiles];
 }
 
@@ -342,17 +342,16 @@
     return tileIndex;
 }
 
+/**
+ * This calculates the current offset of the scroll view, amount of horizontal distance from a stable point.
+ */
 - (float)relativeOffset {
     
     float offset = self.scrollView.contentOffset.x;
     float contentSize = self.scrollView.contentSize.width;
     float width = self.scrollView.frame.size.width;
     
-    // don't process when bouncing beyond the range of the scroll view
-    // clamp offset value between first and last tiles
     offset = clamp(offset, 0., contentSize - width);
-    
-    // now divide into the number of tiles
     offset = fmodf(offset, width);
     
     return offset;
@@ -393,7 +392,7 @@
 
 #pragma mark - Action Menu Methods
 
-- (void)layoutActionMenuForOffset:(float)offset {
+- (void)updateActionMenuLayoutWithScrollViewOffset:(float)offset {
     
     // we're splitting the offset into three equally-spaced animations
     // Timeline:      |----|----|----|----|----|
