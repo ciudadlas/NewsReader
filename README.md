@@ -3,7 +3,7 @@ An iPhone news reader app
 
 # To do
 - Update menu action buttons, and update their icons
-- Tile view fix positioning issues, especially when the tile is getting re-used
+- NewsTile view fix positioning issues, especially when the tile is getting re-used
 - Re-factor, review comments, and pragma mark properly
 - Add unit tests
 - Test app in different phone sizes
