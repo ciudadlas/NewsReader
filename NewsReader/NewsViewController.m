@@ -14,7 +14,7 @@
 
 #warning TO DO: Re-factor this VC into smaller classes
 
-@interface NewsViewController () <UIAlertViewDelegate>
+@interface NewsViewController () <UIAlertViewDelegate, UIScrollViewDelegate>
 
 - (IBAction)changeNewsContentTapped:(id)sender;
 
