@@ -131,9 +131,29 @@
 - (void)setNews:(News *)news {
     _news = news;
     self.newsTitleLabel.text = news.webTitle;
+
+    self.dateLabel.text = [news.webPulicationDate timeAgoSinceNow];
+
+    [self.thumbnailImageView setImageWithURL:[NSURL URLWithString:news.thumbnailURL] placeholderImage:nil];
+    self.summaryTextView.text = news.summaryText;
+    
+    double leftMargin = 15.f;
+    double topMargin = 15.f;
+    self.newsTitleLabel.frame = CGRectMake(leftMargin, topMargin, self.frame.size.width - leftMargin, topMargin);
+    [self.newsTitleLabel sizeToFit];
+    
+    double dateLabelLeftMargin = 15.f;
+    self.dateLabel.frame = CGRectMake(dateLabelLeftMargin, _newsTitleLabel.frame.size.height + _newsTitleLabel.frame.origin.y, self.frame.size.width - leftMargin * 2, topMargin);
+    [self.dateLabel sizeToFit];
+    
+    double thumbnailLeftMargin = 15.f;
+    double imageViewWidth = self.frame.size.width/2 - 2*thumbnailLeftMargin;
+    _thumbnailImageView.frame = CGRectMake(thumbnailLeftMargin, _dateLabel.frame.size.height + _dateLabel.frame.origin.y, imageViewWidth, imageViewWidth);
+    
+    self.summaryTextView.frame = CGRectMake(_thumbnailImageView.frame.origin.x + _thumbnailImageView.frame.size.width, _thumbnailImageView.frame.origin.y + 20, self.frame.size.width - _thumbnailImageView.frame.size.width - _thumbnailImageView.frame.origin.x , self.frame.size.height - _thumbnailImageView.frame.origin.y - 15);
 }
 
-- (void)tapTile:(UIGestureRecognizer *)gestureRecognizer {    
+- (void)tapTile:(UIGestureRecognizer *)gestureRecognizer {
     [self.delegate tileTapped:self];
 }
 

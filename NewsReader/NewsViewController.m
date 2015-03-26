@@ -23,6 +23,12 @@
 @property (weak, nonatomic) IBOutlet UIView *centerAction;
 @property (weak, nonatomic) IBOutlet UIView *rightAction;
 
+@property (strong, nonatomic) NSArray *newsItems;
+@property (strong, nonatomic) NSMutableSet *recycledTiles;
+@property (strong, nonatomic) NSMutableSet *visibleTiles;
+
+@property (nonatomic) int selectedTileIndex;
+
 @end
 
 @implementation NewsViewController
@@ -34,7 +40,11 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     [self setupView];
-    [self loadNewsWithQuery:@"isis"];
+    
+    self.recycledTiles = [[NSMutableSet alloc] initWithObjects:nil];
+    self.visibleTiles = [[NSMutableSet alloc] initWithObjects:nil];
+    
+    [self loadNewsWithQuery:@"France"];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -46,12 +56,61 @@
     // Dispose of any resources that can be recreated.
 }
 
-// This is called after the auto layout constraints of the view have been applied, which is what we need.
+// This is called after the auto layout constraints of the view have been applied.
 //- (void)viewDidLayoutSubviews {
 //    [super viewDidLayoutSubviews];
 //}
 
 #pragma mark - View Setup Helpers
+
+- (void)clearScrollView {
+    
+    // Empty scroll view and put all the visible tile views into the recycled set (if there are any)
+    for (UIView *subview in self.visibleTiles) {
+        [subview removeFromSuperview];
+        [self.recycledTiles addObject:subview];
+    }
+    
+    [self.visibleTiles minusSet:self.recycledTiles];
+}
+
+- (BOOL)isDisplayingPageForIndex:(NSUInteger)index {
+    BOOL foundPage = NO;
+    for (NewsTile *page in self.visibleTiles) {
+        if (page.tag - 100 == index) {
+            foundPage = YES;
+            break;
+        }
+    }
+    return foundPage;
+}
+
+- (void)addTileWithIndex:(int)index {
+    if (index >= 0 && index < [self.newsItems count]) {
+        
+        News *news = (News *) [self.newsItems objectAtIndex:index];
+        NewsTile *tile = [self dequeueReusableTileView];
+        CGRect tileFrame = CGRectMake(index*self.scrollView.frame.size.width + 10, 10,
+                                      self.scrollView.bounds.size.width - 20, self.scrollView.bounds.size.height - 20);
+        if (tile) {
+            DLog(@"Re-using tile.");
+            tile.news = news;
+            tile.frame = tileFrame;
+        } else {
+            DLog(@"Creating new tile.");
+            tile = [[NewsTile alloc] initWithFrame:tileFrame news:news];
+        }
+        
+        tile.delegate = self;
+        tile.tag = 100 + index;
+        [self.scrollView addSubview:tile];
+        
+        // Add tile to currently visible tiles array
+        [self.visibleTiles addObject:tile];
+    } else {
+        DLog(@"No tile found for requested news tile view");
+    }
+}
 
 - (void)setupView {
     UIColor *patternColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"egg_shell"]];
@@ -61,7 +120,7 @@
 }
 
 - (void)loadNewsWithQuery:(NSString *)query {
-
+    
     [SVProgressHUD showWithStatus:@"Loading news"];
     [News getNewsByKeyword:query block:^(NSError *error, NSDictionary *response) {
         if (error) {
@@ -69,44 +128,76 @@
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error loading news: %@", [error localizedDescription]]];
         } else {
             NSArray *news = response[@"news"];
+            self.newsItems = news;
+            
             DLog(@"Fetched %lu news articles", (unsigned long)news.count);
             [SVProgressHUD showSuccessWithStatus:@"Success"];
-            [self setupTilesForReceivedNews:news];
+            
+            [self clearScrollView];
+            
+            // Load 3 tiles, instead of loading all of them
+            for (int tileIndex=0; tileIndex <= 2; tileIndex++) {
+                [self addTileWithIndex:tileIndex];
+            }
+            
+            DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
+            DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
+
+            self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * news.count, self.scrollView.frame.size.height);
+            [self.scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
         }
     }];
 }
 
-- (void)setupTilesForReceivedNews:(NSArray *)news {
-    // First remove all existing tiles
-    for (UIView *view in self.scrollView.subviews) {
-        if ([view isKindOfClass:[NewsTile class]]) {
-            [view removeFromSuperview];
-        }
-    }
-    
-    NSUInteger numberOfTiles = news.count;
-    
-    // Add Tiles
-    for (int i = 0; i < numberOfTiles; i++) {
-        
-        News *newsItem = news[i];
-        NewsTile *tile = [[NewsTile alloc] initWithFrame:CGRectMake(i*self.scrollView.frame.size.width + 10, 10,
-                                                                    self.scrollView.bounds.size.width - 20, self.scrollView.bounds.size.height - 20) news:newsItem];
-        tile.delegate = self;
-        tile.tag = 100 + i;
-        
-        //DLog(@"%@", NSStringFromCGRect(self.scrollView.frame));
-        [self.scrollView addSubview:tile];
-    }
-    
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * numberOfTiles, self.scrollView.frame.size.height);
-    
-    // Scroll to the beginning of scroll view
-    [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+#pragma mark - Helper Methods
 
+- (void)updateTiles {
+    
+    int currentTileIndex = [self currentTileIndex];
+    
+    if (currentTileIndex != self.selectedTileIndex) {
+        
+        int firstNeededPageIndex = (int)MIN(MAX(currentTileIndex - 1, 0), self.newsItems.count - 3);
+        int lastNeededPageIndex  = (int)MAX(MIN(currentTileIndex + 1, self.newsItems.count - 1), 2);
+        
+        DLog(@"First page needed index: %d", firstNeededPageIndex);
+        DLog(@"Last page needed index: %d", lastNeededPageIndex);
+        
+        if (self.newsItems.count > 3) {
+            
+            // Put any visible tiles that are no longer needed into the recycled set
+            for (NewsTile *tile in self.visibleTiles) {
+                if (tile.tag < firstNeededPageIndex + 100 || tile.tag > lastNeededPageIndex + 100) {
+                    DLog(@"Recycling tile with index: %ld", tile.tag - 100);
+                    [self.recycledTiles addObject:tile];
+                    [tile removeFromSuperview];
+                }
+            }
+            
+            [self.visibleTiles minusSet:self.recycledTiles];
+            
+            // Add missing tile views
+            for (int index = firstNeededPageIndex; index <= lastNeededPageIndex; index++) {
+                if (![self isDisplayingPageForIndex:index]) {
+                    [self addTileWithIndex:index];
+                }
+            }
+        }
+        
+        self.selectedTileIndex = currentTileIndex;
+        
+        DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
+        DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
+    }
 }
 
-#pragma mark - Helper Methods
+- (NewsTile *)dequeueReusableTileView {
+    NewsTile *tileView = [self.recycledTiles anyObject];
+    if (tileView) {
+        [self.recycledTiles removeObject:tileView];
+    }
+    return tileView;
+}
 
 - (int)currentTileIndex {
     float offset = self.scrollView.contentOffset.x;
@@ -114,17 +205,17 @@
     float width = self.scrollView.frame.size.width;
     
     // don't process when bouncing beyond the range of the scroll view
-    // clamp offset value between first and last segment
+    // clamp offset value between first and last tiles
     offset = clamp(offset, 0., contentSize - width);
     
-    // now divide into the number of segments
+    // now divide into the number of tiles
     int tileIndex = roundf(offset / width);
     
-    NSLog(@"Current tile index: %d", tileIndex);
+//    DLog (@"Current tile index: %d", tileIndex);
     return tileIndex;
 }
 
-// create the proper placement and perspective for the action menu segments
+// create the proper placement and perspective for the action menu tiles
 - (void)configMenuActions {
     
 #warning TO DO: Look into why this is happening and a potential fix
@@ -181,10 +272,10 @@
     float width = self.scrollView.frame.size.width;
     
     // don't process when bouncing beyond the range of the scroll view
-    // clamp offset value between first and last segment
+    // clamp offset value between first and last tiles
     offset = clamp(offset, 0., contentSize - width);
     
-    // now divide into the number of segments
+    // now divide into the number of tiles
     offset = fmodf(offset, width);
     
     return offset;
@@ -280,6 +371,7 @@
     }
     
     [self layoutActionMenuForOffset:[self relativeOffset]];
+    [self updateTiles];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -288,7 +380,7 @@
         [self enableActionsAfterScroll];
     }
     @catch (NSException *exception) {
-        NSLog(@"Exception after scrolling: %@", exception);
+        DLog(@"Exception after scrolling: %@", exception);
     }
 }
 
@@ -333,7 +425,7 @@
         NewsTile *tile = (NewsTile *)view;
         [self shareText:tile.news.webTitle andImage:nil andUrl:tile.news.fullURL];
     } else {
-        NSLog(@"Error finding the current tile view");
+        DLog(@"Error finding the current tile view");
     }
 }
 
@@ -343,7 +435,7 @@
     if ([view isKindOfClass:[NewsTile class]]) {
         [self tileTapped:(NewsTile *)view];
     } else {
-        NSLog(@"Error finding the current tile view");
+        DLog(@"Error finding the current tile view");
     }
 }
 
