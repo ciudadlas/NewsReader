@@ -93,6 +93,7 @@
         NewsTile *tile = [[NewsTile alloc] initWithFrame:CGRectMake(i*self.scrollView.frame.size.width + 10, 10,
                                                                     self.scrollView.bounds.size.width - 20, self.scrollView.bounds.size.height - 20) news:newsItem];
         tile.delegate = self;
+        tile.tag = 100 + i;
         
         //DLog(@"%@", NSStringFromCGRect(self.scrollView.frame));
         [self.scrollView addSubview:tile];
@@ -106,6 +107,22 @@
 }
 
 #pragma mark - Helper Methods
+
+- (int)currentTileIndex {
+    float offset = self.scrollView.contentOffset.x;
+    float contentSize = self.scrollView.contentSize.width;
+    float width = self.scrollView.frame.size.width;
+    
+    // don't process when bouncing beyond the range of the scroll view
+    // clamp offset value between first and last segment
+    offset = clamp(offset, 0., contentSize - width);
+    
+    // now divide into the number of segments
+    int tileIndex = roundf(offset / width);
+    
+    NSLog(@"Current tile index: %d", tileIndex);
+    return tileIndex;
+}
 
 // create the proper placement and perspective for the action menu segments
 - (void)configMenuActions {
@@ -235,6 +252,25 @@
     self.rightAction.layer.transform = CATransform3DIdentity;
 }
 
+- (void)shareText:(NSString *)text andImage:(UIImage *)image andUrl:(NSURL *)url {
+    NSMutableArray *sharingItems = [NSMutableArray new];
+    
+    if (text) {
+        [sharingItems addObject:text];
+    }
+    if (image) {
+        [sharingItems addObject:image];
+    }
+    if (url) {
+        [sharingItems addObject:url];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^() {
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
+        [self presentViewController:activityController animated:YES completion:nil];
+    });
+}
+
 #pragma mark - UIScrollViewDelegate methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -275,7 +311,7 @@
 - (void)tileTapped:(NewsTile *)tile {
     WebBrowserViewController *webViewController = [[WebBrowserViewController alloc] initWithURL:tile.news.fullURL];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:webViewController];
-    DLog(@"Tapped news item full url: %@", tile.news.fullURL);
+
     [self presentViewController:navController animated:YES completion:^{
         //
     }];
@@ -291,15 +327,28 @@
 }
 
 - (void)leftActionTapped:(id)sender {
-    NSLog(@"Left action tapped");
+    int currentTileIndex = [self currentTileIndex];
+    UIView *view = [self.scrollView viewWithTag:currentTileIndex + 100];
+    if ([view isKindOfClass:[NewsTile class]]) {
+        NewsTile *tile = (NewsTile *)view;
+        [self shareText:tile.news.webTitle andImage:nil andUrl:tile.news.fullURL];
+    } else {
+        NSLog(@"Error finding the current tile view");
+    }
 }
 
 - (void)centerActionTapped:(id)sender {
-    NSLog(@"Center action tapped");
+    int currentTileIndex = [self currentTileIndex];
+    UIView *view = [self.scrollView viewWithTag:currentTileIndex + 100];
+    if ([view isKindOfClass:[NewsTile class]]) {
+        [self tileTapped:(NewsTile *)view];
+    } else {
+        NSLog(@"Error finding the current tile view");
+    }
 }
 
 - (void)rightActionTapped:(id)sender {
-    NSLog(@"Right action tapped");
+    [SVProgressHUD showErrorWithStatus:@"Not yet implemented."];
 }
 
 #pragma mark - UIAlertViewDelegate methods

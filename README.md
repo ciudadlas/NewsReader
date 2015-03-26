@@ -5,6 +5,8 @@ An iPhone news reader app
 - Implement menu action buttons, and update their icons
 - Make tile views re-usable, and re-use them
 
+- Consider moving back and forward buttons in web view controller to the navigation bar from the bottom bar
+- News view fix positioning issues
 - Add unit tests
 - Re-factor, review comments, and pragma mark properly
 - Test app in different phone sizes
