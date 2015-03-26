@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
-@interface SKNWebViewController : UIViewController <WKNavigationDelegate, WKUIDelegate>
+@interface WebBrowserViewController : UIViewController <WKNavigationDelegate, WKUIDelegate>
 
 - (instancetype)initWithURL:(NSURL *)url;
 

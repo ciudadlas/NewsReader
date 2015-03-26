@@ -9,7 +9,7 @@
 #import "NewsViewController.h"
 #import "Macros.h"
 #import "News.h"
-#import "SKNWebViewController.h"
+#import "WebBrowserViewController.h"
 #import "SVProgressHUD.h"
 
 @interface NewsViewController () <UIAlertViewDelegate>
@@ -273,7 +273,7 @@
 }
 
 - (void)tileTapped:(NewsTile *)tile {
-    SKNWebViewController *webViewController = [[SKNWebViewController alloc] initWithURL:tile.news.fullURL];
+    WebBrowserViewController *webViewController = [[WebBrowserViewController alloc] initWithURL:tile.news.fullURL];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:webViewController];
     DLog(@"Tapped news item full url: %@", tile.news.fullURL);
     [self presentViewController:navController animated:YES completion:^{

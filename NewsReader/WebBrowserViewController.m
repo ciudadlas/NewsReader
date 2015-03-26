@@ -6,11 +6,11 @@
 //  Copyright (c) 2015 Serdar Karatekin. All rights reserved.
 //
 
-#import "SKNWebViewController.h"
+#import "WebBrowserViewController.h"
 
 static void *WebContext = &WebContext;
 
-@interface SKNWebViewController ()
+@interface WebBrowserViewController ()
 
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) UIBarButtonItem *forwardButton;
@@ -20,7 +20,7 @@ static void *WebContext = &WebContext;
 
 @end
 
-@implementation SKNWebViewController
+@implementation WebBrowserViewController
 
 #pragma mark - View Lifecycle
 
