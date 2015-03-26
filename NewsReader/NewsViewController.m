@@ -121,6 +121,38 @@
     view.layer.anchorPoint = anchorPoint;
 }
 
+#pragma mark - Load Data Methods
+
+- (void)loadNewsWithQuery:(NSString *)query {
+    
+    [SVProgressHUD showWithStatus:@"Loading news"];
+    [News getNewsByKeyword:query block:^(NSError *error, NSDictionary *response) {
+        if (error) {
+            DLog(@"Error getting news");
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error loading news: %@", [error localizedDescription]]];
+        } else {
+            NSArray *news = response[@"news"];
+            self.newsItems = news;
+            //            DLog(@"Fetched %lu news articles", (unsigned long)news.count);
+            
+            [self clearScrollView];
+            
+            // Load the first 3 tiles, instead of loading all of them
+            for (int tileIndex=0; tileIndex <= 2; tileIndex++) {
+                [self addTileWithIndex:tileIndex];
+            }
+            
+            //            DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
+            //            DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
+            
+            // Set scroll view content size, and move it back to start
+            self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * news.count, self.scrollView.frame.size.height);
+            [self.scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+            
+            [SVProgressHUD showSuccessWithStatus:@"Success"];
+        }
+    }];
+}
 
 #pragma mark - UIScrollViewDelegate Methods
 
@@ -357,39 +389,6 @@
     return offset;
 }
 
-#pragma mark - Load Data Methods
-
-- (void)loadNewsWithQuery:(NSString *)query {
-    
-    [SVProgressHUD showWithStatus:@"Loading news"];
-    [News getNewsByKeyword:query block:^(NSError *error, NSDictionary *response) {
-        if (error) {
-            DLog(@"Error getting news");
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error loading news: %@", [error localizedDescription]]];
-        } else {
-            NSArray *news = response[@"news"];
-            self.newsItems = news;
-//            DLog(@"Fetched %lu news articles", (unsigned long)news.count);
-            
-            [self clearScrollView];
-            
-            // Load the first 3 tiles, instead of loading all of them
-            for (int tileIndex=0; tileIndex <= 2; tileIndex++) {
-                [self addTileWithIndex:tileIndex];
-            }
-            
-//            DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
-//            DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
-            
-            // Set scroll view content size, and move it back to start
-            self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * news.count, self.scrollView.frame.size.height);
-            [self.scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
-            
-            [SVProgressHUD showSuccessWithStatus:@"Success"];
-        }
-    }];
-}
-
 #pragma mark - Action Menu Methods
 
 - (void)updateActionMenuLayoutWithScrollViewOffset:(float)offset {
@@ -453,7 +452,6 @@
     self.centerAction.layer.transform = CATransform3DIdentity;
     self.rightAction.layer.transform = CATransform3DIdentity;
 }
-
 
 #pragma mark - Other Helper Methods
 
