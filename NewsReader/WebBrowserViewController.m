@@ -96,7 +96,7 @@ static void *WebContext = &WebContext;
     }
 }
 
-#pragma mark - View Setup Helpers
+#pragma mark - View Setup Methods
 
 - (void)setupView {
     [self setupNavigationBar];
@@ -158,7 +158,7 @@ static void *WebContext = &WebContext;
     [self.progressView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
 }
 
-#pragma mark - View Update Helpers
+#pragma mark - View Update Methods
 
 - (void)updateBarButtonItemsState {
     self.forwardButton.enabled = self.webView.canGoForward;
@@ -183,7 +183,7 @@ static void *WebContext = &WebContext;
     [self.webView goForward];
 }
 
-#pragma mark - WKNavigationDelegate
+#pragma mark - WKNavigationDelegate Methods
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [self updateBarButtonItemsState];
@@ -203,7 +203,7 @@ static void *WebContext = &WebContext;
     [self updateBarButtonItemsState];
 }
 
-#pragma mark - WKUIDelegate
+#pragma mark - WKUIDelegate Methods
 
 - (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures
 {
