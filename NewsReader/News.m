@@ -35,10 +35,6 @@
 
 #pragma mark - Get Data Methods
 
-+ (void)getNewsBySectionName:(NSString *)keyword block:(NewsResult)closure {
-#warning TO DO: Implement or delete
-}
-
 + (void)getNewsByKeyword:(NSString *)keyword block:(NewsResult)closure {
 
     NSString *requestPath = [NSString stringWithFormat:@"search?api-key=%@&q=%@&show-fields=headline,trailText,thumbnail&order-by=newest", [APIClient sharedInstance].APIKey, keyword];

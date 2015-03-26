@@ -165,16 +165,6 @@ static void *WebContext = &WebContext;
     self.backButton.enabled = self.webView.canGoBack;
 }
 
-- (void)updateSearchBarUrl {
-#warning TO DO: These should be cleaned up
-//    NSString *URLString = [self.webView.URL host];
-//    
-//    URLString = [URLString stringByReplacingOccurrencesOfString:@"https://" withString:@""];
-//    URLString = [URLString stringByReplacingOccurrencesOfString:@"http://" withString:@""];
-//    
-//    self.urlBar.text = URLString;
-}
-
 #pragma mark - Navigation Bar Action Handling
 
 - (void)closeButtonTapped:(id)sender {
@@ -197,24 +187,20 @@ static void *WebContext = &WebContext;
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [self updateBarButtonItemsState];
-    [self updateSearchBarUrl];
     
-    // TODO: Here if progress bar hasnt been set back to 0, set it back.
+#warning TO DO: Here if progress bar hasnt been set back to 0, set it back.
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
     [self updateBarButtonItemsState];
-    [self updateSearchBarUrl];
 }
 
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
     [self updateBarButtonItemsState];
-    [self updateSearchBarUrl];
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
     [self updateBarButtonItemsState];
-    [self updateSearchBarUrl];
 }
 
 #pragma mark - WKUIDelegate
