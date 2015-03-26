@@ -38,7 +38,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-#warning TO DO: Re-factor this method into smaller functions
+#warning TO DO: Re-factor this method into smaller functions. Combine initialization and tile re-use code into one shared functions, without duplicates.
         _news = news;
         
         self.backgroundColor = HEXCOLOR(TILE_DEFAULT_COLOR);
