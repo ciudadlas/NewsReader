@@ -225,8 +225,7 @@
     rotationTransform.m34 = 0.005;
     rotationTransform = CATransform3DRotate(rotationTransform, amount * M_PI / 2, 1.0, 0.0, 0.0);
     
-    CALayer *layer = action.layer;
-    layer.transform = rotationTransform;
+    action.layer.transform = rotationTransform;
 }
 
 - (void)enableActionsAfterScroll {
