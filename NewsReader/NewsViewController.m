@@ -62,7 +62,7 @@
 //    [super viewDidLayoutSubviews];
 //}
 
-#pragma mark - View Setup Helpers
+#pragma mark - View Setup Methods
 
 - (void)setupView {
     UIColor *patternColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"egg_shell"]];
@@ -71,7 +71,150 @@
     [self configMenuActions];
 }
 
-#pragma mark - Tile Re-use Helpers
+// create the proper placement and perspective for the action menu tiles
+- (void)configMenuActions {
+    
+#warning TO DO: Look into why this is happening and a potential fix
+    // These are displacing the menu buttons, so avoiding for now.
+    //    [self setAnchorPoint:CGPointMake(1.5, 0.5) forView:self.leftAction];
+    //    [self setAnchorPoint:CGPointMake(-0.5, 0.5) forView:self.rightAction];
+    
+    // Config left action
+    UITapGestureRecognizer *tapLeft = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftActionTapped:)];
+    tapLeft.numberOfTapsRequired = 1;
+    tapLeft.numberOfTouchesRequired = 1;
+    [self.leftAction addGestureRecognizer: tapLeft];
+    
+    // Config center action
+    UITapGestureRecognizer *tapCenter = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(centerActionTapped:)];
+    tapCenter.numberOfTapsRequired = 1;
+    tapCenter.numberOfTouchesRequired = 1;
+    [self.centerAction addGestureRecognizer: tapCenter];
+    
+    // Config right action
+    UITapGestureRecognizer *tapRight = [[UITapGestureRecognizer alloc] initWithTarget:self action: @selector(rightActionTapped:)];
+    tapRight.numberOfTapsRequired = 1;
+    tapRight.numberOfTouchesRequired = 1;
+    [self.rightAction addGestureRecognizer: tapRight];
+}
+
+// Taken from: http://stackoverflow.com/a/5666430
+- (void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view {
+    
+    CGPoint newPoint = CGPointMake(view.bounds.size.width * anchorPoint.x,
+                                   view.bounds.size.height * anchorPoint.y);
+    CGPoint oldPoint = CGPointMake(view.bounds.size.width * view.layer.anchorPoint.x,
+                                   view.bounds.size.height * view.layer.anchorPoint.y);
+    
+    newPoint = CGPointApplyAffineTransform(newPoint, view.transform);
+    oldPoint = CGPointApplyAffineTransform(oldPoint, view.transform);
+    
+    CGPoint position = view.layer.position;
+    
+    position.x -= oldPoint.x;
+    position.x += newPoint.x;
+    
+    position.y -= oldPoint.y;
+    position.y += newPoint.y;
+    
+    view.layer.position = position;
+    view.layer.anchorPoint = anchorPoint;
+}
+
+
+#pragma mark - UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    for (UIView *newsTile in [scrollView subviews]) {
+        [newsTile setNeedsLayout];
+    }
+    
+    [self layoutActionMenuForOffset:[self relativeOffset]];
+    [self updateTiles];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
+    @try {
+        [self enableActionsAfterScroll];
+    }
+    @catch (NSException *exception) {
+        DLog(@"Exception after scrolling: %@", exception);
+    }
+}
+
+#pragma mark - UIAlertViewDelegate Methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // If load news button is tapped
+    if (buttonIndex == 1) {
+        UITextField *textfield = [alertView textFieldAtIndex: 0];
+        NSString *searchQuery = textfield.text;
+        [self loadNewsWithQuery:searchQuery];
+    }
+}
+
+#pragma mark - NewsTileDelegate Methods
+
+- (float)viewOffsetForScaling:(NewsTile *)tile {
+    
+    float diff = (self.scrollView.contentOffset.x + (tile.frame.size.width / 2)) - tile.center.x;
+    
+    if (diff > tile.initialFrame.size.width) {
+        diff = tile.initialFrame.size.width;
+    }
+    else if ( diff < -tile.initialFrame.size.width) {
+        diff = -tile.initialFrame.size.width;
+    }
+    
+    return diff;
+}
+
+- (void)tileTapped:(NewsTile *)tile {
+    WebBrowserViewController *webViewController = [[WebBrowserViewController alloc] initWithURL:tile.news.fullURL];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:webViewController];
+    
+    [self presentViewController:navController animated:YES completion:^{
+        //
+    }];
+}
+
+#pragma mark - IBAction Methods
+
+- (IBAction)changeNewsContentTapped:(id)sender {
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter a search query below:" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Load News", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
+}
+
+- (void)leftActionTapped:(id)sender {
+    int currentTileIndex = [self currentTileIndex];
+    UIView *view = [self.scrollView viewWithTag:[self getTagFromIndex:currentTileIndex]];
+    if ([view isKindOfClass:[NewsTile class]]) {
+        NewsTile *tile = (NewsTile *)view;
+        [self shareText:tile.news.webTitle andImage:nil andUrl:tile.news.fullURL];
+    } else {
+        DLog(@"Error finding the current tile view");
+    }
+}
+
+- (void)centerActionTapped:(id)sender {
+    int currentTileIndex = [self currentTileIndex];
+    UIView *view = [self.scrollView viewWithTag:[self getTagFromIndex:currentTileIndex]];
+    if ([view isKindOfClass:[NewsTile class]]) {
+        [self tileTapped:(NewsTile *)view];
+    } else {
+        DLog(@"Error finding the current tile view");
+    }
+}
+
+- (void)rightActionTapped:(id)sender {
+    [SVProgressHUD showErrorWithStatus:@"Not yet implemented."];
+}
+
+#pragma mark - Tile Re-Use Methods
 
 - (int)getArrayIndexFromTileViewTag:(int)tag {
     return tag - 100;
@@ -234,56 +377,6 @@
     return tileIndex;
 }
 
-// create the proper placement and perspective for the action menu tiles
-- (void)configMenuActions {
-    
-#warning TO DO: Look into why this is happening and a potential fix
-     // These are displacing the menu buttons, so avoiding for now.
-//    [self setAnchorPoint:CGPointMake(1.5, 0.5) forView:self.leftAction];
-//    [self setAnchorPoint:CGPointMake(-0.5, 0.5) forView:self.rightAction];
-    
-    // Config left action
-    UITapGestureRecognizer *tapLeft = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftActionTapped:)];
-    tapLeft.numberOfTapsRequired = 1;
-    tapLeft.numberOfTouchesRequired = 1;
-    [self.leftAction addGestureRecognizer: tapLeft];
-    
-    // Config center action
-    UITapGestureRecognizer *tapCenter = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(centerActionTapped:)];
-    tapCenter.numberOfTapsRequired = 1;
-    tapCenter.numberOfTouchesRequired = 1;
-    [self.centerAction addGestureRecognizer: tapCenter];
-    
-    // Config right action
-    UITapGestureRecognizer *tapRight = [[UITapGestureRecognizer alloc] initWithTarget:self action: @selector(rightActionTapped:)];
-    tapRight.numberOfTapsRequired = 1;
-    tapRight.numberOfTouchesRequired = 1;
-    [self.rightAction addGestureRecognizer: tapRight];
-}
-
-// Taken from: http://stackoverflow.com/a/5666430
-- (void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view {
-    
-    CGPoint newPoint = CGPointMake(view.bounds.size.width * anchorPoint.x,
-                                   view.bounds.size.height * anchorPoint.y);
-    CGPoint oldPoint = CGPointMake(view.bounds.size.width * view.layer.anchorPoint.x,
-                                   view.bounds.size.height * view.layer.anchorPoint.y);
-    
-    newPoint = CGPointApplyAffineTransform(newPoint, view.transform);
-    oldPoint = CGPointApplyAffineTransform(oldPoint, view.transform);
-    
-    CGPoint position = view.layer.position;
-    
-    position.x -= oldPoint.x;
-    position.x += newPoint.x;
-    
-    position.y -= oldPoint.y;
-    position.y += newPoint.y;
-    
-    view.layer.position = position;
-    view.layer.anchorPoint = anchorPoint;
-}
-
 - (float)relativeOffset {
     
     float offset = self.scrollView.contentOffset.x;
@@ -379,98 +472,6 @@
         UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
         [self presentViewController:activityController animated:YES completion:nil];
     });
-}
-
-#pragma mark - UIScrollViewDelegate methods
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    for (UIView *newsTile in [scrollView subviews]) {
-        [newsTile setNeedsLayout];
-    }
-    
-    [self layoutActionMenuForOffset:[self relativeOffset]];
-    [self updateTiles];
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    
-    @try {
-        [self enableActionsAfterScroll];
-    }
-    @catch (NSException *exception) {
-        DLog(@"Exception after scrolling: %@", exception);
-    }
-}
-
-#pragma mark - NewsTileDelegate methods
-
-- (float)viewOffsetForScaling:(NewsTile *)tile {
-    
-    float diff = (self.scrollView.contentOffset.x + (tile.frame.size.width / 2)) - tile.center.x;
-    
-    if (diff > tile.initialFrame.size.width) {
-        diff = tile.initialFrame.size.width;
-    }
-    else if ( diff < -tile.initialFrame.size.width) {
-        diff = -tile.initialFrame.size.width;
-    }
-    
-    return diff;
-}
-
-- (void)tileTapped:(NewsTile *)tile {
-    WebBrowserViewController *webViewController = [[WebBrowserViewController alloc] initWithURL:tile.news.fullURL];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:webViewController];
-
-    [self presentViewController:navController animated:YES completion:^{
-        //
-    }];
-}
-
-#pragma mark - IBAction methods
-
-- (IBAction)changeNewsContentTapped:(id)sender {
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter a search query below:" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Load News", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
-}
-
-- (void)leftActionTapped:(id)sender {
-    int currentTileIndex = [self currentTileIndex];
-    UIView *view = [self.scrollView viewWithTag:[self getTagFromIndex:currentTileIndex]];
-    if ([view isKindOfClass:[NewsTile class]]) {
-        NewsTile *tile = (NewsTile *)view;
-        [self shareText:tile.news.webTitle andImage:nil andUrl:tile.news.fullURL];
-    } else {
-        DLog(@"Error finding the current tile view");
-    }
-}
-
-- (void)centerActionTapped:(id)sender {
-    int currentTileIndex = [self currentTileIndex];
-    UIView *view = [self.scrollView viewWithTag:[self getTagFromIndex:currentTileIndex]];
-    if ([view isKindOfClass:[NewsTile class]]) {
-        [self tileTapped:(NewsTile *)view];
-    } else {
-        DLog(@"Error finding the current tile view");
-    }
-}
-
-- (void)rightActionTapped:(id)sender {
-    [SVProgressHUD showErrorWithStatus:@"Not yet implemented."];
-}
-
-#pragma mark - UIAlertViewDelegate methods
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    // If load news button is tapped
-    if (buttonIndex == 1) {
-        UITextField *textfield = [alertView textFieldAtIndex: 0];
-        NSString *searchQuery = textfield.text;
-        [self loadNewsWithQuery:searchQuery];
-    }
 }
 
 @end
