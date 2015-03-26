@@ -65,6 +65,15 @@
 
 #pragma mark - View Setup Helpers
 
+- (void)setupView {
+    UIColor *patternColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"egg_shell"]];
+    self.view.backgroundColor = patternColor;
+    
+    [self configMenuActions];
+}
+
+#pragma mark - Tile Re-use Helpers
+
 - (int)getArrayIndexFromTileViewTag:(int)tag {
     return tag - 100;
 }
@@ -87,7 +96,7 @@
 - (BOOL)isDisplayingPageForIndex:(NSUInteger)index {
     BOOL foundPage = NO;
     for (NewsTile *page in self.visibleTiles) {
-        if ([self getArrayIndexFromTileViewTag:page.tag] == index) {
+        if ([self getArrayIndexFromTileViewTag:(int)page.tag] == index) {
             foundPage = YES;
             break;
         }
@@ -123,12 +132,7 @@
     }
 }
 
-- (void)setupView {
-    UIColor *patternColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"egg_shell"]];
-    self.view.backgroundColor = patternColor;
-    
-    [self configMenuActions];
-}
+#pragma mark - Load Data Methods
 
 - (void)loadNewsWithQuery:(NSString *)query {
     
@@ -422,7 +426,7 @@
 
 #pragma mark - IBAction methods
 
-- (void)changeNewsContentTapped:(id)sender {
+- (IBAction)changeNewsContentTapped:(id)sender {
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter a search query below:" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Load News", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
