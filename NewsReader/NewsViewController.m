@@ -19,7 +19,6 @@
 - (IBAction)changeNewsContentTapped:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
 @property (weak, nonatomic) IBOutlet UIView *leftAction;
 @property (weak, nonatomic) IBOutlet UIView *centerAction;
