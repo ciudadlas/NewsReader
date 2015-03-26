@@ -16,7 +16,6 @@
 		7522E54B1ABF403E00078733 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7522E5491ABF403E00078733 /* LaunchScreen.xib */; };
 		7522E5571ABF403E00078733 /* NewsReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E5561ABF403E00078733 /* NewsReaderTests.m */; };
 		7522E66E1ABF866D00078733 /* NewsTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E66D1ABF866D00078733 /* NewsTile.m */; };
-		75759B2E1AC0023700DC67A4 /* NewsSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75759B2D1AC0023700DC67A4 /* NewsSelectionViewController.m */; };
 		75759B311AC00CB100DC67A4 /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = 75759B301AC00CB000DC67A4 /* News.m */; };
 		7598D0731AC29FC500BFE50D /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7598D0721AC29FC500BFE50D /* APIClient.m */; };
 		AC8B7D2263631D6102AF3485 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FCCA178B4C19CB5591536C /* libPods.a */; };
@@ -52,8 +51,6 @@
 		7522E66C1ABF866D00078733 /* NewsTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsTile.h; sourceTree = "<group>"; };
 		7522E66D1ABF866D00078733 /* NewsTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTile.m; sourceTree = "<group>"; };
 		7522E66F1ABFB0D500078733 /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
-		75759B2C1AC0023700DC67A4 /* NewsSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsSelectionViewController.h; sourceTree = "<group>"; };
-		75759B2D1AC0023700DC67A4 /* NewsSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsSelectionViewController.m; sourceTree = "<group>"; };
 		75759B2F1AC00CB000DC67A4 /* News.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = News.h; sourceTree = "<group>"; };
 		75759B301AC00CB000DC67A4 /* News.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = News.m; sourceTree = "<group>"; };
 		7598D0711AC29FC500BFE50D /* APIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
@@ -119,15 +116,6 @@
 			name = "01 - Read News";
 			sourceTree = "<group>";
 		};
-		7502A00C1AC3486500CAF0CF /* 02 - Select News */ = {
-			isa = PBXGroup;
-			children = (
-				75759B2C1AC0023700DC67A4 /* NewsSelectionViewController.h */,
-				75759B2D1AC0023700DC67A4 /* NewsSelectionViewController.m */,
-			);
-			name = "02 - Select News";
-			sourceTree = "<group>";
-		};
 		7502A00D1AC3B31500CAF0CF /* News View */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,7 +161,6 @@
 			children = (
 				7502A0091AC3481100CAF0CF /* 00 - Core */,
 				7502A00B1AC3483700CAF0CF /* 01 - Read News */,
-				7502A00C1AC3486500CAF0CF /* 02 - Select News */,
 				7522E5441ABF403E00078733 /* Main.storyboard */,
 				7522E5471ABF403E00078733 /* Images.xcassets */,
 				7522E5491ABF403E00078733 /* LaunchScreen.xib */,
@@ -358,7 +345,6 @@
 				7502A0081AC341AF00CAF0CF /* WebBrowserViewController.m in Sources */,
 				7522E5431ABF403E00078733 /* NewsViewController.m in Sources */,
 				75759B311AC00CB100DC67A4 /* News.m in Sources */,
-				75759B2E1AC0023700DC67A4 /* NewsSelectionViewController.m in Sources */,
 				7522E5401ABF403E00078733 /* AppDelegate.m in Sources */,
 				7522E53D1ABF403E00078733 /* main.m in Sources */,
 			);
