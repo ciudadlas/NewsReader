@@ -2,9 +2,8 @@
 An iPhone news reader app
 
 # To do
-- Update action menu icons
-- Re-evaluate the fix tile re-use code, there may be a more straightforward way to accomplish it
 - Fix positioning issues in NewsTile view , especially when the tile is getting re-used
+- Re-evaluate the news tile re-use code, there may be a more straightforward way to accomplish it
 - Re-factor, review comments, and pragma mark properly
 - Add unit tests
 - Test app in different phone sizes
