@@ -40,7 +40,6 @@
     NSString *requestPath = [NSString stringWithFormat:@"search?api-key=%@&q=%@&show-fields=headline,trailText,thumbnail&order-by=newest", [APIClient sharedInstance].APIKey, keyword];
     requestPath = [requestPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
-    
     // Make the API call
     [[APIClient sharedInstance] GET:requestPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -49,9 +48,9 @@
         // Parse the API call results
         NSError *error;
         NSArray *news = [self parseNewsResponse:responseObject error:&error];
-//        DLog(@"Response object: %@", responseObject);
         
-        // Depending on what the error is we may decide to disregard the data altogether or still use it despite errors
+        // Depending on what the error is, we may decide to disregard the data altogether or still use it despite errors.
+        // In this case if there is any error, we are returning error back.
         if (error) {
             if (closure != NULL) {
                 closure(error, nil);
@@ -61,7 +60,6 @@
                 closure(nil, @{@"news": news });
             }
         }
-
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -84,7 +82,6 @@
     NSDictionary *newsItems = newsResponse[@"response"][@"results"];
     for (NSDictionary *newsItem in newsItems) {
         
-#warning TO DO: Error checking, and error setting if these values are missing etc.
 #warning TO DO: Make constants for the parsing keys
         NSString *apiUrl = [newsItem objectForKey:@"apiUrl"];
         NSString *newsId = [newsItem objectForKey:@"id"];
@@ -105,18 +102,23 @@
             newsSummary = [[fields objectForKey:@"trailText"] stringByReplacingOccurrencesOfString:@"<br>" withString:@""];
         }
         
-#warning TO DO: Only if the values are all present, add the object.
-        News *newsObject = [[News alloc] initWithAPIURL:apiUrl
-                                                 newsID:newsId
-                                              sectionID:sectionId
-                                            sectionName:sectionName
-                                        publicationDate:publicationDate
-                                               webTitle:webTitle
-                                                 webURL:webUrl
-                                           thumbnailURL:thumbnailURL
-                                            newsSummary:newsSummary];
+        if (apiUrl && newsId && sectionId && sectionName && publicationDate && webTitle && webUrl && thumbnailURL && newsSummary) {
         
-        [news addObject:newsObject];
+            News *newsObject = [[News alloc] initWithAPIURL:apiUrl
+                                                     newsID:newsId
+                                                  sectionID:sectionId
+                                                sectionName:sectionName
+                                            publicationDate:publicationDate
+                                                   webTitle:webTitle
+                                                     webURL:webUrl
+                                               thumbnailURL:thumbnailURL
+                                                newsSummary:newsSummary];
+            
+            [news addObject:newsObject];
+            
+        } else {
+            *parseError = [NSError errorWithDomain:@"com.serdarkaratakin.NewsReader.ParseErrorDomain" code:100 userInfo:@{NSLocalizedDescriptionKey: @"Missing value during parsing of news item"}];
+        }
     }
     
     return [NSArray arrayWithArray:news];
