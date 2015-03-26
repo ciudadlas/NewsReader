@@ -2,13 +2,14 @@
 An iPhone news reader app
 
 # To do
-- Update menu action buttons, and update their icons
-- NewsTile view fix positioning issues, especially when the tile is getting re-used
+- Update action menu icons
+- Re-evaluate the fix tile re-use code, there may be a more straightforward way to accomplish it
+- Fix positioning issues in NewsTile view , especially when the tile is getting re-used
 - Re-factor, review comments, and pragma mark properly
 - Add unit tests
 - Test app in different phone sizes
-- Review codebase, memory leaks, use static analyzer
-- Write Readme documentation
+- Review codebase, check memory leaks, use static analyzer
+- Write readme documentation
 - QA and fix any bugs
 - Consider moving back and forward buttons in web view controller to the navigation bar from the bottom bar
 - Show user where in the news scrolling he is at (how many has he scrolled, how many more items there are)
