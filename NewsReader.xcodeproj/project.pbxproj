@@ -18,6 +18,7 @@
 		7522E66E1ABF866D00078733 /* NewsTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E66D1ABF866D00078733 /* NewsTile.m */; };
 		75759B311AC00CB100DC67A4 /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = 75759B301AC00CB000DC67A4 /* News.m */; };
 		7598D0731AC29FC500BFE50D /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7598D0721AC29FC500BFE50D /* APIClient.m */; };
+		9F9F576D1AC4B47200C04478 /* ActionMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F576C1AC4B47200C04478 /* ActionMenuView.m */; };
 		AC8B7D2263631D6102AF3485 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FCCA178B4C19CB5591536C /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,8 @@
 		7598D0711AC29FC500BFE50D /* APIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
 		7598D0721AC29FC500BFE50D /* APIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
 		83FCCA178B4C19CB5591536C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F9F576B1AC4B47200C04478 /* ActionMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionMenuView.h; sourceTree = "<group>"; };
+		9F9F576C1AC4B47200C04478 /* ActionMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionMenuView.m; sourceTree = "<group>"; };
 		D36E779946AB2C20A72CC30B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +124,8 @@
 			children = (
 				7522E5411ABF403E00078733 /* NewsViewController.h */,
 				7522E5421ABF403E00078733 /* NewsViewController.m */,
+				9F9F576B1AC4B47200C04478 /* ActionMenuView.h */,
+				9F9F576C1AC4B47200C04478 /* ActionMenuView.m */,
 				7522E66C1ABF866D00078733 /* NewsTile.h */,
 				7522E66D1ABF866D00078733 /* NewsTile.m */,
 			);
@@ -341,6 +346,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7522E66E1ABF866D00078733 /* NewsTile.m in Sources */,
+				9F9F576D1AC4B47200C04478 /* ActionMenuView.m in Sources */,
 				7598D0731AC29FC500BFE50D /* APIClient.m in Sources */,
 				7502A0081AC341AF00CAF0CF /* WebBrowserViewController.m in Sources */,
 				7522E5431ABF403E00078733 /* NewsViewController.m in Sources */,

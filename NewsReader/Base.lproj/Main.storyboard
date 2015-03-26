@@ -27,7 +27,7 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="tbV-eH-3Ht"/>
                                 </connections>
                             </scrollView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dtg-S9-xSQ" userLabel="Action Menu">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dtg-S9-xSQ" userLabel="Action Menu" customClass="ActionMenuView">
                                 <rect key="frame" x="153" y="566" width="294" height="71"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E1w-J5-pL8" userLabel="Left Action">
@@ -90,6 +90,11 @@
                                     <constraint firstAttribute="height" constant="71" id="oXW-sX-7dL"/>
                                     <constraint firstAttribute="width" constant="294" id="qbz-Oj-xgb"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="centerAction" destination="cBd-da-8qq" id="IPq-QW-RzE"/>
+                                    <outlet property="leftAction" destination="E1w-J5-pL8" id="1WR-ZB-mh9"/>
+                                    <outlet property="rightAction" destination="ip3-QU-9tL" id="ht2-r6-bEF"/>
+                                </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MkR-cr-MBz">
                                 <rect key="frame" x="223" y="762" width="155" height="30"/>
@@ -120,9 +125,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="800"/>
                     <connections>
-                        <outlet property="centerAction" destination="cBd-da-8qq" id="Jwb-RF-PXV"/>
-                        <outlet property="leftAction" destination="E1w-J5-pL8" id="hml-sO-QyR"/>
-                        <outlet property="rightAction" destination="ip3-QU-9tL" id="dw7-cP-4TT"/>
+                        <outlet property="actionMenuView" destination="dtg-S9-xSQ" id="KDY-gq-xKy"/>
                         <outlet property="scrollView" destination="JfL-he-7Eb" id="tGT-1g-uEi"/>
                     </connections>
                 </viewController>

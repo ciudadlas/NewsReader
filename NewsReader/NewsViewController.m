@@ -11,18 +11,16 @@
 #import "News.h"
 #import "WebBrowserViewController.h"
 #import "SVProgressHUD.h"
+#import "ActionMenuView.h"
 
 #warning TO DO: Re-factor this VC into smaller classes
 
-@interface NewsViewController () <UIAlertViewDelegate, UIScrollViewDelegate>
+@interface NewsViewController () <UIAlertViewDelegate, UIScrollViewDelegate, ActionMenuViewDelegate>
 
 - (IBAction)changeNewsContentTapped:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-
-@property (weak, nonatomic) IBOutlet UIView *leftAction;
-@property (weak, nonatomic) IBOutlet UIView *centerAction;
-@property (weak, nonatomic) IBOutlet UIView *rightAction;
+@property (weak, nonatomic) IBOutlet ActionMenuView *actionMenuView;
 
 @property (strong, nonatomic) NSArray *newsItems;
 @property (strong, nonatomic) NSMutableSet *recycledTiles;
@@ -68,57 +66,8 @@
     UIColor *patternColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"egg_shell"]];
     self.view.backgroundColor = patternColor;
     
-    [self configMenuActions];
-}
-
-// create the proper placement and perspective for the action menu tiles
-- (void)configMenuActions {
-    
-#warning TO DO: Look into why this is happening and a potential fix
-    // These are displacing the menu buttons, so avoiding for now.
-    //    [self setAnchorPoint:CGPointMake(1.5, 0.5) forView:self.leftAction];
-    //    [self setAnchorPoint:CGPointMake(-0.5, 0.5) forView:self.rightAction];
-    
-    // Config left action
-    UITapGestureRecognizer *tapLeft = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftActionTapped:)];
-    tapLeft.numberOfTapsRequired = 1;
-    tapLeft.numberOfTouchesRequired = 1;
-    [self.leftAction addGestureRecognizer: tapLeft];
-    
-    // Config center action
-    UITapGestureRecognizer *tapCenter = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(centerActionTapped:)];
-    tapCenter.numberOfTapsRequired = 1;
-    tapCenter.numberOfTouchesRequired = 1;
-    [self.centerAction addGestureRecognizer: tapCenter];
-    
-    // Config right action
-    UITapGestureRecognizer *tapRight = [[UITapGestureRecognizer alloc] initWithTarget:self action: @selector(rightActionTapped:)];
-    tapRight.numberOfTapsRequired = 1;
-    tapRight.numberOfTouchesRequired = 1;
-    [self.rightAction addGestureRecognizer: tapRight];
-}
-
-// Taken from: http://stackoverflow.com/a/5666430
-- (void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view {
-    
-    CGPoint newPoint = CGPointMake(view.bounds.size.width * anchorPoint.x,
-                                   view.bounds.size.height * anchorPoint.y);
-    CGPoint oldPoint = CGPointMake(view.bounds.size.width * view.layer.anchorPoint.x,
-                                   view.bounds.size.height * view.layer.anchorPoint.y);
-    
-    newPoint = CGPointApplyAffineTransform(newPoint, view.transform);
-    oldPoint = CGPointApplyAffineTransform(oldPoint, view.transform);
-    
-    CGPoint position = view.layer.position;
-    
-    position.x -= oldPoint.x;
-    position.x += newPoint.x;
-    
-    position.y -= oldPoint.y;
-    position.y += newPoint.y;
-    
-    view.layer.position = position;
-    view.layer.anchorPoint = anchorPoint;
+    self.actionMenuView.delegate = self;
+    [self.actionMenuView configMenuActions];
 }
 
 #pragma mark - Load Data Methods
@@ -162,14 +111,14 @@
         [newsTile setNeedsLayout];
     }
     
-    [self updateActionMenuLayoutWithScrollViewOffset:[self relativeOffset]];
+    [self.actionMenuView updateActionMenuLayoutWithScrollViewOffset:[self relativeOffset] scrollView:self.scrollView];
     [self repositionTiles];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     
     @try {
-        [self enableActionsAfterScroll];
+        [self.actionMenuView enableActionsAfterScroll];
     }
     @catch (NSException *exception) {
         DLog(@"Exception after scrolling: %@", exception);
@@ -212,16 +161,9 @@
     }];
 }
 
-#pragma mark - IBAction Methods
+#pragma mark - ActionMenuViewDelegate Methods
 
-- (IBAction)changeNewsContentTapped:(id)sender {
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter a search query below:" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Load News", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
-}
-
-- (void)leftActionTapped:(id)sender {
+- (void)leftActionButtonTapped:(ActionMenuView *)actionMenuView {
     int currentTileIndex = [self currentTileIndex];
     UIView *view = [self.scrollView viewWithTag:[self getTagFromIndex:currentTileIndex]];
     if ([view isKindOfClass:[NewsTile class]]) {
@@ -232,7 +174,7 @@
     }
 }
 
-- (void)centerActionTapped:(id)sender {
+- (void)centerActionButtonTapped:(ActionMenuView *)actionMenuView {
     int currentTileIndex = [self currentTileIndex];
     UIView *view = [self.scrollView viewWithTag:[self getTagFromIndex:currentTileIndex]];
     if ([view isKindOfClass:[NewsTile class]]) {
@@ -242,8 +184,17 @@
     }
 }
 
-- (void)rightActionTapped:(id)sender {
+- (void)rightActionButtonTapped:(ActionMenuView *)actionMenuView {
     [SVProgressHUD showErrorWithStatus:@"Not yet implemented."];
+}
+
+#pragma mark - IBAction Methods
+
+- (IBAction)changeNewsContentTapped:(id)sender {
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter a search query below:" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Load News", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
 }
 
 #pragma mark - Tile Re-Use Methods
@@ -387,70 +338,6 @@
     offset = fmodf(offset, width);
     
     return offset;
-}
-
-#pragma mark - Action Menu Methods
-
-- (void)updateActionMenuLayoutWithScrollViewOffset:(float)offset {
-    
-    // we're splitting the offset into three equally-spaced animations
-    // Timeline:      |----|----|----|----|----|
-    // Left action:   |--------------|
-    // Center action:      |--------------|
-    // Right action:            |--------------|
-    
-    float maxOffset = self.scrollView.frame.size.width;
-    // marginalOffset is the width of a single animation
-    float marginalOffset = maxOffset / 5.0 * 3.0;
-    // iterationGap is the width between sequential animation starts
-    float iterationGap = maxOffset / 5;
-    
-    float leftActionOffset = clamp(offset, 0., marginalOffset);
-    float leftActionRotationAmount = leftActionOffset / marginalOffset;
-    leftActionRotationAmount = [self transformRotation:leftActionRotationAmount];
-    [self rotateAction:self.leftAction byAmount:leftActionRotationAmount];
-    
-    float centerActionOffset = clamp(offset, iterationGap, marginalOffset + iterationGap);
-    centerActionOffset = centerActionOffset - iterationGap;
-    float centerActionRotationAmount = centerActionOffset / marginalOffset;
-    centerActionRotationAmount = [self transformRotation:centerActionRotationAmount];
-    [self rotateAction:self.centerAction byAmount:centerActionRotationAmount];
-    
-    float rightActionOffset = clamp(offset, iterationGap * 2, maxOffset);
-    rightActionOffset = rightActionOffset - (iterationGap * 2);
-    float rightActionRotationAmount = rightActionOffset / marginalOffset;
-    rightActionRotationAmount = [self transformRotation:rightActionRotationAmount];
-    [self rotateAction:self.rightAction byAmount:rightActionRotationAmount];
-}
-
-- (float)transformRotation:(float)rotationAmount {
-    // map our rotation so it flips back down at the center point and the layer is never upside down
-    float returnVal = rotationAmount >= 0.5 ? rotationAmount - 1 : rotationAmount;
-    
-    // because the layer has no height, it'll disappear for a moment at this value if we don't fix it
-    returnVal = returnVal == -0.5 ? -0.4999 : returnVal;
-    
-    // mapping rotation to a true circular path
-    returnVal = asinf(2 * returnVal) / M_PI * 2;
-    
-    return returnVal;
-}
-
-- (void)rotateAction:(UIView *)action byAmount:(float)amount {
-    CATransform3D rotationTransform = CATransform3DIdentity;
-    
-    rotationTransform.m33 = 0.0;
-    rotationTransform.m34 = 0.005;
-    rotationTransform = CATransform3DRotate(rotationTransform, amount * M_PI / 2, 1.0, 0.0, 0.0);
-    
-    action.layer.transform = rotationTransform;
-}
-
-- (void)enableActionsAfterScroll {
-    // Without this, tap gesture recognizers stop working.
-    self.leftAction.layer.transform = CATransform3DIdentity;
-    self.centerAction.layer.transform = CATransform3DIdentity;
-    self.rightAction.layer.transform = CATransform3DIdentity;
 }
 
 #pragma mark - Other Helper Methods
