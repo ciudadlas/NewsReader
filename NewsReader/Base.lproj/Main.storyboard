@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -36,15 +36,15 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="actions-menu-background-left" translatesAutoresizingMaskIntoConstraints="NO" id="l16-Xf-7Bf">
                                                 <rect key="frame" x="0.0" y="0.0" width="99" height="79"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ActionModule_Icon_Feedback" translatesAutoresizingMaskIntoConstraints="NO" id="io4-Od-kMD">
-                                                <rect key="frame" x="41" y="13" width="29" height="28"/>
-                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Share" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bb0-13-RfU">
                                                 <rect key="frame" x="32" y="41" width="42" height="21"/>
                                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="11"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="211-action" translatesAutoresizingMaskIntoConstraints="NO" id="io4-Od-kMD">
+                                                <rect key="frame" x="41" y="17" width="25" height="19"/>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
@@ -54,15 +54,15 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="actions-menu-background-center" translatesAutoresizingMaskIntoConstraints="NO" id="Wbu-Ev-Esf">
                                                 <rect key="frame" x="0.0" y="4" width="99" height="79"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ActionModule_Icon_Star" translatesAutoresizingMaskIntoConstraints="NO" id="70d-BX-zAY">
-                                                <rect key="frame" x="34" y="22" width="30" height="21"/>
-                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Read" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UAZ-ZL-YHg">
                                                 <rect key="frame" x="28" y="45" width="42" height="21"/>
                                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="11"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="12-eye" translatesAutoresizingMaskIntoConstraints="NO" id="70d-BX-zAY">
+                                                <rect key="frame" x="37" y="24" width="24" height="16"/>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
@@ -72,15 +72,15 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="actions-menu-background-right" translatesAutoresizingMaskIntoConstraints="NO" id="UIA-Ot-Lh4">
                                                 <rect key="frame" x="0.0" y="4" width="99" height="79"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ActionModule_Icon_News" translatesAutoresizingMaskIntoConstraints="NO" id="ypn-bN-PHX">
-                                                <rect key="frame" x="35" y="23" width="30" height="21"/>
-                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Save" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ht-9L-nTx">
                                                 <rect key="frame" x="16" y="45" width="65" height="21"/>
                                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="11"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="58-bookmark" translatesAutoresizingMaskIntoConstraints="NO" id="ypn-bN-PHX">
+                                                <rect key="frame" x="44" y="22" width="10" height="21"/>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
@@ -132,9 +132,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ActionModule_Icon_Feedback" width="29" height="28"/>
-        <image name="ActionModule_Icon_News" width="30" height="21"/>
-        <image name="ActionModule_Icon_Star" width="30" height="21"/>
+        <image name="12-eye" width="24" height="16"/>
+        <image name="211-action" width="28" height="22"/>
+        <image name="58-bookmark" width="10" height="26"/>
         <image name="actions-menu-background-center" width="91" height="79"/>
         <image name="actions-menu-background-left" width="99" height="79"/>
         <image name="actions-menu-background-right" width="99" height="79"/>
