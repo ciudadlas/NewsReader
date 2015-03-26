@@ -38,6 +38,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+#warning TO DO: Re-factor this method into smaller functions
         _news = news;
         
         self.backgroundColor = HEXCOLOR(TILE_DEFAULT_COLOR);
