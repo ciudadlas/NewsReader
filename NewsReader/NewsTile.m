@@ -42,6 +42,8 @@
         
         self.backgroundColor = HEXCOLOR(TILE_DEFAULT_COLOR);
         self.layer.cornerRadius = TILE_CORNER_SIZE;
+        self.layer.borderColor = HEXCOLOR(TILE_TITLE_COLOR).CGColor;
+        self.layer.borderWidth = 2;
         _initialFrame = frame;
         
         // 1. Title Label
