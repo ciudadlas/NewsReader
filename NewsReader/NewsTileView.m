@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Serdar Karatekin. All rights reserved.
 //
 
-#import "NewsTile.h"
+#import "NewsTileView.h"
 #import "Macros.h"
 #import "UIImageView+AFNetworking.h"
 #import "NSDate+DateTools.h"
@@ -22,7 +22,7 @@
 
 #define SEGMENT_DETAIL_HEIGHT_DIFF 130.0
 
-@interface NewsTile ()
+@interface NewsTileView ()
 
 @property (nonatomic, strong) UILabel *newsTitleLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
@@ -31,7 +31,7 @@
 
 @end
 
-@implementation NewsTile
+@implementation NewsTileView
 
 - (id)initWithFrame:(CGRect)frame news:(News *)news {
     

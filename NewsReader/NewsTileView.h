@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "News.h"
-@class NewsTile;
+@class NewsTileView;
 
 @protocol NewsTileDelegate <NSObject>
 
 @required
-- (float)viewOffsetForScaling:(NewsTile *)tile;
-- (void)tileTapped:(NewsTile *)tile;
+- (float)viewOffsetForScaling:(NewsTileView *)tile;
+- (void)tileTapped:(NewsTileView *)tile;
 
 @end
 
-@interface NewsTile : UIView
+@interface NewsTileView : UIView
 
 - (id)initWithFrame:(CGRect)frame news:(News *)news;
 

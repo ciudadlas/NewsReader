@@ -138,7 +138,7 @@
 
 #pragma mark - NewsTileDelegate Methods
 
-- (float)viewOffsetForScaling:(NewsTile *)tile {
+- (float)viewOffsetForScaling:(NewsTileView *)tile {
     
     float diff = (self.scrollView.contentOffset.x + (tile.frame.size.width / 2)) - tile.center.x;
     
@@ -152,7 +152,7 @@
     return diff;
 }
 
-- (void)tileTapped:(NewsTile *)tile {
+- (void)tileTapped:(NewsTileView *)tile {
     WebBrowserViewController *webViewController = [[WebBrowserViewController alloc] initWithURL:tile.news.fullURL];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:webViewController];
     
@@ -166,8 +166,8 @@
 - (void)leftActionButtonTapped:(ActionMenuView *)actionMenuView {
     int currentTileIndex = [self currentTileIndex];
     UIView *view = [self.scrollView viewWithTag:[self getTagFromIndex:currentTileIndex]];
-    if ([view isKindOfClass:[NewsTile class]]) {
-        NewsTile *tile = (NewsTile *)view;
+    if ([view isKindOfClass:[NewsTileView class]]) {
+        NewsTileView *tile = (NewsTileView *)view;
         [self shareText:tile.news.webTitle andImage:nil andUrl:tile.news.fullURL];
     } else {
         DLog(@"Error finding the current tile view");
@@ -177,8 +177,8 @@
 - (void)centerActionButtonTapped:(ActionMenuView *)actionMenuView {
     int currentTileIndex = [self currentTileIndex];
     UIView *view = [self.scrollView viewWithTag:[self getTagFromIndex:currentTileIndex]];
-    if ([view isKindOfClass:[NewsTile class]]) {
-        [self tileTapped:(NewsTile *)view];
+    if ([view isKindOfClass:[NewsTileView class]]) {
+        [self tileTapped:(NewsTileView *)view];
     } else {
         DLog(@"Error finding the current tile view");
     }
@@ -220,7 +220,7 @@
 
 - (BOOL)isDisplayingPageForIndex:(NSUInteger)index {
     BOOL foundPage = NO;
-    for (NewsTile *page in self.visibleTiles) {
+    for (NewsTileView *page in self.visibleTiles) {
         if ([self getArrayIndexFromTileViewTag:(int)page.tag] == index) {
             foundPage = YES;
             break;
@@ -233,7 +233,7 @@
     if (index >= 0 && index < [self.newsItems count]) {
         
         News *news = (News *) [self.newsItems objectAtIndex:index];
-        NewsTile *tile = [self dequeueReusableTileView];
+        NewsTileView *tile = [self dequeueReusableTileView];
         CGRect tileFrame = CGRectMake(index*self.scrollView.frame.size.width + 10, 10,
                                       self.scrollView.bounds.size.width - 20, self.scrollView.bounds.size.height - 20);
         if (tile) {
@@ -242,7 +242,7 @@
             tile.frame = tileFrame;
         } else {
 //            DLog(@"Creating new tile.");
-            tile = [[NewsTile alloc] initWithFrame:tileFrame news:news];
+            tile = [[NewsTileView alloc] initWithFrame:tileFrame news:news];
         }
         
         tile.delegate = self;
@@ -272,7 +272,7 @@
         if (self.newsItems.count > 3) {
             
             // Put any visible tiles that are no longer needed into the recycled set
-            for (NewsTile *tile in self.visibleTiles) {
+            for (NewsTileView *tile in self.visibleTiles) {
                 if (tile.tag < [self getTagFromIndex:firstNeededTileIndex] || tile.tag > [self getTagFromIndex:lastNeededTileIndex]) {
                     //                    DLog(@"Recycling tile with tag: %ld", (long)tile.tag);
                     [self.recycledTiles addObject:tile];
@@ -301,8 +301,8 @@
     }
 }
 
-- (NewsTile *)dequeueReusableTileView {
-    NewsTile *tileView = [self.recycledTiles anyObject];
+- (NewsTileView *)dequeueReusableTileView {
+    NewsTileView *tileView = [self.recycledTiles anyObject];
     if (tileView) {
         [self.recycledTiles removeObject:tileView];
     }
