@@ -12,6 +12,8 @@
 #import "WebBrowserViewController.h"
 #import "SVProgressHUD.h"
 
+#warning TO DO: Re-factor this VC into smaller classes
+
 @interface NewsViewController () <UIAlertViewDelegate>
 
 - (IBAction)changeNewsContentTapped:(id)sender;
