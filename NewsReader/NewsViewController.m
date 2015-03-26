@@ -131,7 +131,7 @@
     }
     
     [self layoutActionMenuForOffset:[self relativeOffset]];
-    [self updateTiles];
+    [self repositionTiles];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -274,6 +274,90 @@
     }
 }
 
+- (void)repositionTiles {
+    
+    int currentTileIndex = [self currentTileIndex];
+    
+    if (currentTileIndex != self.selectedTileIndex) {
+        
+        int firstNeededTileIndex = (int)MIN(MAX(currentTileIndex - 1, 0), self.newsItems.count - 3);
+        int lastNeededTileIndex  = (int)MAX(MIN(currentTileIndex + 1, self.newsItems.count - 1), 2);
+        
+        //        DLog(@"First page tile index: %d", firstNeededTileIndex);
+        //        DLog(@"Last page tile index: %d", lastNeededTileIndex);
+        
+        if (self.newsItems.count > 3) {
+            
+            // Put any visible tiles that are no longer needed into the recycled set
+            for (NewsTile *tile in self.visibleTiles) {
+                if (tile.tag < [self getTagFromIndex:firstNeededTileIndex] || tile.tag > [self getTagFromIndex:lastNeededTileIndex]) {
+                    //                    DLog(@"Recycling tile with tag: %ld", (long)tile.tag);
+                    [self.recycledTiles addObject:tile];
+                    [tile removeFromSuperview];
+                }
+            }
+            
+            [self.visibleTiles minusSet:self.recycledTiles];
+            
+            //            DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
+            //            DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
+            
+            
+            // Add missing tile views
+            for (int index = firstNeededTileIndex; index <= lastNeededTileIndex; index++) {
+                if (![self isDisplayingPageForIndex:index]) {
+                    [self addTileWithIndex:index];
+                }
+            }
+        }
+        
+        self.selectedTileIndex = currentTileIndex;
+        
+        //        DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
+        //        DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
+    }
+}
+
+- (NewsTile *)dequeueReusableTileView {
+    NewsTile *tileView = [self.recycledTiles anyObject];
+    if (tileView) {
+        [self.recycledTiles removeObject:tileView];
+    }
+    return tileView;
+}
+
+- (int)currentTileIndex {
+    float offset = self.scrollView.contentOffset.x;
+    float contentSize = self.scrollView.contentSize.width;
+    float width = self.scrollView.frame.size.width;
+    
+    // don't process when bouncing beyond the range of the scroll view
+    // clamp offset value between first and last tiles
+    offset = clamp(offset, 0., contentSize - width);
+    
+    // now divide into the number of tiles
+    int tileIndex = roundf(offset / width);
+    
+    //    DLog (@"Current tile index: %d", tileIndex);
+    return tileIndex;
+}
+
+- (float)relativeOffset {
+    
+    float offset = self.scrollView.contentOffset.x;
+    float contentSize = self.scrollView.contentSize.width;
+    float width = self.scrollView.frame.size.width;
+    
+    // don't process when bouncing beyond the range of the scroll view
+    // clamp offset value between first and last tiles
+    offset = clamp(offset, 0., contentSize - width);
+    
+    // now divide into the number of tiles
+    offset = fmodf(offset, width);
+    
+    return offset;
+}
+
 #pragma mark - Load Data Methods
 
 - (void)loadNewsWithQuery:(NSString *)query {
@@ -307,91 +391,7 @@
     }];
 }
 
-#pragma mark - Helper Methods
-
-- (void)updateTiles {
-    
-    int currentTileIndex = [self currentTileIndex];
-    
-    if (currentTileIndex != self.selectedTileIndex) {
-        
-        int firstNeededTileIndex = (int)MIN(MAX(currentTileIndex - 1, 0), self.newsItems.count - 3);
-        int lastNeededTileIndex  = (int)MAX(MIN(currentTileIndex + 1, self.newsItems.count - 1), 2);
-        
-//        DLog(@"First page tile index: %d", firstNeededTileIndex);
-//        DLog(@"Last page tile index: %d", lastNeededTileIndex);
-        
-        if (self.newsItems.count > 3) {
-            
-            // Put any visible tiles that are no longer needed into the recycled set
-            for (NewsTile *tile in self.visibleTiles) {
-                if (tile.tag < [self getTagFromIndex:firstNeededTileIndex] || tile.tag > [self getTagFromIndex:lastNeededTileIndex]) {
-//                    DLog(@"Recycling tile with tag: %ld", (long)tile.tag);
-                    [self.recycledTiles addObject:tile];
-                    [tile removeFromSuperview];
-                }
-            }
-            
-            [self.visibleTiles minusSet:self.recycledTiles];
-            
-//            DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
-//            DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
-
-            
-            // Add missing tile views
-            for (int index = firstNeededTileIndex; index <= lastNeededTileIndex; index++) {
-                if (![self isDisplayingPageForIndex:index]) {
-                    [self addTileWithIndex:index];
-                }
-            }
-        }
-        
-        self.selectedTileIndex = currentTileIndex;
-        
-//        DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
-//        DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
-    }
-}
-
-- (NewsTile *)dequeueReusableTileView {
-    NewsTile *tileView = [self.recycledTiles anyObject];
-    if (tileView) {
-        [self.recycledTiles removeObject:tileView];
-    }
-    return tileView;
-}
-
-- (int)currentTileIndex {
-    float offset = self.scrollView.contentOffset.x;
-    float contentSize = self.scrollView.contentSize.width;
-    float width = self.scrollView.frame.size.width;
-    
-    // don't process when bouncing beyond the range of the scroll view
-    // clamp offset value between first and last tiles
-    offset = clamp(offset, 0., contentSize - width);
-    
-    // now divide into the number of tiles
-    int tileIndex = roundf(offset / width);
-    
-//    DLog (@"Current tile index: %d", tileIndex);
-    return tileIndex;
-}
-
-- (float)relativeOffset {
-    
-    float offset = self.scrollView.contentOffset.x;
-    float contentSize = self.scrollView.contentSize.width;
-    float width = self.scrollView.frame.size.width;
-    
-    // don't process when bouncing beyond the range of the scroll view
-    // clamp offset value between first and last tiles
-    offset = clamp(offset, 0., contentSize - width);
-    
-    // now divide into the number of tiles
-    offset = fmodf(offset, width);
-    
-    return offset;
-}
+#pragma mark - Action Menu Methods
 
 - (void)layoutActionMenuForOffset:(float)offset {
     
@@ -454,6 +454,9 @@
     self.centerAction.layer.transform = CATransform3DIdentity;
     self.rightAction.layer.transform = CATransform3DIdentity;
 }
+
+
+#pragma mark - Other Helper Methods
 
 - (void)shareText:(NSString *)text andImage:(UIImage *)image andUrl:(NSURL *)url {
     NSMutableArray *sharingItems = [NSMutableArray new];
