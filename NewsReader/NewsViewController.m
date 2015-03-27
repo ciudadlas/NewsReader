@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet ActionMenuView *actionMenuView;
 
-@property (strong, nonatomic) TileScrollViewManager *tileManager;
+@property (strong, nonatomic) TileScrollViewManager *scrollViewManager;
 
 - (IBAction)changeNewsContentTapped:(id)sender;
 
@@ -53,8 +53,8 @@
     UIColor *patternColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"egg_shell"]];
     self.view.backgroundColor = patternColor;
     
-    self.tileManager = [[TileScrollViewManager alloc] initWithScrollView:self.scrollView];
-    self.tileManager.delegate = self;
+    self.scrollViewManager = [[TileScrollViewManager alloc] initWithScrollView:self.scrollView];
+    self.scrollViewManager.delegate = self;
     
     self.actionMenuView.delegate = self;
     [self.actionMenuView setup];
@@ -71,12 +71,12 @@
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error loading news: %@", [error localizedDescription]]];
         } else {
             NSArray *news = response[@"news"];
-            self.tileManager.newsItems = news;
-            [self.tileManager clearScrollView];
+            self.scrollViewManager.newsItems = news;
+            [self.scrollViewManager clearScrollView];
             
             // Load the first 3 tiles, instead of loading all of them
             for (int tileIndex=0; tileIndex <= 2; tileIndex++) {
-                [self.tileManager addTileWithIndex:tileIndex];
+                [self.scrollViewManager addTileWithIndex:tileIndex];
             }
             
             // Set scroll view content size, and move it back to start
@@ -96,8 +96,8 @@
         [view setNeedsLayout];
     }
     
-    [self.actionMenuView updateActionMenuLayoutWithScrollViewOffset:[self.tileManager relativeOffset] scrollView:self.scrollView];
-    [self.tileManager repositionTiles];
+    [self.actionMenuView updateActionMenuLayoutWithScrollViewOffset:[self.scrollViewManager relativeOffset] scrollView:self.scrollView];
+    [self.scrollViewManager repositionTiles];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {    
@@ -122,7 +122,7 @@
 #pragma mark - ActionMenuViewDelegate Methods
 
 - (void)leftActionButtonTapped:(ActionMenuView *)actionMenuView {
-    NewsTileView *tile = [self.tileManager currentTileView];
+    NewsTileView *tile = [self.scrollViewManager currentTileView];
     
     if (tile) {
         [self shareText:tile.news.webTitle image:nil url:tile.news.fullURL];
@@ -130,7 +130,7 @@
 }
 
 - (void)centerActionButtonTapped:(ActionMenuView *)actionMenuView {
-    NewsTileView *tile = [self.tileManager currentTileView];
+    NewsTileView *tile = [self.scrollViewManager currentTileView];
     
     if (tile) {
         [self tileTapped:tile];
