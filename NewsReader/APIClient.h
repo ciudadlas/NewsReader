@@ -15,5 +15,6 @@
 
 + (APIClient *)sharedInstance;
 - (instancetype)initWithBaseURL:(NSURL *)url;
+- (NSMutableDictionary *)newsSearchQuerySharedParameters;
 
 @end

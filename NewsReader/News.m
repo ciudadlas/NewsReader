@@ -39,13 +39,12 @@ static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.Parse
 #pragma mark - Get Data Methods
 
 + (void)getNewsByKeyword:(NSString *)keyword block:(NewsResult)closure {
+    
+    NSMutableDictionary *sharedParameters = [[APIClient sharedInstance] newsSearchQuerySharedParameters];
+    [sharedParameters setObject:keyword forKey:@"q"];
 
-    NSString *requestPath = [NSString stringWithFormat:@"search?api-key=%@&q=%@&show-fields=headline,trailText,thumbnail&order-by=newest", [APIClient sharedInstance].APIKey, keyword];
-    requestPath = [requestPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
-#warning TO DO We should be passing the parameters as parameters here to function below, not in the request path
     // Make the API call
-    [[APIClient sharedInstance] GET:requestPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedInstance] GET:@"search" parameters:sharedParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         DLog(@"Request URL: %@", operation.request.URL);
         

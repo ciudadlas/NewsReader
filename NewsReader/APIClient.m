@@ -39,4 +39,13 @@ static NSString *const APIURLString = @"http://content.guardianapis.com";
     return APIKey;
 }
 
+- (NSMutableDictionary *)newsSearchQuerySharedParameters {
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    [dict setObject:APIKey forKey:@"api-key"];
+    [dict setObject:@"headline,trailText,thumbnail" forKey:@"show-fields"];
+    [dict setObject:@"newest" forKey:@"order-by"];
+    
+    return dict;
+}
+
 @end
