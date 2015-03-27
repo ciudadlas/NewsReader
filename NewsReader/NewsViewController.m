@@ -133,7 +133,7 @@
     
     if ([view isKindOfClass:[NewsTileView class]]) {
         NewsTileView *tile = (NewsTileView *)view;
-        [self shareText:tile.news.webTitle andImage:nil andUrl:tile.news.fullURL];
+        [self shareText:tile.news.webTitle image:nil url:tile.news.fullURL];
     } else {
         DLog(@"Error finding the current tile view");
     }
@@ -176,7 +176,7 @@
 
 #pragma mark - Other Helper Methods
 
-- (void)shareText:(NSString *)text andImage:(UIImage *)image andUrl:(NSURL *)url {
+- (void)shareText:(NSString *)text image:(UIImage *)image url:(NSURL *)url {
     NSMutableArray *sharingItems = [NSMutableArray new];
     
     if (text) {
