@@ -38,67 +38,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-#warning TO DO: Re-factor this method into smaller functions. Combine initialization and tile re-use code into one shared functions, without duplicates.
         _news = news;
-        
-        self.backgroundColor = HEXCOLOR(TILE_DEFAULT_COLOR);
-        self.layer.cornerRadius = TILE_CORNER_SIZE;
-        self.layer.borderColor = HEXCOLOR(TILE_TITLE_COLOR).CGColor;
-        self.layer.borderWidth = 2;
         _initialFrame = frame;
-        
-        // 1. Title Label
-        double leftMargin = 15.f;
-        double topMargin = 15.f;
-        _newsTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, frame.size.width - leftMargin * 2, topMargin)];
-        _newsTitleLabel.textColor = HEXCOLOR(TILE_TITLE_COLOR);
-        _newsTitleLabel.backgroundColor = [UIColor clearColor];
-        _newsTitleLabel.text = news.webTitle;
-        _newsTitleLabel.opaque = NO;
-        _newsTitleLabel.textAlignment = NSTextAlignmentLeft;
-        _newsTitleLabel.minimumScaleFactor = 2;
-        _newsTitleLabel.autoresizesSubviews = YES;
-        _newsTitleLabel.numberOfLines = 2;
-        _newsTitleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15.f];
-        [_newsTitleLabel sizeToFit];
-        [self addSubview:_newsTitleLabel];
-        
-        // 2. Date Label
-        double dateLabelLeftMargin = 15.f;
-        _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(dateLabelLeftMargin, _newsTitleLabel.frame.size.height + _newsTitleLabel.frame.origin.y, frame.size.width - leftMargin * 2, topMargin)];
-        _dateLabel.textColor = [UIColor grayColor];
-        _dateLabel.backgroundColor = [UIColor clearColor];
-        _dateLabel.text = [news.webPulicationDate timeAgoSinceNow];
-        _dateLabel.opaque = NO;
-        _dateLabel.textAlignment = NSTextAlignmentLeft;
-        _dateLabel.minimumScaleFactor = 2;
-        _dateLabel.autoresizesSubviews = YES;
-        _dateLabel.numberOfLines = 1;
-        _dateLabel.font = [UIFont fontWithName:@"Helvetica" size:12.f];
-        [_dateLabel sizeToFit];
-        [self addSubview:_dateLabel];
-        
-        // 3. Thumbnail Image
-        double thumbnailLeftMargin = 15.f;
-        double imageViewWidth = frame.size.width/2 - 2*thumbnailLeftMargin;
-        _thumbnailImageView = [[UIImageView alloc] initWithFrame:CGRectMake(thumbnailLeftMargin, _dateLabel.frame.size.height + _dateLabel.frame.origin.y, imageViewWidth, imageViewWidth)];
-        _thumbnailImageView.contentMode = UIViewContentModeScaleAspectFit & UIViewContentModeTop;
-        [_thumbnailImageView setImageWithURL:[NSURL URLWithString:news.thumbnailURL] placeholderImage:nil];
-        [self addSubview:_thumbnailImageView];
-        
-        // 4. News Summary Label
-        _summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(_thumbnailImageView.frame.origin.x + _thumbnailImageView.frame.size.width, _thumbnailImageView.frame.origin.y + 20, frame.size.width - _thumbnailImageView.frame.size.width - _thumbnailImageView.frame.origin.x , frame.size.height - _thumbnailImageView.frame.origin.y - 15)];
-        _summaryTextView.text = news.summaryText;
-        _summaryTextView.editable = NO;
-        _summaryTextView.selectable = NO;
-        _summaryTextView.backgroundColor = [UIColor clearColor];
-        [self addSubview:_summaryTextView];
-        
-        // 5. Tap Recognizer
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTile:)];
-        tap.numberOfTapsRequired = 2;
-        [self addGestureRecognizer:tap];
-        
+        [self setupView];
     }
     
     return self;
@@ -132,31 +74,29 @@
     _news = news;
     
     [self resetView];
-    
-    self.newsTitleLabel.text = news.webTitle;
-    self.dateLabel.text = [news.webPulicationDate timeAgoSinceNow];
-
-    [self.thumbnailImageView setImageWithURL:[NSURL URLWithString:news.thumbnailURL] placeholderImage:nil];
-    self.summaryTextView.text = news.summaryText;
-    
-    double leftMargin = 15.f;
-    double topMargin = 15.f;
-    self.newsTitleLabel.frame = CGRectMake(leftMargin, topMargin, self.frame.size.width - leftMargin, topMargin);
-    [self.newsTitleLabel sizeToFit];
-    
-    double dateLabelLeftMargin = 15.f;
-    self.dateLabel.frame = CGRectMake(dateLabelLeftMargin, _newsTitleLabel.frame.size.height + _newsTitleLabel.frame.origin.y, self.frame.size.width - leftMargin * 2, topMargin);
-    [self.dateLabel sizeToFit];
-    
-    double thumbnailLeftMargin = 15.f;
-    double imageViewWidth = self.frame.size.width/2 - 2*thumbnailLeftMargin;
-    _thumbnailImageView.frame = CGRectMake(thumbnailLeftMargin, _dateLabel.frame.size.height + _dateLabel.frame.origin.y, imageViewWidth, imageViewWidth);
-    
-    self.summaryTextView.frame = CGRectMake(_thumbnailImageView.frame.origin.x + _thumbnailImageView.frame.size.width, _thumbnailImageView.frame.origin.y + 20, self.frame.size.width - _thumbnailImageView.frame.size.width - _thumbnailImageView.frame.origin.x , self.frame.size.height - _thumbnailImageView.frame.origin.y - 15);
+    [self setupTitleLabel];
+    [self setupDateLabel];
+    [self setupThumbnailImage];
+    [self setupSummaryTextView];
 }
 
 - (void)tapTile:(UIGestureRecognizer *)gestureRecognizer {
     [self.delegate tileTapped:self];
+}
+
+#pragma mark - View Setup Helpers
+
+- (void)setupView {
+    self.backgroundColor = HEXCOLOR(TILE_DEFAULT_COLOR);
+    self.layer.cornerRadius = TILE_CORNER_SIZE;
+    self.layer.borderColor = HEXCOLOR(TILE_TITLE_COLOR).CGColor;
+    self.layer.borderWidth = 2;
+    
+    [self setupTitleLabel];
+    [self setupDateLabel];
+    [self setupThumbnailImage];
+    [self setupSummaryTextView];
+    [self setupGestureRecognizer];
 }
 
 - (void)resetView {
@@ -164,6 +104,102 @@
     self.dateLabel.text = nil;
     self.newsTitleLabel.text = nil;
     self.summaryTextView.text = nil;
+}
+
+- (void)setupTitleLabel {
+    double leftMargin = 15.f;
+    double topMargin = 15.f;
+    
+    CGRect viewFrame = CGRectMake(leftMargin, topMargin,
+                                  self.initialFrame.size.width - leftMargin * 2, topMargin);
+    
+    if (!_newsTitleLabel) {
+        _newsTitleLabel = [[UILabel alloc] initWithFrame:viewFrame];
+        _newsTitleLabel.textColor = HEXCOLOR(TILE_TITLE_COLOR);
+        _newsTitleLabel.backgroundColor = [UIColor clearColor];
+        _newsTitleLabel.opaque = NO;
+        _newsTitleLabel.textAlignment = NSTextAlignmentLeft;
+        _newsTitleLabel.minimumScaleFactor = 2;
+        _newsTitleLabel.autoresizesSubviews = YES;
+        _newsTitleLabel.numberOfLines = 2;
+        _newsTitleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15.f];
+        [self addSubview:_newsTitleLabel];
+    } else {
+        _newsTitleLabel.frame = viewFrame;
+    }
+    
+    _newsTitleLabel.text = self.news.webTitle;
+    [_newsTitleLabel sizeToFit];
+}
+
+- (void)setupDateLabel {
+    double topMargin = 15.f;
+    double dateLabelLeftMargin = 15.f;
+    
+    CGRect viewFrame = CGRectMake(dateLabelLeftMargin, _newsTitleLabel.frame.size.height + _newsTitleLabel.frame.origin.y,
+                                  self.initialFrame.size.width - dateLabelLeftMargin * 2, topMargin);
+    
+    if (!_dateLabel) {
+        _dateLabel = [[UILabel alloc] initWithFrame:viewFrame];
+        _dateLabel.textColor = [UIColor grayColor];
+        _dateLabel.backgroundColor = [UIColor clearColor];
+        _dateLabel.opaque = NO;
+        _dateLabel.textAlignment = NSTextAlignmentLeft;
+        _dateLabel.minimumScaleFactor = 2;
+        _dateLabel.autoresizesSubviews = YES;
+        _dateLabel.numberOfLines = 1;
+        _dateLabel.font = [UIFont fontWithName:@"Helvetica" size:12.f];
+        [self addSubview:_dateLabel];
+    } else {
+        _dateLabel.frame = viewFrame;
+    }
+    
+    _dateLabel.text = [self.news.webPulicationDate timeAgoSinceNow];
+    [_dateLabel sizeToFit];
+}
+
+- (void)setupThumbnailImage {
+    double thumbnailLeftMargin = 15.f;
+    double imageViewWidth = self.initialFrame.size.width/2 - 2*thumbnailLeftMargin;
+    
+    CGRect viewFrame = CGRectMake(thumbnailLeftMargin, _dateLabel.frame.size.height + _dateLabel.frame.origin.y,
+                                  imageViewWidth, imageViewWidth);
+    
+    if (!_thumbnailImageView) {
+        _thumbnailImageView = [[UIImageView alloc] initWithFrame:viewFrame];
+        _thumbnailImageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self addSubview:_thumbnailImageView];
+    } else {
+        _thumbnailImageView.frame = viewFrame;
+    }
+    
+    [_thumbnailImageView setImageWithURL:[NSURL URLWithString:self.news.thumbnailURL] placeholderImage:nil];
+}
+
+- (void)setupSummaryTextView {
+    
+    CGRect viewFrame = CGRectMake(self.initialFrame.size.width / 2, self.thumbnailImageView.frame.origin.y,
+                                  self.initialFrame.size.width / 2 - 15.f, self.initialFrame.size.height - self.thumbnailImageView.frame.origin.y - 15);
+    
+    if (!_summaryTextView) {
+        _summaryTextView = [[UITextView alloc] initWithFrame:viewFrame];
+        _summaryTextView.editable = NO;
+        _summaryTextView.selectable = NO;
+        _summaryTextView.scrollEnabled = NO;
+        _summaryTextView.backgroundColor = [UIColor clearColor];
+        _summaryTextView.font = [UIFont fontWithName:@"Helvetica" size:12.f];
+        [self addSubview:_summaryTextView];
+    } else {
+        _summaryTextView.frame = viewFrame;
+    }
+    
+    _summaryTextView.text = self.news.summaryText;
+}
+
+- (void)setupGestureRecognizer {
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTile:)];
+    tap.numberOfTapsRequired = 2;
+    [self addGestureRecognizer:tap];
 }
 
 @end

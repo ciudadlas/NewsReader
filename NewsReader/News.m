@@ -116,8 +116,8 @@ static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.Parse
     if (fields) {
         thumbnailURL = [fields objectForKey:@"thumbnail"];
         
-        // It looks like that the API can return random <br> strings for the trailText field. Getting rid of those here.
-        newsSummary = [[fields objectForKey:@"trailText"] stringByReplacingOccurrencesOfString:@"<br>" withString:@""];
+        // It looks like that the API can return random HTML tags for the trailText. Getting rid of those here.
+        newsSummary = [self stripHTML:[fields objectForKey:@"trailText"]];
     }
     
     if (apiUrl && newsId && sectionId && sectionName && publicationDate && webTitle && webUrl && thumbnailURL && newsSummary) {
@@ -150,6 +150,13 @@ static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.Parse
     } else {
         return nil;
     }
+}
+
++ (NSString *)stripHTML:(NSString *)inputString {
+    NSRange r;
+    while ((r = [inputString rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound)
+        inputString = [inputString stringByReplacingCharactersInRange:r withString:@""];
+    return inputString;
 }
 
 @end
