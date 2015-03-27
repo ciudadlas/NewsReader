@@ -40,11 +40,11 @@ static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.Parse
 
 + (void)getNewsByKeyword:(NSString *)keyword block:(NewsResult)closure {
     
-    NSMutableDictionary *sharedParameters = [[APIClient sharedInstance] newsSearchQuerySharedParameters];
-    [sharedParameters setObject:keyword forKey:@"q"];
+    NSMutableDictionary *parameters = [[APIClient sharedInstance] newsSearchQuerySharedParameters];
+    [parameters setObject:keyword forKey:@"q"];
 
     // Make the API call
-    [[APIClient sharedInstance] GET:@"search" parameters:sharedParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedInstance] GET:@"search" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         DLog(@"Request URL: %@", operation.request.URL);
         
