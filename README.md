@@ -1,5 +1,5 @@
 # NewsReader
-An iPhone news reader app
+A news reader app for iPhone
 
 # To do
 - Fix subview positioning issues in `NewsTileView`, especially when the tile is getting re-used
