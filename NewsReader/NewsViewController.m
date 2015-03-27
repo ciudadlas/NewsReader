@@ -93,8 +93,8 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    for (UIView *newsTile in [scrollView subviews]) {
-        [newsTile setNeedsLayout];
+    for (UIView *view in [scrollView subviews]) {
+        [view setNeedsLayout];
     }
     
     [self.actionMenuView updateActionMenuLayoutWithScrollViewOffset:[self.tileManager relativeOffset] scrollView:self.scrollView];

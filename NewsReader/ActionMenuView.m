@@ -125,7 +125,7 @@
 }
 
 - (void)enableActionsAfterScroll {
-    // Without this, tap gesture recognizers stop working.
+    // Without this, tap gesture recognizers on these views stop working due to the rotation.
     self.leftAction.layer.transform = CATransform3DIdentity;
     self.centerAction.layer.transform = CATransform3DIdentity;
     self.rightAction.layer.transform = CATransform3DIdentity;
