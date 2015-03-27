@@ -131,12 +131,12 @@
 			children = (
 				7522E5411ABF403E00078733 /* NewsViewController.h */,
 				7522E5421ABF403E00078733 /* NewsViewController.m */,
-				9F9F576B1AC4B47200C04478 /* ActionMenuView.h */,
-				9F9F576C1AC4B47200C04478 /* ActionMenuView.m */,
-				7522E66C1ABF866D00078733 /* NewsTileView.h */,
-				7522E66D1ABF866D00078733 /* NewsTileView.m */,
 				9F9F576E1AC4BB6C00C04478 /* TileScrollViewManager.h */,
 				9F9F576F1AC4BB6C00C04478 /* TileScrollViewManager.m */,
+				7522E66C1ABF866D00078733 /* NewsTileView.h */,
+				7522E66D1ABF866D00078733 /* NewsTileView.m */,
+				9F9F576B1AC4B47200C04478 /* ActionMenuView.h */,
+				9F9F576C1AC4B47200C04478 /* ActionMenuView.m */,
 			);
 			name = "News View";
 			sourceTree = "<group>";
