@@ -12,7 +12,7 @@ A news reader app for iPhone
 - QA, test app in different phone sizes and fix any bugs
 - Consider moving back and forward buttons in web view controller to the navigation bar from the bottom bar
 - Show user where in the news scrolling he is at (how many has he scrolled, how many more items there are)
-- When user reaches the end of scroll view, automatically loads new items
+- When user reaches the end of scroll view, automatically load new items
 - Persist user's entered search keywords and show a history (Look into trying http://realm.io/ for this)
 - Enable search by category and load a list of categories
 - Look into a more fun or more comprehensive API instead of Guardian
