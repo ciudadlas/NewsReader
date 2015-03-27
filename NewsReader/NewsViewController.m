@@ -48,11 +48,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-// This is called after the auto layout constraints of the view have been applied.
-//- (void)viewDidLayoutSubviews {
-//    [super viewDidLayoutSubviews];
-//}
-
 #pragma mark - View Setup Methods
 
 - (void)setupView {
