@@ -14,8 +14,6 @@
 #import "ActionMenuView.h"
 #import "TileScrollViewManager.h"
 
-#warning TO DO: Re-factor this VC into smaller classes
-
 @interface NewsViewController () <UIAlertViewDelegate, UIScrollViewDelegate, ActionMenuViewDelegate, TileScrollViewManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
