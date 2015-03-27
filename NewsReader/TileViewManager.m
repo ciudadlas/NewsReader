@@ -10,7 +10,7 @@
 #import "NewsTileView.h"
 #import "Macros.h"
 
-@interface TileViewManager() <NewsTileDelegate>
+@interface TileViewManager() <NewsTileViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (strong, nonatomic) NSMutableSet *recycledTiles;

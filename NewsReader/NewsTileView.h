@@ -10,7 +10,7 @@
 #import "News.h"
 @class NewsTileView;
 
-@protocol NewsTileDelegate <NSObject>
+@protocol NewsTileViewDelegate <NSObject>
 
 @required
 - (float)viewOffsetForScaling:(NewsTileView *)tile;
@@ -23,7 +23,7 @@
 - (id)initWithFrame:(CGRect)frame news:(News *)news;
 
 @property (nonatomic) CGRect initialFrame;
-@property (nonatomic, weak) id <NewsTileDelegate> delegate;
+@property (nonatomic, weak) id <NewsTileViewDelegate> delegate;
 @property (nonatomic, strong) News *news;
 
 @end
