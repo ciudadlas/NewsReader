@@ -130,6 +130,7 @@
 - (void)leftActionButtonTapped:(ActionMenuView *)actionMenuView {
     int currentTileIndex = [self.tileManager currentTileIndex];
     UIView *view = [self.scrollView viewWithTag:[self.tileManager getTagFromIndex:currentTileIndex]];
+    
     if ([view isKindOfClass:[NewsTileView class]]) {
         NewsTileView *tile = (NewsTileView *)view;
         [self shareText:tile.news.webTitle andImage:nil andUrl:tile.news.fullURL];
@@ -141,6 +142,7 @@
 - (void)centerActionButtonTapped:(ActionMenuView *)actionMenuView {
     int currentTileIndex = [self.tileManager currentTileIndex];
     UIView *view = [self.scrollView viewWithTag:[self.tileManager getTagFromIndex:currentTileIndex]];
+    
     if ([view isKindOfClass:[NewsTileView class]]) {
         [self tileTapped:(NewsTileView *)view];
     } else {
