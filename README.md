@@ -7,7 +7,7 @@ An iPhone news reader app
 - Re-evaluate the news tile re-use code in `TileScrollViewManager`, there may be a more straightforward way to accomplish it
 - Re-factor, review comments, and pragma mark properly
 - Add unit tests
-- Review codebase, check memory leaks, use static analyzer
+- Review codebase, check memory leaks, ~~use static analyzer~~
 - Write readme documentation
 - QA, test app in different phone sizes and fix any bugs
 - Consider moving back and forward buttons in web view controller to the navigation bar from the bottom bar

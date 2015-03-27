@@ -88,7 +88,9 @@ static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.Parse
             }
         }
     } else {
-        *parseError = [NSError errorWithDomain:ParseErrorDomain code:101 userInfo:@{NSLocalizedDescriptionKey: @"News items missing in API response."}];
+        if (parseError != NULL) {
+            *parseError = [NSError errorWithDomain:ParseErrorDomain code:101 userInfo:@{NSLocalizedDescriptionKey: @"News items missing in API response."}];
+        }
     }
     
     return [NSArray arrayWithArray:newsArray];
