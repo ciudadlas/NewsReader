@@ -19,8 +19,7 @@
 
 @implementation ActionMenuView
 
-// create the proper placement and perspective for the action menu tiles
-- (void)configMenuActions {
+- (void)setup {
     
 #warning TO DO: Look into why this is happening and a potential fix
     // These are displacing the menu buttons, so avoiding for now.

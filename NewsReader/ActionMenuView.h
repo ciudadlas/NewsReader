@@ -22,7 +22,7 @@
 
 @property (weak, nonatomic) id <ActionMenuViewDelegate> delegate;
 
-- (void)configMenuActions;
+- (void)setup;
 - (void)updateActionMenuLayoutWithScrollViewOffset:(float)offset scrollView:(UIScrollView *)scrollView;
 - (void)enableActionsAfterScroll;
 

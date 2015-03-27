@@ -58,7 +58,7 @@
     self.tileManager.delegate = self;
     
     self.actionMenuView.delegate = self;
-    [self.actionMenuView configMenuActions];
+    [self.actionMenuView setup];
 }
 
 #pragma mark - Load Data Methods
