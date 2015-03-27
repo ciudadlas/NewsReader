@@ -82,7 +82,7 @@ static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.Parse
     NSArray *newsItems = newsResponse[@"response"][@"results"];
     if (newsItems) {
         for (NSDictionary *newsItem in newsItems) {
-            News *news = [self parseSingleNewsItem:newsItem];            
+            News *news = [self parseSingleNewsItem:newsItem];
             if (news) {
                 [newsArray addObject:news];
             }
@@ -136,7 +136,7 @@ static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.Parse
         returnValue = newsObject;
         
     } else {
-        DLog(@"Missing value during parsing of news item.");
+        DLog(@"Missing value during parsing of single news item.");
     }
     
     return returnValue;
