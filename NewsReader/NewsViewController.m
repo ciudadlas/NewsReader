@@ -106,12 +106,10 @@
     [self.tileManager repositionTiles];
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {    
     @try {
         [self.actionMenuView enableActionsAfterScroll];
-    }
-    @catch (NSException *exception) {
+    } @catch (NSException *exception) {
         DLog(@"Exception after scrolling: %@", exception);
     }
 }

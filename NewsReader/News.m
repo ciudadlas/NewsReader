@@ -80,7 +80,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     
-    NSDictionary *newsItems = newsResponse[@"response"][@"results"];
+    NSArray *newsItems = newsResponse[@"response"][@"results"];
     for (NSDictionary *newsItem in newsItems) {
         
 #warning TO DO: Make constants for the parsing keys
