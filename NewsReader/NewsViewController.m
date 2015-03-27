@@ -164,8 +164,7 @@
 
 #pragma mark - IBAction Methods
 
-- (IBAction)changeNewsContentTapped:(id)sender {
-    
+- (IBAction)changeNewsContentTapped:(id)sender {    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter a search query below:" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Load News", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alert show];
