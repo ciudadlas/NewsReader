@@ -186,7 +186,7 @@
     return offset;
 }
 
-#pragma mark - NewsTileDelegate Methods
+#pragma mark - NewsTileViewDelegate Methods
 
 - (float)viewOffsetForScaling:(NewsTileView *)tile {
     
