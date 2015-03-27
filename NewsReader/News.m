@@ -81,45 +81,49 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     
     NSArray *newsItems = newsResponse[@"response"][@"results"];
-    for (NSDictionary *newsItem in newsItems) {
-        
+    if (newsItems) {
+        for (NSDictionary *newsItem in newsItems) {
+            
 #warning TO DO: Make constants for the parsing keys
-        NSString *apiUrl = [newsItem objectForKey:@"apiUrl"];
-        NSString *newsId = [newsItem objectForKey:@"id"];
-        NSString *sectionId = [newsItem objectForKey:@"sectionId"];
-        NSString *sectionName = [newsItem objectForKey:@"sectionName"];
-        NSDate *publicationDate = [dateFormatter dateFromString:[newsItem objectForKey:@"webPublicationDate"]];
-        NSString *webTitle = [newsItem objectForKey:@"webTitle"];
-        NSString *webUrl = [newsItem objectForKey:@"webUrl"];
-        
-        NSString *thumbnailURL = nil;
-        NSString *newsSummary = nil;
-        
-        NSDictionary *fields = [newsItem objectForKey:@"fields"];
-        if (fields) {
-            thumbnailURL = [fields objectForKey:@"thumbnail"];
+            NSString *apiUrl = [newsItem objectForKey:@"apiUrl"];
+            NSString *newsId = [newsItem objectForKey:@"id"];
+            NSString *sectionId = [newsItem objectForKey:@"sectionId"];
+            NSString *sectionName = [newsItem objectForKey:@"sectionName"];
+            NSDate *publicationDate = [dateFormatter dateFromString:[newsItem objectForKey:@"webPublicationDate"]];
+            NSString *webTitle = [newsItem objectForKey:@"webTitle"];
+            NSString *webUrl = [newsItem objectForKey:@"webUrl"];
             
-            // It looks like that the API can return random <br> strings for the trailText field. Getting rid of those here.
-            newsSummary = [[fields objectForKey:@"trailText"] stringByReplacingOccurrencesOfString:@"<br>" withString:@""];
+            NSString *thumbnailURL = nil;
+            NSString *newsSummary = nil;
+            
+            NSDictionary *fields = [newsItem objectForKey:@"fields"];
+            if (fields) {
+                thumbnailURL = [fields objectForKey:@"thumbnail"];
+                
+                // It looks like that the API can return random <br> strings for the trailText field. Getting rid of those here.
+                newsSummary = [[fields objectForKey:@"trailText"] stringByReplacingOccurrencesOfString:@"<br>" withString:@""];
+            }
+            
+            if (apiUrl && newsId && sectionId && sectionName && publicationDate && webTitle && webUrl && thumbnailURL && newsSummary) {
+                
+                News *newsObject = [[News alloc] initWithAPIURL:apiUrl
+                                                         newsID:newsId
+                                                      sectionID:sectionId
+                                                    sectionName:sectionName
+                                                publicationDate:publicationDate
+                                                       webTitle:webTitle
+                                                         webURL:webUrl
+                                                   thumbnailURL:thumbnailURL
+                                                    newsSummary:newsSummary];
+                
+                [news addObject:newsObject];
+                
+            } else {
+                *parseError = [NSError errorWithDomain:@"com.serdarkaratakin.NewsReader.ParseErrorDomain" code:100 userInfo:@{NSLocalizedDescriptionKey: @"Missing value during parsing of news item."}];
+            }
         }
-        
-        if (apiUrl && newsId && sectionId && sectionName && publicationDate && webTitle && webUrl && thumbnailURL && newsSummary) {
-        
-            News *newsObject = [[News alloc] initWithAPIURL:apiUrl
-                                                     newsID:newsId
-                                                  sectionID:sectionId
-                                                sectionName:sectionName
-                                            publicationDate:publicationDate
-                                                   webTitle:webTitle
-                                                     webURL:webUrl
-                                               thumbnailURL:thumbnailURL
-                                                newsSummary:newsSummary];
-            
-            [news addObject:newsObject];
-            
-        } else {
-            *parseError = [NSError errorWithDomain:@"com.serdarkaratakin.NewsReader.ParseErrorDomain" code:100 userInfo:@{NSLocalizedDescriptionKey: @"Missing value during parsing of news item"}];
-        }
+    } else {
+        *parseError = [NSError errorWithDomain:@"com.serdarkaratakin.NewsReader.ParseErrorDomain" code:100 userInfo:@{NSLocalizedDescriptionKey: @"News items missing in API response."}];
     }
     
     return [NSArray arrayWithArray:news];
