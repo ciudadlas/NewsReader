@@ -11,7 +11,7 @@
 
 @interface APIClient : AFHTTPRequestOperationManager
 
-@property (nonatomic, strong, readonly) NSString *APIKey;
+@property (strong, nonatomic, readonly) NSString *APIKey;
 
 + (APIClient *)sharedInstance;
 - (instancetype)initWithBaseURL:(NSURL *)url;

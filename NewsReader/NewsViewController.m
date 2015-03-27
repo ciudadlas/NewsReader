@@ -18,10 +18,10 @@
 
 @interface NewsViewController () <UIAlertViewDelegate, UIScrollViewDelegate, ActionMenuViewDelegate, TileViewManagerDelegate>
 
-@property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, weak) IBOutlet ActionMenuView *actionMenuView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet ActionMenuView *actionMenuView;
 
-@property (nonatomic, strong) TileViewManager *tileManager;
+@property (strong, nonatomic) TileViewManager *tileManager;
 
 - (IBAction)changeNewsContentTapped:(id)sender;
 

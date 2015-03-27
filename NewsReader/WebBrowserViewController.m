@@ -12,11 +12,11 @@ static void *WebContext = &WebContext;
 
 @interface WebBrowserViewController ()
 
-@property (nonatomic, strong) WKWebView *webView;
-@property (nonatomic, strong) UIBarButtonItem *forwardButton;
-@property (nonatomic, strong) UIBarButtonItem *backButton;
-@property (nonatomic, strong) UIProgressView *progressView;
-@property (nonatomic, strong) NSURL *initialURL;
+@property (strong, nonatomic) WKWebView *webView;
+@property (strong, nonatomic) UIBarButtonItem *forwardButton;
+@property (strong, nonatomic) UIBarButtonItem *backButton;
+@property (strong, nonatomic) UIProgressView *progressView;
+@property (strong, nonatomic) NSURL *initialURL;
 
 @end
 

@@ -12,16 +12,16 @@ typedef void (^NewsResult)(NSError *error, NSDictionary *repsonse);
 
 @interface News : NSObject
 
-@property (nonatomic, copy, readonly) NSString *apiURL;
-@property (nonatomic, copy, readonly) NSString *newsID;
-@property (nonatomic, copy, readonly) NSString *sectionID;
-@property (nonatomic, copy, readonly) NSString *sectionName;
-@property (nonatomic, copy, readonly) NSDate *webPulicationDate;
-@property (nonatomic, copy, readonly) NSString *webTitle;
-@property (nonatomic, copy, readonly) NSString *webURL;
-@property (nonatomic, copy, readonly) NSString *summaryText;
-@property (nonatomic, copy, readonly) NSString *thumbnailURL;
-@property (nonatomic, readonly) NSURL *fullURL;
+@property (copy, nonatomic, readonly) NSString *apiURL;
+@property (copy, nonatomic, readonly) NSString *newsID;
+@property (copy, nonatomic, readonly) NSString *sectionID;
+@property (copy, nonatomic, readonly) NSString *sectionName;
+@property (copy, nonatomic, readonly) NSDate *webPulicationDate;
+@property (copy, nonatomic, readonly) NSString *webTitle;
+@property (copy, nonatomic, readonly) NSString *webURL;
+@property (copy, nonatomic, readonly) NSString *summaryText;
+@property (copy, nonatomic, readonly) NSString *thumbnailURL;
+@property (copy, nonatomic, readonly) NSURL *fullURL;
 
 - (instancetype)initWithAPIURL:(NSString*)apiURL newsID:(NSString *)newsID sectionID:(NSString *)sectionID sectionName:(NSString *)sectionName publicationDate:(NSDate *)publicationDate webTitle:(NSString *)webTitle webURL:(NSString *)webURL thumbnailURL:(NSString *)thumbnailURL newsSummary:(NSString *)newsSummary;
 

@@ -24,10 +24,10 @@
 
 @interface NewsTileView ()
 
-@property (nonatomic, strong) UILabel *newsTitleLabel;
-@property (nonatomic, strong) UILabel *dateLabel;
-@property (nonatomic, strong) UIImageView *thumbnailImageView;
-@property (nonatomic, strong) UITextView *summaryTextView;
+@property (strong, nonatomic) UILabel *newsTitleLabel;
+@property (strong, nonatomic) UILabel *dateLabel;
+@property (strong, nonatomic) UIImageView *thumbnailImageView;
+@property (strong, nonatomic) UITextView *summaryTextView;
 
 @end
 

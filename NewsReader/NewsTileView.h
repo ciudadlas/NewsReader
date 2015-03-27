@@ -21,8 +21,8 @@
 @interface NewsTileView : UIView
 
 @property (nonatomic) CGRect initialFrame;
-@property (nonatomic, weak) id <NewsTileViewDelegate> delegate;
-@property (nonatomic, strong) News *news;
+@property (weak, nonatomic) id <NewsTileViewDelegate> delegate;
+@property (strong, nonatomic) News *news;
 
 - (id)initWithFrame:(CGRect)frame news:(News *)news;
 

@@ -19,8 +19,8 @@
 
 @interface TileViewManager : NSObject
 
-@property (nonatomic, strong) NSArray *newsItems;
-@property (nonatomic, weak) id <TileViewManagerDelegate> delegate;
+@property (strong, nonatomic) NSArray *newsItems;
+@property (weak, nonatomic) id <TileViewManagerDelegate> delegate;
 
 - (instancetype)initWithScrollView:(UIScrollView *)scrollView;
 - (void)clearScrollView;

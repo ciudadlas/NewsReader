@@ -20,7 +20,7 @@
 
 @interface ActionMenuView : UIView
 
-@property (nonatomic, weak) id <ActionMenuViewDelegate> delegate;
+@property (weak, nonatomic) id <ActionMenuViewDelegate> delegate;
 
 - (void)configMenuActions;
 - (void)updateActionMenuLayoutWithScrollViewOffset:(float)offset scrollView:(UIScrollView *)scrollView;
