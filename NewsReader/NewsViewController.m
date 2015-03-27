@@ -127,8 +127,6 @@
     
     if (tile) {
         [self shareText:tile.news.webTitle image:nil url:tile.news.fullURL];
-    } else {
-        DLog(@"Error finding the current tile view.");
     }
 }
 
@@ -137,8 +135,6 @@
     
     if (tile) {
         [self tileTapped:tile];
-    } else {
-        DLog(@"Error finding the current tile view.");
     }
 }
 

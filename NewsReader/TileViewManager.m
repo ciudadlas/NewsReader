@@ -166,6 +166,7 @@
     if (view && [view isKindOfClass:[NewsTileView class]]) {
         return (NewsTileView *)view;
     } else {
+        DLog(@"Error finding the current tile view.");
         return nil;
     }
 }
