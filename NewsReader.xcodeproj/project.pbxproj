@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7502A0081AC341AF00CAF0CF /* WebBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7502A0071AC341AF00CAF0CF /* WebBrowserViewController.m */; };
+		751DF9291AC5640000AD6905 /* NSDateFormatter+ThreadSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 751DF9281AC5640000AD6905 /* NSDateFormatter+ThreadSafe.m */; };
 		7522E53D1ABF403E00078733 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E53C1ABF403E00078733 /* main.m */; };
 		7522E5401ABF403E00078733 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E53F1ABF403E00078733 /* AppDelegate.m */; };
 		7522E5431ABF403E00078733 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522E5421ABF403E00078733 /* NewsViewController.m */; };
@@ -37,6 +38,8 @@
 		5F868C196D509AB4AE7B8604 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		7502A0061AC341AF00CAF0CF /* WebBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebBrowserViewController.h; sourceTree = "<group>"; };
 		7502A0071AC341AF00CAF0CF /* WebBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebBrowserViewController.m; sourceTree = "<group>"; };
+		751DF9271AC5640000AD6905 /* NSDateFormatter+ThreadSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+ThreadSafe.h"; sourceTree = "<group>"; };
+		751DF9281AC5640000AD6905 /* NSDateFormatter+ThreadSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+ThreadSafe.m"; sourceTree = "<group>"; };
 		7522E5371ABF403E00078733 /* NewsReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7522E53B1ABF403E00078733 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7522E53C1ABF403E00078733 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -97,6 +100,7 @@
 			children = (
 				7522E53E1ABF403E00078733 /* AppDelegate.h */,
 				7522E53F1ABF403E00078733 /* AppDelegate.m */,
+				751DF9261AC563E100AD6905 /* Helpers */,
 				7502A00A1AC3482400CAF0CF /* Data Layer */,
 			);
 			name = "00 - Core";
@@ -144,6 +148,15 @@
 				7502A0071AC341AF00CAF0CF /* WebBrowserViewController.m */,
 			);
 			name = "Web Browser View";
+			sourceTree = "<group>";
+		};
+		751DF9261AC563E100AD6905 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				751DF9271AC5640000AD6905 /* NSDateFormatter+ThreadSafe.h */,
+				751DF9281AC5640000AD6905 /* NSDateFormatter+ThreadSafe.m */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		7522E52E1ABF403E00078733 = {
@@ -354,6 +367,7 @@
 				9F9F57701AC4BB6C00C04478 /* TileScrollViewManager.m in Sources */,
 				9F9F576D1AC4B47200C04478 /* ActionMenuView.m in Sources */,
 				7598D0731AC29FC500BFE50D /* APIClient.m in Sources */,
+				751DF9291AC5640000AD6905 /* NSDateFormatter+ThreadSafe.m in Sources */,
 				7502A0081AC341AF00CAF0CF /* WebBrowserViewController.m in Sources */,
 				7522E5431ABF403E00078733 /* NewsViewController.m in Sources */,
 				75759B311AC00CB100DC67A4 /* News.m in Sources */,

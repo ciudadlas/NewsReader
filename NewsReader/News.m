@@ -9,6 +9,7 @@
 #import "News.h"
 #import "APIClient.h"
 #import "Macros.h"
+#import "NSDateFormatter+ThreadSafe.h"
 
 static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.ParseErrorDomain";
 
@@ -96,9 +97,6 @@ static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.Parse
 
 + (News *)parseSingleNewsItem:(NSDictionary *)newsItem {
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-    
     News *returnValue = nil;
 
 #warning TO DO: Make constants for the parsing keys
@@ -106,7 +104,7 @@ static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.Parse
     NSString *newsId = [newsItem objectForKey:@"id"];
     NSString *sectionId = [newsItem objectForKey:@"sectionId"];
     NSString *sectionName = [newsItem objectForKey:@"sectionName"];
-    NSDate *publicationDate = [dateFormatter dateFromString:[newsItem objectForKey:@"webPublicationDate"]];
+    NSDate *publicationDate = [[NSDateFormatter threadSafeDateFormatter] dateFromString:[newsItem objectForKey:@"webPublicationDate"]];
     NSString *webTitle = [newsItem objectForKey:@"webTitle"];
     NSString *webUrl = [newsItem objectForKey:@"webUrl"];
     
