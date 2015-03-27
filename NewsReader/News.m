@@ -10,6 +10,8 @@
 #import "APIClient.h"
 #import "Macros.h"
 
+static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.ParseErrorDomain";
+
 @implementation News
 
 #pragma mark - Initializers
@@ -50,8 +52,8 @@
         NSError *error;
         NSArray *news = [self parseNewsResponse:responseObject error:&error];
         
-        // Depending on what the error is, we may decide to disregard the data altogether or still use it despite errors.
-        // In this case if there is any error, we are returning error back.
+        // Depending on what the error is during parsing, we may decide to disregard the data altogether or still use it despite errors.
+        // In this case if there is any error, we are returning error back, regardless of what the error is.
         if (error) {
             if (closure != NULL) {
                 closure(error, nil);
@@ -119,11 +121,11 @@
                 [news addObject:newsObject];
                 
             } else {
-                *parseError = [NSError errorWithDomain:@"com.serdarkaratakin.NewsReader.ParseErrorDomain" code:100 userInfo:@{NSLocalizedDescriptionKey: @"Missing value during parsing of news item."}];
+                NSLog(@"Missing value during parsing of news item.");
             }
         }
     } else {
-        *parseError = [NSError errorWithDomain:@"com.serdarkaratakin.NewsReader.ParseErrorDomain" code:100 userInfo:@{NSLocalizedDescriptionKey: @"News items missing in API response."}];
+        *parseError = [NSError errorWithDomain:ParseErrorDomain code:101 userInfo:@{NSLocalizedDescriptionKey: @"News items missing in API response."}];
     }
     
     return [NSArray arrayWithArray:news];
