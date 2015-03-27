@@ -2,8 +2,8 @@
 //  NSDateFormatter+ThreadSafe.m
 //  Skate
 //
-//  Created by Serdar Karatekin on 12/16/13.
-//  Copyright (c) 2013 Crispin Porter + Bogusky. All rights reserved.
+//  Created by Serdar Karatekin on 3/27/15.
+//  Copyright (c) 2015 Serdar Karatekin. All rights reserved.
 //
 
 #import "NSDateFormatter+ThreadSafe.h"
