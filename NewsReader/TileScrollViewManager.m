@@ -6,11 +6,11 @@
 //  Copyright (c) 2015 Serdar Karatekin. All rights reserved.
 //
 
-#import "TileViewManager.h"
+#import "TileScrollViewManager.h"
 #import "NewsTileView.h"
 #import "Macros.h"
 
-@interface TileViewManager() <NewsTileViewDelegate>
+@interface TileScrollViewManager() <NewsTileViewDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) NSMutableSet *recycledTiles;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation TileViewManager
+@implementation TileScrollViewManager
 
 - (instancetype)initWithScrollView:(UIScrollView *)scrollView {
     self = [super init];

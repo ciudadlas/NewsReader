@@ -12,16 +12,16 @@
 #import "WebBrowserViewController.h"
 #import "SVProgressHUD.h"
 #import "ActionMenuView.h"
-#import "TileViewManager.h"
+#import "TileScrollViewManager.h"
 
 #warning TO DO: Re-factor this VC into smaller classes
 
-@interface NewsViewController () <UIAlertViewDelegate, UIScrollViewDelegate, ActionMenuViewDelegate, TileViewManagerDelegate>
+@interface NewsViewController () <UIAlertViewDelegate, UIScrollViewDelegate, ActionMenuViewDelegate, TileScrollViewManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet ActionMenuView *actionMenuView;
 
-@property (strong, nonatomic) TileViewManager *tileManager;
+@property (strong, nonatomic) TileScrollViewManager *tileManager;
 
 - (IBAction)changeNewsContentTapped:(id)sender;
 
@@ -54,7 +54,7 @@
     UIColor *patternColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"egg_shell"]];
     self.view.backgroundColor = patternColor;
     
-    self.tileManager = [[TileViewManager alloc] initWithScrollView:self.scrollView];
+    self.tileManager = [[TileScrollViewManager alloc] initWithScrollView:self.scrollView];
     self.tileManager.delegate = self;
     
     self.actionMenuView.delegate = self;

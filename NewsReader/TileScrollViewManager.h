@@ -10,17 +10,17 @@
 #import <UIKit/UIKit.h>
 #import "NewsTileView.h"
 
-@protocol TileViewManagerDelegate <NSObject>
+@protocol TileScrollViewManagerDelegate <NSObject>
 
 @optional
 - (void)tileTapped:(NewsTileView *)tile;
 
 @end
 
-@interface TileViewManager : NSObject
+@interface TileScrollViewManager : NSObject
 
 @property (strong, nonatomic) NSArray *newsItems;
-@property (weak, nonatomic) id <TileViewManagerDelegate> delegate;
+@property (weak, nonatomic) id <TileScrollViewManagerDelegate> delegate;
 
 - (instancetype)initWithScrollView:(UIScrollView *)scrollView;
 - (void)clearScrollView;

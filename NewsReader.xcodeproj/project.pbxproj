@@ -19,7 +19,7 @@
 		75759B311AC00CB100DC67A4 /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = 75759B301AC00CB000DC67A4 /* News.m */; };
 		7598D0731AC29FC500BFE50D /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7598D0721AC29FC500BFE50D /* APIClient.m */; };
 		9F9F576D1AC4B47200C04478 /* ActionMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F576C1AC4B47200C04478 /* ActionMenuView.m */; };
-		9F9F57701AC4BB6C00C04478 /* TileViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F576F1AC4BB6C00C04478 /* TileViewManager.m */; };
+		9F9F57701AC4BB6C00C04478 /* TileScrollViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F576F1AC4BB6C00C04478 /* TileScrollViewManager.m */; };
 		AC8B7D2263631D6102AF3485 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FCCA178B4C19CB5591536C /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -60,8 +60,8 @@
 		83FCCA178B4C19CB5591536C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9F576B1AC4B47200C04478 /* ActionMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionMenuView.h; sourceTree = "<group>"; };
 		9F9F576C1AC4B47200C04478 /* ActionMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionMenuView.m; sourceTree = "<group>"; };
-		9F9F576E1AC4BB6C00C04478 /* TileViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileViewManager.h; sourceTree = "<group>"; };
-		9F9F576F1AC4BB6C00C04478 /* TileViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TileViewManager.m; sourceTree = "<group>"; };
+		9F9F576E1AC4BB6C00C04478 /* TileScrollViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileScrollViewManager.h; sourceTree = "<group>"; };
+		9F9F576F1AC4BB6C00C04478 /* TileScrollViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TileScrollViewManager.m; sourceTree = "<group>"; };
 		D36E779946AB2C20A72CC30B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,8 +131,8 @@
 				9F9F576C1AC4B47200C04478 /* ActionMenuView.m */,
 				7522E66C1ABF866D00078733 /* NewsTileView.h */,
 				7522E66D1ABF866D00078733 /* NewsTileView.m */,
-				9F9F576E1AC4BB6C00C04478 /* TileViewManager.h */,
-				9F9F576F1AC4BB6C00C04478 /* TileViewManager.m */,
+				9F9F576E1AC4BB6C00C04478 /* TileScrollViewManager.h */,
+				9F9F576F1AC4BB6C00C04478 /* TileScrollViewManager.m */,
 			);
 			name = "News View";
 			sourceTree = "<group>";
@@ -351,7 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7522E66E1ABF866D00078733 /* NewsTileView.m in Sources */,
-				9F9F57701AC4BB6C00C04478 /* TileViewManager.m in Sources */,
+				9F9F57701AC4BB6C00C04478 /* TileScrollViewManager.m in Sources */,
 				9F9F576D1AC4B47200C04478 /* ActionMenuView.m in Sources */,
 				7598D0731AC29FC500BFE50D /* APIClient.m in Sources */,
 				7502A0081AC341AF00CAF0CF /* WebBrowserViewController.m in Sources */,
