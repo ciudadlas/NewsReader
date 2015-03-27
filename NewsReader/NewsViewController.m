@@ -141,7 +141,7 @@
     [SVProgressHUD showErrorWithStatus:@"Not yet implemented."];
 }
 
-#pragma mark - TileViewManagerDelegate Methods
+#pragma mark - TileScrollViewManagerDelegate Methods
 
 - (void)tileTapped:(NewsTileView *)tile {
     WebBrowserViewController *webViewController = [[WebBrowserViewController alloc] initWithURL:tile.news.fullURL];
