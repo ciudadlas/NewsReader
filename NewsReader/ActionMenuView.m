@@ -21,7 +21,7 @@
 
 - (void)setup {
     
-#warning TO DO: Look into why this is happening and a potential fix
+#warning TO DO: Look into why this is happening and finding a fix
     // These are displacing the menu buttons, so avoiding for now.
     //    [self setAnchorPoint:CGPointMake(1.5, 0.5) forView:self.leftAction];
     //    [self setAnchorPoint:CGPointMake(-0.5, 0.5) forView:self.rightAction];

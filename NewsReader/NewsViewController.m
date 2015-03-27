@@ -13,6 +13,7 @@
 #import "SVProgressHUD.h"
 #import "ActionMenuView.h"
 #import "TileScrollViewManager.h"
+#import "NewsTileView.h"
 
 @interface NewsViewController () <UIAlertViewDelegate, UIScrollViewDelegate, ActionMenuViewDelegate, TileScrollViewManagerDelegate>
 
