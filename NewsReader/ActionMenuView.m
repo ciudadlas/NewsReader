@@ -11,9 +11,9 @@
 
 @interface ActionMenuView()
 
-@property (weak, nonatomic) IBOutlet UIView *leftAction;
-@property (weak, nonatomic) IBOutlet UIView *centerAction;
-@property (weak, nonatomic) IBOutlet UIView *rightAction;
+@property (nonatomic, weak) IBOutlet UIView *leftAction;
+@property (nonatomic, weak) IBOutlet UIView *centerAction;
+@property (nonatomic, weak) IBOutlet UIView *rightAction;
 
 @end
 

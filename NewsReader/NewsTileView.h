@@ -20,10 +20,10 @@
 
 @interface NewsTileView : UIView
 
-- (id)initWithFrame:(CGRect)frame news:(News *)news;
-
 @property (nonatomic) CGRect initialFrame;
 @property (nonatomic, weak) id <NewsTileViewDelegate> delegate;
 @property (nonatomic, strong) News *news;
+
+- (id)initWithFrame:(CGRect)frame news:(News *)news;
 
 @end

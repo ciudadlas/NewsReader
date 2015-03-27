@@ -13,8 +13,8 @@
 @interface TileViewManager() <NewsTileViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (strong, nonatomic) NSMutableSet *recycledTiles;
-@property (strong, nonatomic) NSMutableSet *visibleTiles;
+@property (nonatomic, strong) NSMutableSet *recycledTiles;
+@property (nonatomic, strong) NSMutableSet *visibleTiles;
 
 @property (nonatomic) int selectedTileIndex;
 

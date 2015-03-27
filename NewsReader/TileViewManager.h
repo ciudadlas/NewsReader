@@ -19,6 +19,9 @@
 
 @interface TileViewManager : NSObject
 
+@property (nonatomic, strong) NSArray *newsItems;
+@property (nonatomic, weak) id <TileViewManagerDelegate> delegate;
+
 - (instancetype)initWithScrollView:(UIScrollView *)scrollView;
 - (void)clearScrollView;
 - (void)addTileWithIndex:(int)index;
@@ -27,8 +30,5 @@
 - (int)currentTileIndex;
 - (int)getArrayIndexFromTileViewTag:(int)tag;
 - (int)getTagFromIndex:(int)index;
-
-@property (strong, nonatomic) NSArray *newsItems;
-@property (weak, nonatomic) id <TileViewManagerDelegate> delegate;
 
 @end
