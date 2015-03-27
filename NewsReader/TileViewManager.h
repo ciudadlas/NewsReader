@@ -28,6 +28,7 @@
 - (void)repositionTiles;
 - (float)relativeOffset;
 - (int)currentTileIndex;
+- (NewsTileView *)currentTileView;
 - (int)getArrayIndexFromTileViewTag:(int)tag;
 - (int)getTagFromIndex:(int)index;
 

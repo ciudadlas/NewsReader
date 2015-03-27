@@ -159,6 +159,17 @@
     return tileIndex;
 }
 
+- (NewsTileView *)currentTileView {
+    int currentTileIndex = [self currentTileIndex];
+    UIView *view = [self.scrollView viewWithTag:[self getTagFromIndex:currentTileIndex]];
+    
+    if (view && [view isKindOfClass:[NewsTileView class]]) {
+        return (NewsTileView *)view;
+    } else {
+        return nil;
+    }
+}
+
 /**
  * This calculates the current offset of the scroll view, amount of horizontal distance from a stable point.
  */

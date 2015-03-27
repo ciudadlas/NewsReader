@@ -128,25 +128,22 @@
 #pragma mark - ActionMenuViewDelegate Methods
 
 - (void)leftActionButtonTapped:(ActionMenuView *)actionMenuView {
-    int currentTileIndex = [self.tileManager currentTileIndex];
-    UIView *view = [self.scrollView viewWithTag:[self.tileManager getTagFromIndex:currentTileIndex]];
+    NewsTileView *tile = [self.tileManager currentTileView];
     
-    if ([view isKindOfClass:[NewsTileView class]]) {
-        NewsTileView *tile = (NewsTileView *)view;
+    if (tile) {
         [self shareText:tile.news.webTitle image:nil url:tile.news.fullURL];
     } else {
-        DLog(@"Error finding the current tile view");
+        DLog(@"Error finding the current tile view.");
     }
 }
 
 - (void)centerActionButtonTapped:(ActionMenuView *)actionMenuView {
-    int currentTileIndex = [self.tileManager currentTileIndex];
-    UIView *view = [self.scrollView viewWithTag:[self.tileManager getTagFromIndex:currentTileIndex]];
+    NewsTileView *tile = [self.tileManager currentTileView];
     
-    if ([view isKindOfClass:[NewsTileView class]]) {
-        [self tileTapped:(NewsTileView *)view];
+    if (tile) {
+        [self tileTapped:tile];
     } else {
-        DLog(@"Error finding the current tile view");
+        DLog(@"Error finding the current tile view.");
     }
 }
 
