@@ -20,7 +20,7 @@
 #define SCALE_CORRECTION 1.4
 #define ROTATION_FACTOR 1000.0
 
-#define SEGMENT_DETAIL_HEIGHT_DIFF 130.0
+static int const StandardMargin = 15;
 
 @interface NewsTileView ()
 
@@ -107,11 +107,9 @@
 }
 
 - (void)setupTitleLabel {
-    double leftMargin = 15.f;
-    double topMargin = 15.f;
     
-    CGRect viewFrame = CGRectMake(leftMargin, topMargin,
-                                  self.initialFrame.size.width - leftMargin * 2, topMargin);
+    CGRect viewFrame = CGRectMake(StandardMargin, StandardMargin,
+                                  self.initialFrame.size.width - StandardMargin * 2, StandardMargin);
     
     if (!_newsTitleLabel) {
         _newsTitleLabel = [[UILabel alloc] initWithFrame:viewFrame];
@@ -133,11 +131,9 @@
 }
 
 - (void)setupDateLabel {
-    double topMargin = 15.f;
-    double dateLabelLeftMargin = 15.f;
     
-    CGRect viewFrame = CGRectMake(dateLabelLeftMargin, _newsTitleLabel.frame.size.height + _newsTitleLabel.frame.origin.y,
-                                  self.initialFrame.size.width - dateLabelLeftMargin * 2, topMargin);
+    CGRect viewFrame = CGRectMake(StandardMargin, _newsTitleLabel.frame.size.height + _newsTitleLabel.frame.origin.y,
+                                  self.initialFrame.size.width - StandardMargin * 2, StandardMargin);
     
     if (!_dateLabel) {
         _dateLabel = [[UILabel alloc] initWithFrame:viewFrame];
@@ -159,15 +155,14 @@
 }
 
 - (void)setupThumbnailImage {
-    double thumbnailLeftMargin = 15.f;
-    double imageViewWidth = self.initialFrame.size.width/2 - 2*thumbnailLeftMargin;
+    double imageViewWidth = self.initialFrame.size.width/2 - 2*StandardMargin;
     
-    CGRect viewFrame = CGRectMake(thumbnailLeftMargin, _dateLabel.frame.size.height + _dateLabel.frame.origin.y,
+    CGRect viewFrame = CGRectMake(StandardMargin, _dateLabel.frame.size.height + _dateLabel.frame.origin.y + StandardMargin,
                                   imageViewWidth, imageViewWidth);
     
     if (!_thumbnailImageView) {
         _thumbnailImageView = [[UIImageView alloc] initWithFrame:viewFrame];
-        _thumbnailImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _thumbnailImageView.contentMode = UIViewContentModeScaleAspectFit & UIViewContentModeTop;
         [self addSubview:_thumbnailImageView];
     } else {
         _thumbnailImageView.frame = viewFrame;
@@ -178,8 +173,8 @@
 
 - (void)setupSummaryTextView {
     
-    CGRect viewFrame = CGRectMake(self.initialFrame.size.width / 2, self.thumbnailImageView.frame.origin.y,
-                                  self.initialFrame.size.width / 2 - 15.f, self.initialFrame.size.height - self.thumbnailImageView.frame.origin.y - 15);
+    CGRect viewFrame = CGRectMake(self.initialFrame.size.width / 2, self.thumbnailImageView.frame.origin.y - StandardMargin,
+                                  self.initialFrame.size.width / 2 - StandardMargin, self.initialFrame.size.height - self.thumbnailImageView.frame.origin.y - StandardMargin);
     
     if (!_summaryTextView) {
         _summaryTextView = [[UITextView alloc] initWithFrame:viewFrame];
