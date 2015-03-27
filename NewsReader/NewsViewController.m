@@ -66,7 +66,7 @@
     [SVProgressHUD showWithStatus:@"Loading news"];
     [News getNewsByKeyword:query block:^(NSError *error, NSDictionary *response) {
         if (error) {
-            DLog(@"Error getting news");
+            DLog(@"Error getting news: %@", [error localizedDescription]);
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error loading news: %@", [error localizedDescription]]];
         } else {
             NSArray *news = response[@"news"];
