@@ -112,7 +112,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     // If load news button is tapped
     if (buttonIndex == 1) {
-        UITextField *textfield = [alertView textFieldAtIndex: 0];
+        UITextField *textfield = [alertView textFieldAtIndex:0];
         NSString *searchQuery = textfield.text;
         [self loadNewsWithQuery:searchQuery];
     }
