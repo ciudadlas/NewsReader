@@ -93,6 +93,10 @@ static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.Parse
         }
     }
     
+    if (newsArray.count == 0) {
+        *parseError = [NSError errorWithDomain:ParseErrorDomain code:102 userInfo:@{NSLocalizedDescriptionKey: @"No news succesfully parsed."}];
+    }
+    
     return [NSArray arrayWithArray:newsArray];
 }
 
