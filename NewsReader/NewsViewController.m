@@ -95,7 +95,7 @@
         [view setNeedsLayout];
     }
     
-    [self.actionMenuView updateActionMenuLayoutWithScrollViewOffset:[self.scrollViewManager relativeOffset] scrollView:self.scrollView];
+    [self.actionMenuView updateActionMenuLayoutWithScrollViewOffset:[self.scrollViewManager scrollViewRelativeOffset] scrollView:self.scrollView];
     [self.scrollViewManager repositionTiles];
 }
 

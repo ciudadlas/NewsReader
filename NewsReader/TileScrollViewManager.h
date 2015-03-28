@@ -26,10 +26,7 @@
 - (void)clearScrollView;
 - (void)addTileWithIndex:(int)index;
 - (void)repositionTiles;
-- (float)relativeOffset;
-- (int)currentTileIndex;
+- (float)scrollViewRelativeOffset;
 - (NewsTileView *)currentTileView;
-- (int)getArrayIndexFromTileViewTag:(int)tag;
-- (int)getTagFromIndex:(int)index;
 
 @end

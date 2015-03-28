@@ -63,6 +63,9 @@
     return foundPage;
 }
 
+/**
+ * Adds a new or re-cycled news tile to the view at the requested position
+ */
 - (void)addTileWithIndex:(int)index {
     if (index >= 0 && index < [self.newsItems count]) {
         
@@ -71,11 +74,9 @@
         CGRect tileFrame = CGRectMake(index*self.scrollView.frame.size.width + 10, 10,
                                       self.scrollView.bounds.size.width - 20, self.scrollView.bounds.size.height - 20);
         if (tile) {
-            //            DLog(@"Re-using tile.");
             tile.news = news;
             tile.frame = tileFrame;
         } else {
-            //            DLog(@"Creating new tile.");
             tile = [[NewsTileView alloc] initWithFrame:tileFrame news:news];
         }
         
@@ -87,7 +88,7 @@
         [self.visibleTiles addObject:tile];
         
     } else {
-        DLog(@"No tile found for requested news tile view");
+        DLog(@"No news item available for the requested news tile view");
     }
 }
 
@@ -99,9 +100,6 @@
         
         int firstNeededTileIndex = (int)MIN(MAX(currentTileIndex - 1, 0), self.newsItems.count - 3);
         int lastNeededTileIndex  = (int)MAX(MIN(currentTileIndex + 1, self.newsItems.count - 1), 2);
-        
-        //        DLog(@"First page tile index: %d", firstNeededTileIndex);
-        //        DLog(@"Last page tile index: %d", lastNeededTileIndex);
         
         if (self.newsItems.count > 3) {
             
@@ -116,10 +114,6 @@
             
             [self.visibleTiles minusSet:self.recycledTiles];
             
-            //            DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
-            //            DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
-            
-            
             // Add missing tile views
             for (int index = firstNeededTileIndex; index <= lastNeededTileIndex; index++) {
                 if (![self isDisplayingPageForIndex:index]) {
@@ -129,9 +123,6 @@
         }
         
         self.selectedTileIndex = currentTileIndex;
-        
-        //        DLog(@"Number of visible tiles: %lu", (unsigned long)self.visibleTiles.count);
-        //        DLog(@"Number of recycled tiles: %lu", (unsigned long)self.recycledTiles.count);
     }
 }
 
@@ -154,8 +145,7 @@
     
     // now divide into the number of tiles
     int tileIndex = roundf(offset / width);
-    
-    //    DLog (@"Current tile index: %d", tileIndex);
+
     return tileIndex;
 }
 
@@ -174,7 +164,7 @@
 /**
  * This calculates the current offset of the scroll view, amount of horizontal distance from a stable point.
  */
-- (float)relativeOffset {
+- (float)scrollViewRelativeOffset {
     
     float offset = self.scrollView.contentOffset.x;
     float contentSize = self.scrollView.contentSize.width;
