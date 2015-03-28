@@ -56,7 +56,6 @@
     self.scrollViewManager.delegate = self;
     
     self.actionMenuView.delegate = self;
-    [self.actionMenuView setup];
 }
 
 #pragma mark - Load Data Methods

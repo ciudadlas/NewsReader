@@ -19,6 +19,12 @@
 
 @implementation ActionMenuView
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    [self setup];
+}
+
 - (void)setup {
     
 #warning TO DO: Look into why this is happening and finding a fix
