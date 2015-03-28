@@ -10,14 +10,13 @@
 
 @implementation NSDateFormatter (ThreadSafe)
 
-NSString *const kCachedDateFormatterKey = @"CachedDateFormatterKey";
+NSString *const CachedDateFormatterKey = @"CachedDateFormatterKey";
 
 // Taken from https://coderwall.com/p/yjnkwg
 // There may be more efficient ways to do this with the C functions: https://developer.apple.com/library/mac/documentation/cocoa/conceptual/DataFormatting/Articles/dfDateFormatting10_4.html
-+ (NSDateFormatter *)threadSafeDateFormatter
-{
++ (NSDateFormatter *)threadSafeDateFormatter {
     NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
-    NSDateFormatter *dateFormatter = [threadDictionary objectForKey:kCachedDateFormatterKey];
+    NSDateFormatter *dateFormatter = [threadDictionary objectForKey:CachedDateFormatterKey];
     
     if (!dateFormatter) {
         dateFormatter = [[NSDateFormatter alloc] init];
@@ -25,7 +24,7 @@ NSString *const kCachedDateFormatterKey = @"CachedDateFormatterKey";
         [dateFormatter setLocale:enUSPOSIXLocale];
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
         
-        [threadDictionary setObject:dateFormatter forKey:kCachedDateFormatterKey];
+        [threadDictionary setObject:dateFormatter forKey:CachedDateFormatterKey];
     }
     return dateFormatter;
 }
