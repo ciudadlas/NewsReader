@@ -64,7 +64,7 @@
 }
 
 /**
- * Adds a new or re-cycled news tile to the view at the requested position
+ * Adds a new or re-cycled news tile to the scroll view at the requested position
  */
 - (void)addTileWithIndex:(int)index {
     if (index >= 0 && index < [self.newsItems count]) {
