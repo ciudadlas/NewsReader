@@ -11,8 +11,6 @@
 
 @interface APIClient : AFHTTPRequestOperationManager
 
-@property (strong, nonatomic, readonly) NSString *APIKey;
-
 + (APIClient *)sharedInstance;
 - (instancetype)initWithBaseURL:(NSURL *)url;
 - (NSMutableDictionary *)newsSearchQuerySharedParameters;
