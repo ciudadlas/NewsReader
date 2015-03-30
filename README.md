@@ -2,7 +2,6 @@
 A news reader app for iPhone
 
 # To do
-- Fix subview positioning issues in `NewsTileView`, especially when the tile is getting re-used
 - Address to do warnings in the code
 - Re-evaluate the news tile re-use code in `TileScrollViewManager`, there may be a more straightforward way to accomplish it
 - Re-factor, review comments, and pragma mark properly
