@@ -16,4 +16,5 @@ A news reader app for iPhone
 - Enable search by category and load a list of categories
 - Look into a more fun or more comprehensive API instead of Guardian
   - https://www.petfinder.com/developers/api-docs 
+  - https://www.rescuegroups.org/services/adoptable-pet-data-http-json-api/
 - Look into making user be able to choose his news sources (like Pulse app)
