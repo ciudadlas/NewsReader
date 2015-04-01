@@ -10,6 +10,7 @@
 #import "APIClient.h"
 #import "Macros.h"
 #import "NSDateFormatter+ThreadSafe.h"
+#import "NSString+StripHTML.h"
 
 static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.ParseErrorDomain";
 
@@ -123,7 +124,7 @@ static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.Parse
         thumbnailURL = [fields objectForKey:@"thumbnail"];
         
         // It looks like that the API can return random HTML tags for the trailText. Getting rid of those here.
-        newsSummary = [self stripHTML:[fields objectForKey:@"trailText"]];
+        newsSummary = [[fields objectForKey:@"trailText"] stripHTML];
     }
     
     if (apiUrl && newsId && sectionId && sectionName && publicationDate && webTitle && webUrl && thumbnailURL && newsSummary) {
@@ -156,13 +157,6 @@ static NSString *const ParseErrorDomain = @"com.serdarkaratakin.NewsReader.Parse
     } else {
         return nil;
     }
-}
-
-+ (NSString *)stripHTML:(NSString *)inputString {
-    NSRange r;
-    while ((r = [inputString rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound)
-        inputString = [inputString stringByReplacingCharactersInRange:r withString:@""];
-    return inputString;
 }
 
 @end
