@@ -15,4 +15,5 @@ A news reader app for iPhone
 - Persist user's entered search keywords and show a history (Look into trying http://realm.io/ for this)
 - Enable search by category and load a list of categories
 - Look into a more fun or more comprehensive API instead of Guardian
+  - https://www.petfinder.com/developers/api-docs 
 - Look into making user be able to choose his news sources (like Pulse app)
